@@ -26,6 +26,7 @@
 #include "usbd_hid.h"
 
 /* USER CODE BEGIN Includes */
+#include <main.h>
 #include "usbd_midi.h"
 
 /* USER CODE END Includes */
@@ -84,19 +85,16 @@ void MX_USB_DEVICE_Init(void)
   /* USER CODE BEGIN USB_DEVICE_Init_PostTreatment */
   HAL_PWREx_EnableUSBVoltageDetector();
 #else
-  if (USBD_Init(&hUsbDeviceHS, &HS_Desc, DEVICE_HS) != USBD_OK)
-  {
+  if (USBD_Init(&hUsbDeviceHS, &HS_Desc, 0) != USBD_OK)
     Error_Handler();
-  }
+
   if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_MIDI) != USBD_OK)
-  {
     Error_Handler();
-  }
+
+
   if (USBD_Start(&hUsbDeviceHS) != USBD_OK)
-  {
     Error_Handler();
-  }
-  HAL_PWREx_EnableUSBVoltageDetector();
+
 #endif
 
   /* USER CODE END USB_DEVICE_Init_PostTreatment */

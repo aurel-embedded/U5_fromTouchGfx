@@ -33,6 +33,7 @@
 extern "C" {
 #endif
 
+#include "main.h"
 #include  "usbd_ioreq.h"
 
 #define USB_CLASS_MIDI 1
