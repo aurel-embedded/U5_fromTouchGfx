@@ -46,7 +46,6 @@ MEMORY
 {
   RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 3008K
   FLASH    (rx)    : ORIGIN = 0x08000000,   LENGTH = 4096K
-  EXT_FLASH (r)   : ORIGIN = 0xA0000000, LENGTH = 128M
 }
 
 /* Sections */
@@ -185,12 +184,4 @@ SECTIONS
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
-  
-    ExtFlashSection :
-  {
-    *(ExtFlashSection ExtFlashSection.*)
-    *(.gnu.linkonce.r.*)
-    . = ALIGN(0x4);
-  } >EXT_FLASH
-  
 }

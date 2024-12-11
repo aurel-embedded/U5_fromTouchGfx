@@ -13,51 +13,17 @@ class FlashDataReader;
 
 struct Typography
 {
-    static const touchgfx::FontId SHARETECH_55 = 0;
-    static const touchgfx::FontId SHARETECH_26 = 1;
-    static const touchgfx::FontId SHARETECH_20 = 2;
-    static const touchgfx::FontId SHARETECH_65 = 3;
-    static const touchgfx::FontId SHARETECH_120 = 4;
-    static const touchgfx::FontId SAIRASEMIBOLD_22 = 5;
-    static const touchgfx::FontId SAIRASEMIBOLD_16 = 6;
-    static const touchgfx::FontId SAIRAMEDIUM_65 = 7;
-    static const touchgfx::FontId TOPBARTEXT = 8;
-    static const touchgfx::FontId MAINSELECTEDSUBDEMO = 9;
-    static const touchgfx::FontId SHARETECH_48 = 10;
-    static const touchgfx::FontId SHARETECH_90 = 11;
-    static const touchgfx::FontId SAIRASEMIBOLD_26 = 12;
-    static const touchgfx::FontId SAIRAMEDIUM_32 = 13;
-    static const touchgfx::FontId SAIRASEMIBOLD_38 = 14;
-    static const touchgfx::FontId WHEELTEXT_SCREENTRANSITION = 15;
-    static const touchgfx::FontId LARGETRANSITIONTEXT_SCREENTRANSITION = 16;
-    static const touchgfx::FontId TOPBARTEXT_SCREENTRANSITION = 17;
-    static const touchgfx::FontId ANIMATIONSPEED_SCREENTRANSITION = 18;
-    static const touchgfx::FontId SHARETECH_36 = 19;
+    static const touchgfx::FontId DEFAULT = 0;
+    static const touchgfx::FontId LARGE = 1;
+    static const touchgfx::FontId SMALL = 2;
 };
 
 struct TypographyFontIndex
 {
-    static const touchgfx::FontId SHARETECH_55 = 0;                         // ShareTechMono_Regular_55_4bpp
-    static const touchgfx::FontId SHARETECH_26 = 1;                         // ShareTechMono_Regular_26_4bpp
-    static const touchgfx::FontId SHARETECH_20 = 2;                         // ShareTechMono_Regular_20_4bpp
-    static const touchgfx::FontId SHARETECH_65 = 3;                         // ShareTechMono_Regular_65_4bpp
-    static const touchgfx::FontId SHARETECH_120 = 4;                        // ShareTechMono_Regular_120_4bpp
-    static const touchgfx::FontId SAIRASEMIBOLD_22 = 5;                     // SairaCondensed_SemiBold_22_4bpp
-    static const touchgfx::FontId SAIRASEMIBOLD_16 = 6;                     // SairaCondensed_SemiBold_16_4bpp
-    static const touchgfx::FontId SAIRAMEDIUM_65 = 7;                       // SairaCondensed_Medium_65_4bpp
-    static const touchgfx::FontId TOPBARTEXT = 8;                           // Saira_Medium_20_4bpp
-    static const touchgfx::FontId MAINSELECTEDSUBDEMO = 9;                  // Saira_SemiCondensed_SemiBold_32_4bpp
-    static const touchgfx::FontId SHARETECH_48 = 10;                         // ShareTechMono_Regular_48_4bpp
-    static const touchgfx::FontId SHARETECH_90 = 11;                         // ShareTechMono_Regular_90_4bpp
-    static const touchgfx::FontId SAIRASEMIBOLD_26 = 12;                     // SairaCondensed_SemiBold_26_4bpp
-    static const touchgfx::FontId SAIRAMEDIUM_32 = 13;                       // SairaCondensed_Medium_32_4bpp
-    static const touchgfx::FontId SAIRASEMIBOLD_38 = 14;                     // SairaCondensed_SemiBold_38_4bpp
-    static const touchgfx::FontId WHEELTEXT_SCREENTRANSITION = 15;           // Saira_Medium_11_4bpp
-    static const touchgfx::FontId LARGETRANSITIONTEXT_SCREENTRANSITION = 16; // Saira_SemiBold_30_4bpp
-    static const touchgfx::FontId TOPBARTEXT_SCREENTRANSITION = 8;          // Saira_Medium_20_4bpp
-    static const touchgfx::FontId ANIMATIONSPEED_SCREENTRANSITION = 15;      // Saira_Medium_11_4bpp
-    static const touchgfx::FontId SHARETECH_36 = 17;                         // ShareTechMono_Regular_36_4bpp
-    static const uint16_t NUMBER_OF_FONTS = 18;
+    static const touchgfx::FontId DEFAULT = 0; // verdana_20_4bpp
+    static const touchgfx::FontId LARGE = 1;   // verdana_40_4bpp
+    static const touchgfx::FontId SMALL = 2;   // verdana_10_4bpp
+    static const uint16_t NUMBER_OF_FONTS = 3;
 };
 
 class ApplicationFontProvider : public touchgfx::FontProvider

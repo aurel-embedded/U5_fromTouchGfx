@@ -130,101 +130,59 @@
     <Filter Include="Source Files\generated\simulator">
       <UniqueIdentifier>{C07B02B9-A55E-47AA-AD61-59A6AAD754E6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui">
-      <UniqueIdentifier>E72F8291-39F0-4E5A-DDD6-10F287BBAF5F</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\gui">
-      <UniqueIdentifier>E9F5F5C3-93D5-0714-6449-0C1F3E0A026C</UniqueIdentifier>
+      <UniqueIdentifier>B51E34F7-D11C-769F-17D0-B7F5682DF467</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\menu_screen">
-      <UniqueIdentifier>6080BB4B-7D0A-AFE7-B51D-0A5751D1C156</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated">
-      <UniqueIdentifier>1B926B37-0038-30E1-B158-6A0EEE461E96</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated">
-      <UniqueIdentifier>5BA148EF-E3C0-D9F6-127E-02ED46584AF0</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\containers">
-      <UniqueIdentifier>262D99B4-A886-CF9C-BDE4-052EE9A79483</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\containers">
-      <UniqueIdentifier>532CE00B-EF92-77B7-9D6F-D7E8ACB83786</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\mjpeg_screen">
-      <UniqueIdentifier>DA75E0B4-7924-472F-AEDF-BCEFADFAE823</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\common">
-      <UniqueIdentifier>58E760CA-6B0F-8975-A330-60C82A28196B</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\common">
-      <UniqueIdentifier>9E075459-44B0-E06C-083B-8FE6A76D8CA0</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\model">
-      <UniqueIdentifier>8F587DEA-C138-5551-2591-CD62FF905FE2</UniqueIdentifier>
+    <Filter Include="Source Files\gui">
+      <UniqueIdentifier>5378207F-C09D-D8F0-6BB4-E516BAAA05A9</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\model">
-      <UniqueIdentifier>C1BC2412-3FE5-41B0-5DE4-E41F90C2D5B3</UniqueIdentifier>
+      <UniqueIdentifier>0987022F-162B-4A17-A518-D744D16654EF</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\Transitions">
-      <UniqueIdentifier>FFBD4586-A38E-A51D-FBA3-26D124067C6E</UniqueIdentifier>
+    <Filter Include="Source Files\gui\model">
+      <UniqueIdentifier>9A06C23A-072D-7FA0-3D1B-96060CD68BFD</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\gui\Transitions">
-      <UniqueIdentifier>05167B97-79BF-40EA-55CB-17F996061268</UniqueIdentifier>
+    <Filter Include="Source Files\gui\screen1_screen">
+      <UniqueIdentifier>42E1BC73-97A7-F7B4-38D9-86ACB36FBA1E</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\screentransitiondemo_screen">
-      <UniqueIdentifier>00FFED3E-6BF5-8D78-A4FB-2E72B3B83D60</UniqueIdentifier>
+    <Filter Include="Header Files\generated\gui_generated">
+      <UniqueIdentifier>5CDB4E7C-EB5B-8C3D-F935-2A5D0CA05B59</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\compassscreen_screen">
-      <UniqueIdentifier>332DD5C8-6EB4-DCE4-F479-C460F65FA334</UniqueIdentifier>
+    <Filter Include="Header Files\gui\common">
+      <UniqueIdentifier>FB2B50BF-EEC9-C846-2E55-8F0C5323DA22</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\gui\compassscreen_screen">
-      <UniqueIdentifier>BEB0AF9B-D49C-B0DA-0019-C7C04D20A2AC</UniqueIdentifier>
+    <Filter Include="Header Files\gui\screen1_screen">
+      <UniqueIdentifier>ED019B43-E4F8-709E-70E4-77F739AF3FCA</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\svg_screen">
-      <UniqueIdentifier>6EB482D4-B7CF-8139-56B9-B68929A1B708</UniqueIdentifier>
+    <Filter Include="Source Files\generated\gui_generated">
+      <UniqueIdentifier>3B07FCAC-14C0-559D-E688-2A7C5922A452</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\gui\e_bikedemo_screen">
-      <UniqueIdentifier>F1397C8A-F2B0-90DF-F768-11CEFA250125</UniqueIdentifier>
+    <Filter Include="Source Files\gui\common">
+      <UniqueIdentifier>752A12CE-FC31-A946-EDD2-72E6DEE795CA</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\e_bikedemo_screen">
-      <UniqueIdentifier>186A1919-D741-4662-B137-97D9937BC9CE</UniqueIdentifier>
+    <Filter Include="Source Files\generated\gui_generated\screen1_screen">
+      <UniqueIdentifier>9989099C-4CB6-304E-C8EE-3A4B2DE81BCB</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\gui\dicedemo_screen">
-      <UniqueIdentifier>A85D0A83-A1A9-B4F8-473B-EFAAEFD96378</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\dicedemo_screen">
-      <UniqueIdentifier>C15FCBFA-4563-DC40-4A2C-946296F47A62</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\containers">
-      <UniqueIdentifier>84597EB8-69D3-1A96-BDB1-4B0E24C2A27F</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\containers">
-      <UniqueIdentifier>0F195904-B291-7827-0801-4AC67704D99C</UniqueIdentifier>
+    <Filter Include="Header Files\generated\gui_generated\screen1_screen">
+      <UniqueIdentifier>2E2848C8-C140-3B47-A67D-78F499F56D44</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\generated\simulator\include">
-      <UniqueIdentifier>5D3FF9AE-C0D1-9A95-278E-6651E2C4F83C</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\e_bikedemo_screen">
-      <UniqueIdentifier>4C661757-86E9-B324-AA54-33B5F54A9E5E</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\e_bikedemo_screen">
-      <UniqueIdentifier>D8800172-0CD6-F4C7-7EFC-47CABCA2550A</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\simulator\video">
-      <UniqueIdentifier>B9569065-6891-B27A-15DA-569B18B73246</UniqueIdentifier>
+      <UniqueIdentifier>01181095-33A4-84C5-C00D-88C3F6F3B7FE</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\generated\gui_generated\common">
-      <UniqueIdentifier>0568AADE-CB5D-FBD3-960C-BFBF7275FCD3</UniqueIdentifier>
+      <UniqueIdentifier>6B3FC70B-20E0-DB57-5C77-0A2FF1DE7915</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\generated\gui_generated\common">
-      <UniqueIdentifier>16CD9169-73FE-9FB3-F967-9E64825EA9F1</UniqueIdentifier>
+      <UniqueIdentifier>59F3E90E-A0CE-0F75-B724-D8221B4F5BC7</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\simulator\video">
+      <UniqueIdentifier>948A47FB-D78A-60B4-880D-16C612EBD2AB</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\generated\simulator\include\simulator">
-      <UniqueIdentifier>C8FB0263-90F4-486C-733F-A48C712EDF40</UniqueIdentifier>
+      <UniqueIdentifier>E5C33992-701F-8891-7A86-B3B619D6A69C</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\generated\simulator\include\simulator\video">
-      <UniqueIdentifier>58ED44DD-C1B8-390E-3D20-68F1F251721A</UniqueIdentifier>
+      <UniqueIdentifier>E86D76E7-5B01-6A61-9FB4-160679D02244</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -246,203 +204,26 @@
     <ClCompile Include="$(ApplicationRoot)\generated\simulator\src\mainBase.cpp">
       <Filter>Source Files\generated\simulator</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\AdvanceDiceContainer_DiceDemo.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\animationButton_ScreenTransition.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\animationButton_ScreenTransitionBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\animationsDepthButton_DiceDemo.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\animationsDepthButton_DiceDemoBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\bottombarContainer_ScreenTransition.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\compassscreen_screen\CompassScreenView.cpp">
-      <Filter>Source Files\gui\compassscreen_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\Transitions\CoverTransition.cpp">
-      <Filter>Source Files\gui\Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\Transitions\CubeTransition.cpp">
-      <Filter>Source Files\gui\Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\cubeUpDownButtonsContainer_DiceDemo.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\cubeUpDownButtonsContainer_DiceDemoBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\Transitions\CurtainsTransition.cpp">
-      <Filter>Source Files\gui\Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\dicedemo_screen\DiceDemoView.cpp">
-      <Filter>Source Files\gui\dicedemo_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\e_bikedemo_screen\E_BikeDemoPresenter.cpp">
-      <Filter>Source Files\gui\e_bikedemo_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\e_bikedemo_screen\E_BikeDemoView.cpp">
-      <Filter>Source Files\gui\e_bikedemo_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\e_bikedemo_screen\E_BikeDemoViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\e_bikedemo_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\Transitions\FlipTransition.cpp">
-      <Filter>Source Files\gui\Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\common\FloatEasingEquations.cpp">
-      <Filter>Source Files\gui\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\common\FrameRate.cpp">
-      <Filter>Source Files\gui\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\FrameRate_Compass.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\FrameRate_CompassBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\FrameRate_E_Bike.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\FrameRate_E_BikeBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\FrameRate_Menu.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\FrameRate_MenuBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\FrameRate_SVG.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\FrameRate_SVGBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gui\src\common\FrontendApplication.cpp">
       <Filter>Source Files\gui\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\generated\gui_generated\src\common\FrontendApplicationBase.cpp">
       <Filter>Source Files\generated\gui_generated\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\IceScoopItemContainer_SVG.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\IceScoopWheelContainer_SVG.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\IceScoopWheelContainer_SVGBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MainWheel.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MainWheelBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MainWheelIcon.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MainWheelIconBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\common\MCULoadPercentage.cpp">
-      <Filter>Source Files\gui\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MCULoadPercentage_Compass.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MCULoadPercentage_CompassBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MCULoadPercentage_E_Bike.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MCULoadPercentage_E_BikeBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MCULoadPercentage_Menu.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MCULoadPercentage_MenuBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MCULoadPercentage_SVG.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MCULoadPercentage_SVGBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\menu_screen\MenuView.cpp">
-      <Filter>Source Files\gui\menu_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\mjpeg_screen\MJPEGView.cpp">
-      <Filter>Source Files\gui\mjpeg_screen</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gui\src\model\Model.cpp">
       <Filter>Source Files\gui\model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\Transitions\RolloutTransition.cpp">
-      <Filter>Source Files\gui\Transitions</Filter>
+    <ClCompile Include="..\..\gui\src\screen1_screen\Screen1Presenter.cpp">
+      <Filter>Source Files\gui\screen1_screen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\screentransitiondemo_screen\ScreenTransitionDemoView.cpp">
-      <Filter>Source Files\gui\screentransitiondemo_screen</Filter>
+    <ClCompile Include="..\..\gui\src\screen1_screen\Screen1View.cpp">
+      <Filter>Source Files\gui\screen1_screen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\selectedIconsContainer_DiceDemo.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\SimpleDiceContainer_DiceDemo.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\Transitions\SlideTransition.cpp">
-      <Filter>Source Files\gui\Transitions</Filter>
+    <ClCompile Include="..\..\generated\gui_generated\src\screen1_screen\Screen1ViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\screen1_screen</Filter>
     </ClCompile>
     <ClCompile Include="..\..\generated\simulator\src\video\SoftwareMJPEGDecoder.cpp">
       <Filter>Source Files\generated\simulator\video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\Transitions\SpinOutTransition.cpp">
-      <Filter>Source Files\gui\Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\Transitions\SpinTransition.cpp">
-      <Filter>Source Files\gui\Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\svg_screen\SVGView.cpp">
-      <Filter>Source Files\gui\svg_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\topbarContainer.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\topbarContainer_ScreenTransition.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\topbarContainer_ScreenTransitionBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\topbarContainerBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\transitionItem_ScreenTransition.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\transitionItem_ScreenTransitionBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\Transitions\Transitions.cpp">
-      <Filter>Source Files\gui\Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\WaffleMenuContainer.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\WaffleMenuIcon.cpp">
-      <Filter>Source Files\gui\containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -856,98 +637,8 @@
     <ClInclude Include="$(ApplicationRoot)\generated\simulator\include\simulator\mainBase.hpp">
       <Filter>Header Files\generated\simulator</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\AdvanceDiceContainer_DiceDemo.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\animationButton_ScreenTransition.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\animationButton_ScreenTransitionBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\animationsDepthButton_DiceDemo.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\animationsDepthButton_DiceDemoBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\bottombarContainer_ScreenTransition.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\compassscreen_screen\CompassScreenPresenter.hpp">
-      <Filter>Header Files\gui\compassscreen_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\compassscreen_screen\CompassScreenView.hpp">
-      <Filter>Header Files\gui\compassscreen_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\common\constans.hpp">
-      <Filter>Header Files\gui\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\common\Constants.hpp">
-      <Filter>Header Files\gui\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\Transitions\CoverTransition.hpp">
-      <Filter>Header Files\gui\Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\Transitions\CubeTransition.hpp">
-      <Filter>Header Files\gui\Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\cubeUpDownButtonsContainer_DiceDemo.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\cubeUpDownButtonsContainer_DiceDemoBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\Transitions\CurtainsTransition.hpp">
-      <Filter>Header Files\gui\Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\dicedemo_screen\DiceDemoView.hpp">
-      <Filter>Header Files\gui\dicedemo_screen</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\DirectFrameBufferVideoController.hpp">
       <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\e_bikedemo_screen\E_BikeDemoPresenter.hpp">
-      <Filter>Header Files\gui\e_bikedemo_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\e_bikedemo_screen\E_BikeDemoView.hpp">
-      <Filter>Header Files\gui\e_bikedemo_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\e_bikedemo_screen\E_BikeDemoViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\e_bikedemo_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\Transitions\FlipTransition.hpp">
-      <Filter>Header Files\gui\Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\common\FloatEasingEquations.hpp">
-      <Filter>Header Files\gui\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\common\FrameRate.hpp">
-      <Filter>Header Files\gui\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\FrameRate_Compass.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\FrameRate_CompassBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\FrameRate_E_Bike.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\FrameRate_E_BikeBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\FrameRate_Menu.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\FrameRate_MenuBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\FrameRate_SVG.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\FrameRate_SVGBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\common\FrontendApplication.hpp">
       <Filter>Header Files\gui\common</Filter>
@@ -961,54 +652,6 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\FrontendHeapBase.hpp">
       <Filter>Header Files\generated\gui_generated\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\IceScoopItemContainer_SVG.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\IceScoopWheelContainer_SVG.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\IceScoopWheelContainer_SVGBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MainWheel.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MainWheelBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MainWheelIcon.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MainWheelIconBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\common\MCULoadPercentage.hpp">
-      <Filter>Header Files\gui\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MCULoadPercentage_Compass.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MCULoadPercentage_CompassBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MCULoadPercentage_E_Bike.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MCULoadPercentage_E_BikeBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MCULoadPercentage_Menu.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MCULoadPercentage_MenuBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MCULoadPercentage_SVG.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MCULoadPercentage_SVGBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\MJPEGDecoder.hpp">
       <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
     </ClInclude>
@@ -1018,62 +661,20 @@
     <ClInclude Include="..\..\gui\include\gui\model\ModelListener.hpp">
       <Filter>Header Files\gui\model</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\Transitions\RolloutTransition.hpp">
-      <Filter>Header Files\gui\Transitions</Filter>
+    <ClInclude Include="..\..\gui\include\gui\screen1_screen\Screen1Presenter.hpp">
+      <Filter>Header Files\gui\screen1_screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\selectedIconsContainer_DiceDemo.hpp">
-      <Filter>Header Files\gui\containers</Filter>
+    <ClInclude Include="..\..\gui\include\gui\screen1_screen\Screen1View.hpp">
+      <Filter>Header Files\gui\screen1_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\screen1_screen\Screen1ViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\screen1_screen</Filter>
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\SimConstants.hpp">
       <Filter>Header Files\generated\gui_generated\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\SimpleDiceContainer_DiceDemo.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\Transitions\SlideTransition.hpp">
-      <Filter>Header Files\gui\Transitions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\SoftwareMJPEGDecoder.hpp">
       <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\Transitions\SpinOutTransition.hpp">
-      <Filter>Header Files\gui\Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\Transitions\SpinTransition.hpp">
-      <Filter>Header Files\gui\Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\common\structs.hpp">
-      <Filter>Header Files\gui\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\topbarContainer.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\topbarContainer_ScreenTransition.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\topbarContainer_ScreenTransitionBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\topbarContainerBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\transitionItem_ScreenTransition.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\transitionItem_ScreenTransitionBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\Transitions\Transitions.hpp">
-      <Filter>Header Files\gui\Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\common\Utils.hpp">
-      <Filter>Header Files\gui\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\WaffleMenuContainer.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\WaffleMenuIcon.hpp">
-      <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

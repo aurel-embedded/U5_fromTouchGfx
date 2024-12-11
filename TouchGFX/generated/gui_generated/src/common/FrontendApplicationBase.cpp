@@ -11,8 +11,8 @@
 #ifdef SIMULATOR
 #include <platform/driver/lcd/LCD16bpp.hpp>
 #endif
-#include <gui/e_bikedemo_screen/E_BikeDemoView.hpp>
-#include <gui/e_bikedemo_screen/E_BikeDemoPresenter.hpp>
+#include <gui/screen1_screen/Screen1View.hpp>
+#include <gui/screen1_screen/Screen1Presenter.hpp>
 
 using namespace touchgfx;
 
@@ -23,7 +23,6 @@ FrontendApplicationBase::FrontendApplicationBase(Model& m, FrontendHeap& heap)
       model(m)
 {
     touchgfx::HAL::getInstance()->setDisplayOrientation(touchgfx::ORIENTATION_LANDSCAPE);
-    touchgfx::Texts::setLanguage(GB);
 #ifdef SIMULATOR
     reinterpret_cast<touchgfx::LCD16bpp&>(touchgfx::HAL::lcd()).enableTextureMapperAll();
     reinterpret_cast<touchgfx::LCD16bpp&>(touchgfx::HAL::lcd()).enableDecompressorL8_All();
@@ -35,37 +34,15 @@ FrontendApplicationBase::FrontendApplicationBase(Model& m, FrontendHeap& heap)
  * Screen Transition Declarations
  */
 
-// E_BikeDemo
+// Screen1
 
-void FrontendApplicationBase::gotoE_BikeDemoScreenNoTransition()
+void FrontendApplicationBase::gotoScreen1ScreenNoTransition()
 {
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoE_BikeDemoScreenNoTransitionImpl);
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoScreen1ScreenNoTransitionImpl);
     pendingScreenTransitionCallback = &transitionCallback;
 }
 
-void FrontendApplicationBase::gotoE_BikeDemoScreenNoTransitionImpl()
+void FrontendApplicationBase::gotoScreen1ScreenNoTransitionImpl()
 {
-    touchgfx::makeTransition<E_BikeDemoView, E_BikeDemoPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
-void FrontendApplicationBase::gotoE_BikeDemoScreenWipeTransitionSouth()
-{
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoE_BikeDemoScreenWipeTransitionSouthImpl);
-    pendingScreenTransitionCallback = &transitionCallback;
-}
-
-void FrontendApplicationBase::gotoE_BikeDemoScreenWipeTransitionSouthImpl()
-{
-    touchgfx::makeTransition<E_BikeDemoView, E_BikeDemoPresenter, touchgfx::WipeTransition<SOUTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
-void FrontendApplicationBase::gotoE_BikeDemoScreenWipeTransitionNorth()
-{
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoE_BikeDemoScreenWipeTransitionNorthImpl);
-    pendingScreenTransitionCallback = &transitionCallback;
-}
-
-void FrontendApplicationBase::gotoE_BikeDemoScreenWipeTransitionNorthImpl()
-{
-    touchgfx::makeTransition<E_BikeDemoView, E_BikeDemoPresenter, touchgfx::WipeTransition<NORTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    touchgfx::makeTransition<Screen1View, Screen1Presenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }

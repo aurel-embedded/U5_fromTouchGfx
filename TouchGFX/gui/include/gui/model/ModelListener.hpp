@@ -7,7 +7,7 @@ class ModelListener
 {
 public:
     ModelListener() : model(0) {}
-
+    
     virtual ~ModelListener() {}
 
     void bind(Model* m)

@@ -5,18 +5,4 @@
 
 #include <touchgfx/hal/Types.hpp>
 
-const uint32_t video_ST8464_bin_length = 29749630;
-#ifdef SIMULATOR
-extern const uint8_t* video_ST8464_bin_start;
-#else
-extern const uint8_t video_ST8464_bin_start[];
-#endif
-
-const uint32_t video_output_short_bin_length = 6405366;
-#ifdef SIMULATOR
-extern const uint8_t* video_output_short_bin_start;
-#else
-extern const uint8_t video_output_short_bin_start[];
-#endif
-
 #endif // TOUCHGFX_VIDEODATABASE_HPP

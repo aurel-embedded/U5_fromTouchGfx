@@ -17,27 +17,19 @@ public:
 
     virtual void changeToStartScreen()
     {
-        gotoE_BikeDemoScreenNoTransition();
+        gotoScreen1ScreenNoTransition();
     }
 
-    // E_BikeDemo
-    void gotoE_BikeDemoScreenNoTransition();
-
-    void gotoE_BikeDemoScreenWipeTransitionSouth();
-
-    void gotoE_BikeDemoScreenWipeTransitionNorth();
+    // Screen1
+    void gotoScreen1ScreenNoTransition();
 
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
     Model& model;
 
-    // E_BikeDemo
-    void gotoE_BikeDemoScreenNoTransitionImpl();
-
-    void gotoE_BikeDemoScreenWipeTransitionSouthImpl();
-
-    void gotoE_BikeDemoScreenWipeTransitionNorthImpl();
+    // Screen1
+    void gotoScreen1ScreenNoTransitionImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP
