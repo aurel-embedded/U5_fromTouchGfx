@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="texts.xsd" Version="4.24.1">
+  <Languages>
+    <Language Id="GB" />
+  </Languages>
+  <Texts>
+    <TextGroup Id="Menu">
+      <Text Id="__SingleUse_PRW2" Alignment="Left" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">FPS:</Translation>
+      </Text>
+      <Text Id="__SingleUse_AXU9" Alignment="Left" TypographyId="topbarText">
+        <Translation Language="GB">60</Translation>
+      </Text>
+      <Text Id="__SingleUse_2U2X" Alignment="Center" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_BIUI" Alignment="Left" TypographyId="topbarText">
+        <Translation Language="GB">100</Translation>
+      </Text>
+      <Text Id="__SingleUse_LDRK" Alignment="Center" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_T5ZS" Alignment="Left" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">MCU:</Translation>
+      </Text>
+      <Text Id="MainSelectedSubDemoEBike" Alignment="Left" TypographyId="MainSelectedSubDemo">
+        <Translation Language="GB">E-bike</Translation>
+      </Text>
+      <Text Id="MainSelectedSubDemoTransition" Alignment="Left" TypographyId="MainSelectedSubDemo">
+        <Translation Language="GB">Transitions</Translation>
+      </Text>
+      <Text Id="MainSelectedSubDemoCompass" Alignment="Left" TypographyId="MainSelectedSubDemo">
+        <Translation Language="GB">Compass</Translation>
+      </Text>
+      <Text Id="MainSelectedSubDemoMJPEG" Alignment="Left" TypographyId="MainSelectedSubDemo">
+        <Translation Language="GB">MJPEG</Translation>
+      </Text>
+      <Text Id="MainSelectedSubDemoDice" Alignment="Left" TypographyId="MainSelectedSubDemo">
+        <Translation Language="GB">DICE</Translation>
+      </Text>
+      <Text Id="MainSelectedSubDemoSVG" Alignment="Left" TypographyId="MainSelectedSubDemo">
+        <Translation Language="GB">SVG</Translation>
+      </Text>
+    </TextGroup>
+    <TextGroup Id="SVG">
+      <Text Id="__SingleUse_NRRU" Alignment="Left" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">FPS:</Translation>
+      </Text>
+      <Text Id="__SingleUse_1A84" Alignment="Left" TypographyId="topbarText">
+        <Translation Language="GB">60</Translation>
+      </Text>
+      <Text Id="__SingleUse_MP6A" Alignment="Center" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_FJG4" Alignment="Left" TypographyId="topbarText">
+        <Translation Language="GB">100</Translation>
+      </Text>
+      <Text Id="__SingleUse_ICBQ" Alignment="Center" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_ZJWC" Alignment="Left" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">MCU:</Translation>
+      </Text>
+    </TextGroup>
+    <TextGroup Id="Compass_Screen">
+      <Text Id="MCULoadPercentage_Compass" Alignment="Right" TypographyId="ShareTech_36">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="FPSValue_Compass" Alignment="Right" TypographyId="ShareTech_36">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="rotationDegreeCompass" Alignment="Center" TypographyId="ShareTech_65">
+        <Translation Language="GB">&lt;value&gt;°</Translation>
+      </Text>
+      <Text Id="__SingleUse_UDE8" Alignment="Left" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">60</Translation>
+      </Text>
+      <Text Id="__SingleUse_51NZ" Alignment="Left" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">100</Translation>
+      </Text>
+      <Text Id="rotationLabel" Alignment="Left" TypographyId="SairaSemiBold_38">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="rotationDegree" Alignment="Left" TypographyId="ShareTech_90">
+        <Translation Language="GB">&lt;value&gt;°</Translation>
+      </Text>
+      <Text Id="FPSLabelText_Compass" Alignment="Center" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">FPS</Translation>
+      </Text>
+      <Text Id="MCULabelText_Compass" Alignment="Center" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">MCU LOAD</Translation>
+      </Text>
+    </TextGroup>
+    <TextGroup Id="E_Bike">
+      <Text Id="SpeedValue" Alignment="Center" TypographyId="ShareTech_120">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="TotalDistanceMoved" Alignment="Center" TypographyId="ShareTech_26">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="BatteryLifeTime" Alignment="Center" TypographyId="ShareTech_26">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="ElevationValue" Alignment="Center" TypographyId="ShareTech_20">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="TotalDistanceKm_Lable" Alignment="Center" TypographyId="SairaSemiBold_16">
+        <Translation Language="GB">TOTAL km</Translation>
+      </Text>
+      <Text Id="TotalDistanceMPH_Lable" Alignment="Center" TypographyId="SairaSemiBold_16">
+        <Translation Language="GB">TOTAL mi</Translation>
+      </Text>
+      <Text Id="RemainingLabel" Alignment="Center" TypographyId="SairaSemiBold_16">
+        <Translation Language="GB">REMAINING</Translation>
+      </Text>
+      <Text Id="__SingleUse_B6UT" Alignment="Center" TypographyId="ShareTech_120">
+        <Translation Language="GB">36</Translation>
+      </Text>
+      <Text Id="__SingleUse_49Q7" Alignment="Center" TypographyId="ShareTech_26">
+        <Translation Language="GB">03:00</Translation>
+      </Text>
+      <Text Id="__SingleUse_52Q4" Alignment="Center" TypographyId="ShareTech_20">
+        <Translation Language="GB">+146m</Translation>
+      </Text>
+      <Text Id="__SingleUse_XB5M" Alignment="Center" TypographyId="ShareTech_26">
+        <Translation Language="GB">0.0</Translation>
+      </Text>
+      <Text Id="NavigationLabel" Alignment="Center" TypographyId="SairaSemiBold_22">
+        <Translation Language="GB">NAVIGATION</Translation>
+      </Text>
+      <Text Id="__SingleUse_3RS8" Alignment="Center" TypographyId="SairaMedium_65">
+        <Translation Language="GB">N</Translation>
+      </Text>
+      <Text Id="rotationDirection" Alignment="Center" TypographyId="SairaMedium_65">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_ZU1M" Alignment="Center" TypographyId="ShareTech_65">
+        <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="rotationDegree_Ebike" Alignment="Center" TypographyId="ShareTech_65">
+        <Translation Language="GB">&lt;value&gt;°</Translation>
+      </Text>
+      <Text Id="DirectionLabel" Alignment="Center" TypographyId="SairaSemiBold_22">
+        <Translation Language="GB">DIRECTION</Translation>
+      </Text>
+      <Text Id="FPSLabelText" Alignment="Center" TypographyId="SairaSemiBold_22">
+        <Translation Language="GB">FPS</Translation>
+      </Text>
+      <Text Id="MCULabelText" Alignment="Center" TypographyId="SairaSemiBold_22">
+        <Translation Language="GB">MCU Load</Translation>
+      </Text>
+    </TextGroup>
+    <TextGroup Id="FrameRate_Ebike">
+      <Text Id="__SingleUse_UHJ4" Alignment="Left" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">60</Translation>
+      </Text>
+      <Text Id="FPSValue_Ebike" Alignment="Center" TypographyId="ShareTech_55">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+    </TextGroup>
+    <TextGroup Id="MCULoad_Ebike">
+      <Text Id="__SingleUse_NJCX" Alignment="Left" TypographyId="SairaSemiBold_26">
+        <Translation Language="GB">100</Translation>
+      </Text>
+      <Text Id="MCULoadPercentage_Ebike" Alignment="Center" TypographyId="ShareTech_55">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+    </TextGroup>
+    <TextGroup Id="ScreenTransition">
+      <Text Id="CoverTransition" Alignment="Center" TypographyId="wheelText_ScreenTransition">
+        <Translation Language="GB">Cover</Translation>
+      </Text>
+      <Text Id="FlipTransition" Alignment="Center" TypographyId="wheelText_ScreenTransition">
+        <Translation Language="GB">Flip</Translation>
+      </Text>
+      <Text Id="SlideTransition" Alignment="Center" TypographyId="wheelText_ScreenTransition">
+        <Translation Language="GB">Slide</Translation>
+      </Text>
+      <Text Id="CurtainsTransition" Alignment="Center" TypographyId="wheelText_ScreenTransition">
+        <Translation Language="GB">Curtains</Translation>
+      </Text>
+      <Text Id="RolloutTransition" Alignment="Center" TypographyId="wheelText_ScreenTransition">
+        <Translation Language="GB">Rollout</Translation>
+      </Text>
+      <Text Id="LargeCoverTransition" Alignment="Center" TypographyId="largeTransitionText_ScreenTransition">
+        <Translation Language="GB">COVER TRANSITION</Translation>
+      </Text>
+      <Text Id="LargeFlipTransition" Alignment="Center" TypographyId="largeTransitionText_ScreenTransition">
+        <Translation Language="GB">FLIP TRANSITION</Translation>
+      </Text>
+      <Text Id="LargeSlideTransition" Alignment="Center" TypographyId="largeTransitionText_ScreenTransition">
+        <Translation Language="GB">SLIDE TRANSITION</Translation>
+      </Text>
+      <Text Id="LargeCurtainsTransition" Alignment="Center" TypographyId="largeTransitionText_ScreenTransition">
+        <Translation Language="GB">CURTAINS TRANSITION</Translation>
+      </Text>
+      <Text Id="LargeRolloutTransition" Alignment="Center" TypographyId="largeTransitionText_ScreenTransition">
+        <Translation Language="GB">ROLLOUT TRANSITION</Translation>
+      </Text>
+      <Text Id="NormalSpeed" Alignment="Center" TypographyId="animationSpeed_ScreenTransition">
+        <Translation Language="GB">Normal speed</Translation>
+      </Text>
+      <Text Id="SlowMotion" Alignment="Center" TypographyId="animationSpeed_ScreenTransition">
+        <Translation Language="GB">Slow-motion</Translation>
+      </Text>
+      <Text Id="LargeCubeTransition" Alignment="Center" TypographyId="largeTransitionText_ScreenTransition">
+        <Translation Language="GB">CUBE TRANSITION</Translation>
+      </Text>
+      <Text Id="CubeTransition" Alignment="Center" TypographyId="wheelText_ScreenTransition">
+        <Translation Language="GB">Cube</Translation>
+      </Text>
+      <Text Id="LargeSpinTransition" Alignment="Center" TypographyId="largeTransitionText_ScreenTransition">
+        <Translation Language="GB">SPIN TRANSITION</Translation>
+      </Text>
+      <Text Id="LargeSpinOutTransition" Alignment="Center" TypographyId="largeTransitionText_ScreenTransition">
+        <Translation Language="GB">SPIN OUT TRANSITION</Translation>
+      </Text>
+      <Text Id="SpinTransition" Alignment="Center" TypographyId="wheelText_ScreenTransition">
+        <Translation Language="GB">Spin</Translation>
+      </Text>
+      <Text Id="SpinOutTransition" Alignment="Center" TypographyId="wheelText_ScreenTransition">
+        <Translation Language="GB">Spin Out</Translation>
+      </Text>
+    </TextGroup>
+    <TextGroup Id="TopbarContainer">
+      <Text Id="__SingleUse_BBZA" Alignment="Left" TypographyId="topbarText">
+        <Translation Language="GB">MCU:</Translation>
+      </Text>
+      <Text Id="__SingleUse_01T6" Alignment="Left" TypographyId="topbarText">
+        <Translation Language="GB">100</Translation>
+      </Text>
+      <Text Id="__SingleUse_MM9I" Alignment="Left" TypographyId="topbarText">
+        <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_42EO" Alignment="Right" TypographyId="topbarText">
+        <Translation Language="GB">FPS:</Translation>
+      </Text>
+      <Text Id="__SingleUse_B1JC" Alignment="Left" TypographyId="topbarText">
+        <Translation Language="GB">60</Translation>
+      </Text>
+      <Text Id="__SingleUse_CWYQ" Alignment="Right" TypographyId="topbarText">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+    </TextGroup>
+    <TextGroup Id="Unsorted" />
+  </Texts>
+  <Typographies>
+    <Typography Id="ShareTech_55" Font="ShareTechMono-Regular.ttf" Size="55" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
+    <Typography Id="ShareTech_26" Font="ShareTechMono-Regular.ttf" Size="26" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
+    <Typography Id="ShareTech_20" Font="ShareTechMono-Regular.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9,a-z" />
+    <Typography Id="ShareTech_65" Font="ShareTechMono-Regular.ttf" Size="65" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
+    <Typography Id="ShareTech_120" Font="ShareTechMono-Regular.ttf" Size="120" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
+    <Typography Id="SairaSemiBold_22" Font="SairaCondensed-SemiBold.ttf" Size="22" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
+    <Typography Id="SairaSemiBold_16" Font="SairaCondensed-SemiBold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
+    <Typography Id="SairaMedium_65" Font="SairaCondensed-Medium.ttf" Size="65" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="A-Z" />
+    <Typography Id="topbarText" Font="Saira-Medium.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
+    <Typography Id="MainSelectedSubDemo" Font="Saira_SemiCondensed-SemiBold.ttf" Size="32" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="-" WildcardCharacterRanges="A-Z" />
+    <Typography Id="ShareTech_48" Font="ShareTechMono-Regular.ttf" Size="48" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
+    <Typography Id="ShareTech_90" Font="ShareTechMono-Regular.ttf" Size="90" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
+    <Typography Id="SairaSemiBold_26" Font="SairaCondensed-SemiBold.ttf" Size="26" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9,A-Z" />
+    <Typography Id="SairaMedium_32" Font="SairaCondensed-Medium.ttf" Size="32" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9,A-Z" />
+    <Typography Id="SairaSemiBold_38" Font="SairaCondensed-SemiBold.ttf" Size="38" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="A-Z" />
+    <Typography Id="wheelText_ScreenTransition" Font="Saira-Medium.ttf" Size="11" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="largeTransitionText_ScreenTransition" Font="Saira-SemiBold.ttf" Size="30" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="topbarText_ScreenTransition" Font="Saira-Medium.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
+    <Typography Id="animationSpeed_ScreenTransition" Font="Saira-Medium.ttf" Size="11" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="ShareTech_36" Font="ShareTechMono-Regular.ttf" Size="36" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0-9" />
+  </Typographies>
+</TextDatabase>
