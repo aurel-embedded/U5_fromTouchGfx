@@ -51,7 +51,7 @@ osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 128 * 4
+  .stack_size = 512 * 4
 };
 /* Definitions for GUI_Task */
 osThreadId_t GUI_TaskHandle;
@@ -143,7 +143,8 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(100);
+	  HAL_GPIO_TogglePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin);
+	  osDelay(100);
   }
   /* USER CODE END defaultTask */
 }

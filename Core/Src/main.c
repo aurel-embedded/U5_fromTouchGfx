@@ -761,7 +761,25 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_Delay(uint32_t Delay)
+{
+	uint32_t tickstart = HAL_GetTick();
+	uint32_t wait = Delay;
 
+	/* Add a freq to guarantee minimum wait */
+	if (wait < HAL_MAX_DELAY)
+	{
+		wait += (uint32_t)(uwTickFreq);
+	}
+
+	while ((HAL_GetTick() - tickstart) < wait)
+	{
+		if(osKernelGetState() == osKernelRunning) {
+		     osDelay(1);
+		}
+	}
+
+}
 /* USER CODE END 4 */
 
 /**
@@ -793,9 +811,11 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
+//  __disable_irq();
   while (1)
   {
+	  HAL_GPIO_TogglePin(USER_LD2_RED_GPIO_Port, USER_LD2_RED_Pin);
+	  HAL_Delay(200);
   }
   /* USER CODE END Error_Handler_Debug */
 }
