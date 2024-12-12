@@ -64,6 +64,8 @@ DMA_HandleTypeDef handle_GPDMA1_Channel0;
 
 LTDC_HandleTypeDef hltdc;
 
+RNG_HandleTypeDef hrng;
+
 PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
 /* USER CODE BEGIN PV */
@@ -87,6 +89,7 @@ static void MX_HSPI1_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_JPEG_Init(void);
 static void MX_USB_OTG_HS_PCD_Init(void);
+static void MX_RNG_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -140,6 +143,7 @@ int main(void)
   MX_I2C2_Init();
   MX_JPEG_Init();
   MX_USB_OTG_HS_PCD_Init();
+  MX_RNG_Init();
   MX_TouchGFX_Init();
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
@@ -187,8 +191,9 @@ void SystemClock_Config(void)
 
   /** Initializes the CPU, AHB and APB buses clocks
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48|RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMBOOST = RCC_PLLMBOOST_DIV1;
@@ -653,6 +658,33 @@ static void MX_LTDC_Init(void)
 }
 
 /**
+  * @brief RNG Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_RNG_Init(void)
+{
+
+  /* USER CODE BEGIN RNG_Init 0 */
+
+  /* USER CODE END RNG_Init 0 */
+
+  /* USER CODE BEGIN RNG_Init 1 */
+
+  /* USER CODE END RNG_Init 1 */
+  hrng.Instance = RNG;
+  hrng.Init.ClockErrorDetection = RNG_CED_ENABLE;
+  if (HAL_RNG_Init(&hrng) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN RNG_Init 2 */
+
+  /* USER CODE END RNG_Init 2 */
+
+}
+
+/**
   * @brief USB_OTG_HS Initialization Function
   * @param None
   * @retval None
@@ -791,6 +823,30 @@ void HAL_Delay(uint32_t Delay)
 		}
 	}
 
+}
+
+
+int _getentropy(void *buffer, size_t length)
+{
+    if (buffer == NULL || length == 0) {
+        return -1; // Erreur d'arguments
+    }
+
+    // Vérifiez si le RNG est disponible
+    if (HAL_RNG_Init(&hrng) != HAL_OK) {
+        return -1; // Échec de l'initialisation
+    }
+
+    uint8_t *buf = (uint8_t *)buffer;
+    for (size_t i = 0; i < length; i++) {
+        uint32_t random_number;
+        if (HAL_RNG_GenerateRandomNumber(&hrng, &random_number) != HAL_OK) {
+            return -1; // Erreur pendant la génération
+        }
+        buf[i] = (uint8_t)(random_number & 0xFF); // Récupérez un octet aléatoire
+    }
+
+    return 0; // Succès
 }
 /* USER CODE END 4 */
 
