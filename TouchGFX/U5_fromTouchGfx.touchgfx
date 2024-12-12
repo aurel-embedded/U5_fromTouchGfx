@@ -12,17 +12,99 @@
             "RelativeFilename": "__generated\\glass_theme_images_backgrounds_800x480_bubbles_toxic.png"
           },
           {
+            "Type": "ButtonWithLabel",
+            "Name": "midi2_btn",
+            "X": 560,
+            "Y": 430,
+            "Width": 240,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
+            "TextId": "__SingleUse_LJUJ",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
+          },
+          {
             "Type": "Button",
             "Name": "button1",
-            "X": 280,
-            "Y": 215,
             "Width": 240,
             "Height": 50,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_round_pressed.png",
             "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_round_inactive.png"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "midi1_btn",
+            "Y": 430,
+            "Width": 240,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
+            "TextId": "__SingleUse_3SGT",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 329,
+            "Y": 200,
+            "Width": 143,
+            "Height": 40,
+            "TextId": "__SingleUse_3OLG",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 36,
+              "Green": 121,
+              "Blue": 181
+            },
+            "AutoSize": true
           }
         ],
-        "Interactions": []
+        "Interactions": [
+          {
+            "InteractionName": "midi1_btn_clicked_action",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "midi1_btn"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "midi1_btn_clicked"
+            }
+          },
+          {
+            "InteractionName": "midi2_btn_clicked_action",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "midi2_btn"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "midi2_btn_clicked"
+            }
+          }
+        ]
       }
     ],
     "CustomContainerDefinitions": [],

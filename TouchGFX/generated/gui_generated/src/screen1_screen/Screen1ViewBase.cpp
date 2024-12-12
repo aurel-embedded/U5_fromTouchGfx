@@ -4,8 +4,10 @@
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include <touchgfx/Color.hpp>
 #include <images/BitmapDatabase.hpp>
+#include <texts/TextKeysAndLanguages.hpp>
 
-Screen1ViewBase::Screen1ViewBase()
+Screen1ViewBase::Screen1ViewBase() :
+    buttonCallback(this, &Screen1ViewBase::buttonCallbackHandler)
 {
     __background.setPosition(0, 0, 800, 480);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
@@ -15,9 +17,31 @@ Screen1ViewBase::Screen1ViewBase()
     image1.setBitmap(touchgfx::Bitmap(BITMAP_GLASS_THEME_IMAGES_BACKGROUNDS_800X480_BUBBLES_TOXIC_ID));
     add(image1);
 
-    button1.setXY(280, 215);
+    midi2_btn.setXY(560, 430);
+    midi2_btn.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_NORMAL_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_PRESSED_ID));
+    midi2_btn.setLabelText(touchgfx::TypedText(T___SINGLEUSE_LJUJ));
+    midi2_btn.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    midi2_btn.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    midi2_btn.setAction(buttonCallback);
+    add(midi2_btn);
+
+    button1.setXY(0, 0);
     button1.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUND_INACTIVE_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUND_PRESSED_ID));
     add(button1);
+
+    midi1_btn.setXY(0, 430);
+    midi1_btn.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_NORMAL_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_PRESSED_ID));
+    midi1_btn.setLabelText(touchgfx::TypedText(T___SINGLEUSE_3SGT));
+    midi1_btn.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    midi1_btn.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    midi1_btn.setAction(buttonCallback);
+    add(midi1_btn);
+
+    textArea1.setXY(329, 200);
+    textArea1.setColor(touchgfx::Color::getColorFromRGB(36, 121, 181));
+    textArea1.setLinespacing(0);
+    textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_3OLG));
+    add(textArea1);
 }
 
 Screen1ViewBase::~Screen1ViewBase()
@@ -28,4 +52,22 @@ Screen1ViewBase::~Screen1ViewBase()
 void Screen1ViewBase::setupScreen()
 {
 
+}
+
+void Screen1ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
+{
+    if (&src == &midi1_btn)
+    {
+        //midi1_btn_clicked_action
+        //When midi1_btn clicked call virtual function
+        //Call midi1_btn_clicked
+        midi1_btn_clicked();
+    }
+    if (&src == &midi2_btn)
+    {
+        //midi2_btn_clicked_action
+        //When midi2_btn clicked call virtual function
+        //Call midi2_btn_clicked
+        midi2_btn_clicked();
+    }
 }

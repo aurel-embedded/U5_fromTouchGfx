@@ -16,3 +16,11 @@ void Screen1Presenter::deactivate()
 {
 
 }
+
+void Screen1Presenter::midiNote(int note, bool state)
+{
+	if(state == true)
+		model->sendMidiOn(note);
+	else
+		model->sendMidiOff(note);
+}

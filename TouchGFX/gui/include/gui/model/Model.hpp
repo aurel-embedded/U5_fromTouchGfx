@@ -14,6 +14,9 @@ public:
     }
 
     void tick();
+
+    void sendMidiOn(int note);
+    void sendMidiOff(int note);
 protected:
     ModelListener* modelListener;
 };
