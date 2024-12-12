@@ -54,10 +54,10 @@ void HAL_PCD_SOFCallback(PCD_HandleTypeDef *hpcd)
 void HAL_PCD_ResetCallback(PCD_HandleTypeDef *hpcd)
 {
   USBD_SpeedTypeDef speed = USBD_SPEED_FULL;
-  if ( hpcd->Init.speed != PCD_SPEED_FULL)
-  {
-    Error_Handler();
-  }
+//  if ( hpcd->Init.speed != PCD_SPEED_FULL)
+//  {
+//    Error_Handler();
+//  }
     /* Set Speed. */
   USBD_LL_SetSpeed((USBD_HandleTypeDef*)hpcd->pData, speed);
   /* Reset Device. */
