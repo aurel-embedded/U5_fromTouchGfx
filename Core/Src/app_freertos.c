@@ -24,7 +24,7 @@
 #include "cmsis_os2.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "usb_device.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,7 +51,7 @@ osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 128 * 4
+  .stack_size = 512 * 4
 };
 /* Definitions for GUI_Task */
 osThreadId_t GUI_TaskHandle;
@@ -73,6 +73,9 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* Hook prototypes */
 void vApplicationIdleHook(void);
+void vApplicationStackOverflowHook(xTaskHandle xTask, char *pcTaskName);
+void configureTimerForRunTimeStats(void);
+unsigned long getRunTimeCounterValue(void);
 
 /* USER CODE BEGIN 2 */
 void vApplicationIdleHook( void )
@@ -88,6 +91,28 @@ void vApplicationIdleHook( void )
    memory allocated by the kernel to any task that has since been deleted. */
 }
 /* USER CODE END 2 */
+
+/* USER CODE BEGIN 4 */
+void vApplicationStackOverflowHook(xTaskHandle xTask, char *pcTaskName)
+{
+   /* Run time stack overflow checking is performed if
+   configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2. This hook function is
+   called if a stack overflow is detected. */
+}
+/* USER CODE END 4 */
+
+/* USER CODE BEGIN 1 */
+/* Functions needed when configGENERATE_RUN_TIME_STATS is on */
+__weak void configureTimerForRunTimeStats(void)
+{
+
+}
+
+__weak unsigned long getRunTimeCounterValue(void)
+{
+return 0;
+}
+/* USER CODE END 1 */
 
 /**
   * @brief  FreeRTOS initialization
@@ -139,10 +164,12 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN defaultTask */
+	MX_USB_DEVICE_Init();
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	  HAL_GPIO_TogglePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin);
+	  osDelay(100);
   }
   /* USER CODE END defaultTask */
 }

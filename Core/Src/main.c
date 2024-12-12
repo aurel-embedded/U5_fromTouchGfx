@@ -24,6 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <usbd_def.h>
 #include "BSP/Components/mx66uw1g45g/mx66uw1g45g.h"
 /* USER CODE END Includes */
 
@@ -63,6 +64,8 @@ DMA_HandleTypeDef handle_GPDMA1_Channel0;
 
 LTDC_HandleTypeDef hltdc;
 
+PCD_HandleTypeDef hpcd_USB_OTG_HS;
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -83,6 +86,7 @@ static void MX_GPU2D_Init(void);
 static void MX_HSPI1_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_JPEG_Init(void);
+static void MX_USB_OTG_HS_PCD_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -135,6 +139,7 @@ int main(void)
   MX_HSPI1_Init();
   MX_I2C2_Init();
   MX_JPEG_Init();
+  MX_USB_OTG_HS_PCD_Init();
   MX_TouchGFX_Init();
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
@@ -214,6 +219,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** MCO configuration
+  */
+  HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_SYSCLK, RCC_MCODIV_1);
 }
 
 /**
@@ -644,6 +653,40 @@ static void MX_LTDC_Init(void)
 }
 
 /**
+  * @brief USB_OTG_HS Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USB_OTG_HS_PCD_Init(void)
+{
+
+  /* USER CODE BEGIN USB_OTG_HS_Init 0 */
+  /* USER CODE END USB_OTG_HS_Init 0 */
+
+  /* USER CODE BEGIN USB_OTG_HS_Init 1 */
+
+  /* USER CODE END USB_OTG_HS_Init 1 */
+  hpcd_USB_OTG_HS.Instance = USB_OTG_HS;
+  hpcd_USB_OTG_HS.Init.dev_endpoints = 9;
+  hpcd_USB_OTG_HS.Init.speed = PCD_SPEED_HIGH;
+  hpcd_USB_OTG_HS.Init.phy_itface = USB_OTG_HS_EMBEDDED_PHY;
+  hpcd_USB_OTG_HS.Init.Sof_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.low_power_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.lpm_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.use_dedicated_ep1 = DISABLE;
+  hpcd_USB_OTG_HS.Init.vbus_sensing_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.dma_enable = DISABLE;
+  if (HAL_PCD_Init(&hpcd_USB_OTG_HS) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USB_OTG_HS_Init 2 */
+
+  /* USER CODE END USB_OTG_HS_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -662,6 +705,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOI_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, LCD_DISP_EN_Pin|LCD_BL_CTRL_Pin, GPIO_PIN_SET);
@@ -705,6 +749,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PA8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF0_MCO;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /*Configure GPIO pins : USER_LD2_RED_Pin USER_LD3_GREEN_Pin */
   GPIO_InitStruct.Pin = USER_LD2_RED_Pin|USER_LD3_GREEN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
@@ -721,7 +773,25 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_Delay(uint32_t Delay)
+{
+	uint32_t tickstart = HAL_GetTick();
+	uint32_t wait = Delay;
 
+	/* Add a freq to guarantee minimum wait */
+	if (wait < HAL_MAX_DELAY)
+	{
+		wait += (uint32_t)(uwTickFreq);
+	}
+
+	while ((HAL_GetTick() - tickstart) < wait)
+	{
+		if(osKernelGetState() == osKernelRunning) {
+		     osDelay(1);
+		}
+	}
+
+}
 /* USER CODE END 4 */
 
 /**
@@ -753,9 +823,11 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
+//  __disable_irq();
   while (1)
   {
+	  HAL_GPIO_TogglePin(USER_LD2_RED_GPIO_Port, USER_LD2_RED_Pin);
+	  HAL_Delay(200);
   }
   /* USER CODE END Error_Handler_Debug */
 }
