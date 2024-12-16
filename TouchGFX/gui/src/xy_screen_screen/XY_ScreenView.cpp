@@ -15,6 +15,7 @@ void XY_ScreenView::setupScreen()
     int x = TouchPicture.getX() + TouchPicture.getWidth()/2 - myTouchXYCursor.getWidth() / 2;
     int y = TouchPicture.getY() + TouchPicture.getHeight()/2 - myTouchXYCursor.getHeight() / 2;
     myTouchXYCursor.setXY(x, y);
+    myTouchXYCursor.setCollider(TouchPicture.getX(), TouchPicture.getY(), TouchPicture.getWidth(), TouchPicture.getHeight());
     myTouchXYCursor.setBackgroundBitmap(BITMAP_CURSORXY2_ID);
     add(myTouchXYCursor);
 }

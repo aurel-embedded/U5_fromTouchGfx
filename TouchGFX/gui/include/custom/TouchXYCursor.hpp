@@ -45,6 +45,8 @@ public:
 	 */
 	void setBackgroundBitmap(const touchgfx::BitmapId id);
 
+	void setCollider(int x, int y, int width, int height);
+
 	int getCenterX() const;
 	int getCenterY() const;
 
@@ -55,9 +57,15 @@ private:
 	mutable int coord_width;   // Width of the distortion
 	mutable int coord_height;  // Height of the distortion
 
+	int collider_xMin;
+	int collider_xMax;
+	int collider_yMin;
+	int collider_yMax;
+
 	static const uint8_t touchXYCursorRadius = 50;
 	static const uint8_t touchXYCursorWidth = 2 * touchXYCursorRadius;
 	static const uint8_t touchXYCursorZoom = 40;
+	static const uint8_t touchXYCursorAlpha = 100;
 	int16_t touchXYCursor[touchXYCursorWidth][touchXYCursorWidth]; //note: move the lens data to flash
 	touchgfx::Image touchXYCursorImage;
 
