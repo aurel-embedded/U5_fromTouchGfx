@@ -10,7 +10,6 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/ButtonWithLabel.hpp>
-#include <touchgfx/widgets/Button.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
@@ -41,11 +40,10 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::Image image1;
+    touchgfx::Image BackGround;
     touchgfx::ButtonWithLabel midi2_btn;
-    touchgfx::Button button1;
     touchgfx::ButtonWithLabel midi1_btn;
-    touchgfx::TextArea textArea1;
+    touchgfx::TextArea Title;
 
 private:
 

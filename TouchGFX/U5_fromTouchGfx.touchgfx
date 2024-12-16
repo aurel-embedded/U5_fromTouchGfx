@@ -6,7 +6,7 @@
         "Components": [
           {
             "Type": "Image",
-            "Name": "image1",
+            "Name": "BackGround",
             "Width": 800,
             "Height": 480,
             "RelativeFilename": "__generated\\glass_theme_images_backgrounds_800x480_bubbles_toxic.png"
@@ -15,7 +15,7 @@
             "Type": "ButtonWithLabel",
             "Name": "midi2_btn",
             "X": 560,
-            "Y": 430,
+            "Y": 50,
             "Width": 240,
             "Height": 50,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
@@ -35,17 +35,9 @@
             "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
           },
           {
-            "Type": "Button",
-            "Name": "button1",
-            "Width": 240,
-            "Height": 50,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_round_pressed.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_round_inactive.png"
-          },
-          {
             "Type": "ButtonWithLabel",
             "Name": "midi1_btn",
-            "Y": 430,
+            "X": 560,
             "Width": 240,
             "Height": 50,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
@@ -66,9 +58,8 @@
           },
           {
             "Type": "TextArea",
-            "Name": "textArea1",
+            "Name": "Title",
             "X": 329,
-            "Y": 200,
             "Width": 143,
             "Height": 40,
             "TextId": "__SingleUse_3OLG",

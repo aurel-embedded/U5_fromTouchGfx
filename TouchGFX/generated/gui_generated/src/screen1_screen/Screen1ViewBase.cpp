@@ -13,11 +13,11 @@ Screen1ViewBase::Screen1ViewBase() :
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    image1.setXY(0, 0);
-    image1.setBitmap(touchgfx::Bitmap(BITMAP_GLASS_THEME_IMAGES_BACKGROUNDS_800X480_BUBBLES_TOXIC_ID));
-    add(image1);
+    BackGround.setXY(0, 0);
+    BackGround.setBitmap(touchgfx::Bitmap(BITMAP_GLASS_THEME_IMAGES_BACKGROUNDS_800X480_BUBBLES_TOXIC_ID));
+    add(BackGround);
 
-    midi2_btn.setXY(560, 430);
+    midi2_btn.setXY(560, 50);
     midi2_btn.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_NORMAL_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_PRESSED_ID));
     midi2_btn.setLabelText(touchgfx::TypedText(T___SINGLEUSE_LJUJ));
     midi2_btn.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -25,11 +25,7 @@ Screen1ViewBase::Screen1ViewBase() :
     midi2_btn.setAction(buttonCallback);
     add(midi2_btn);
 
-    button1.setXY(0, 0);
-    button1.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUND_INACTIVE_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUND_PRESSED_ID));
-    add(button1);
-
-    midi1_btn.setXY(0, 430);
+    midi1_btn.setXY(560, 0);
     midi1_btn.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_NORMAL_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_PRESSED_ID));
     midi1_btn.setLabelText(touchgfx::TypedText(T___SINGLEUSE_3SGT));
     midi1_btn.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -37,11 +33,11 @@ Screen1ViewBase::Screen1ViewBase() :
     midi1_btn.setAction(buttonCallback);
     add(midi1_btn);
 
-    textArea1.setXY(329, 200);
-    textArea1.setColor(touchgfx::Color::getColorFromRGB(36, 121, 181));
-    textArea1.setLinespacing(0);
-    textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_3OLG));
-    add(textArea1);
+    Title.setXY(329, 0);
+    Title.setColor(touchgfx::Color::getColorFromRGB(36, 121, 181));
+    Title.setLinespacing(0);
+    Title.setTypedText(touchgfx::TypedText(T___SINGLEUSE_3OLG));
+    add(Title);
 }
 
 Screen1ViewBase::~Screen1ViewBase()
