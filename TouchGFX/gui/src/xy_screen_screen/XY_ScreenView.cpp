@@ -11,7 +11,10 @@ XY_ScreenView::XY_ScreenView()
 void XY_ScreenView::setupScreen()
 {
     XY_ScreenViewBase::setupScreen();
-    myTouchXYCursor.setXY(200, 200);
+
+    int x = TouchPicture.getX() + TouchPicture.getWidth()/2 - myTouchXYCursor.getWidth() / 2;
+    int y = TouchPicture.getY() + TouchPicture.getHeight()/2 - myTouchXYCursor.getHeight() / 2;
+    myTouchXYCursor.setXY(x, y);
     myTouchXYCursor.setBackgroundBitmap(BITMAP_CURSORXY2_ID);
     add(myTouchXYCursor);
 }
@@ -32,5 +35,6 @@ void XY_ScreenView::handleTickEvent()
     Unicode::snprintf(coordY_lblBuffer, COORDY_LBL_SIZE, "%d", y);
     coordY_lbl.invalidate();
 }
+
 
 

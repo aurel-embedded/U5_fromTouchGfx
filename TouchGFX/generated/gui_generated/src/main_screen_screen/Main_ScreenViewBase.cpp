@@ -39,7 +39,7 @@ Main_ScreenViewBase::Main_ScreenViewBase() :
     Title.setTypedText(touchgfx::TypedText(T___SINGLEUSE_3OLG));
     add(Title);
 
-    XY_btn.setXY(0, 106);
+    XY_btn.setXY(10, 23);
     XY_btn.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_60_TINY_ROUNDED_ACTIVE_ID), touchgfx::Bitmap(BITMAP_DARK_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_60_TINY_ROUNDED_PRESSED_ID));
     XY_btn.setLabelText(touchgfx::TypedText(T___SINGLEUSE_N03U));
     XY_btn.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));

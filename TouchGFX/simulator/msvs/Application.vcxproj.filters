@@ -206,10 +206,10 @@
       <UniqueIdentifier>F7C1159D-1370-E05B-8BD8-2281B603A9DE</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\include">
-      <UniqueIdentifier>F4558D11-2E4F-5F8B-474D-D493FE86427C</UniqueIdentifier>
+      <UniqueIdentifier>324FDE46-F1E2-B792-96EB-F8F2704AAA24</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\include\custom">
-      <UniqueIdentifier>88674F57-1343-0A07-2C61-649620691D79</UniqueIdentifier>
+      <UniqueIdentifier>A36D63DC-5E17-30D1-1E93-76ED341AAB86</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

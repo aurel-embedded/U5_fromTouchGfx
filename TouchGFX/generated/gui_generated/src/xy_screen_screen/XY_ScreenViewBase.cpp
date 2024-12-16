@@ -17,7 +17,7 @@ XY_ScreenViewBase::XY_ScreenViewBase() :
     background.setBitmap(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_BACKGROUNDS_800X480_PUZZLE_ID));
     add(background);
 
-    Back_btn.setXY(0, 15);
+    Back_btn.setXY(10, 23);
     Back_btn.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_60_TINY_ROUNDED_ACTIVE_ID), touchgfx::Bitmap(BITMAP_DARK_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_60_TINY_ROUNDED_PRESSED_ID));
     Back_btn.setLabelText(touchgfx::TypedText(T___SINGLEUSE_AGN0));
     Back_btn.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));

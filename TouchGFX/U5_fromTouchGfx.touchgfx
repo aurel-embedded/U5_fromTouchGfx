@@ -74,7 +74,8 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "XY_btn",
-            "Y": 106,
+            "X": 10,
+            "Y": 23,
             "Width": 144,
             "Height": 60,
             "Pressed": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_pressed.png",
@@ -145,7 +146,8 @@
           {
             "Type": "ButtonWithLabel",
             "Name": "Back_btn",
-            "Y": 15,
+            "X": 10,
+            "Y": 23,
             "Width": 144,
             "Height": 60,
             "Pressed": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_pressed.png",

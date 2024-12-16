@@ -14,10 +14,9 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
     virtual void handleTickEvent();
+
 protected:
     Draggable<TouchXYCursor> myTouchXYCursor;
-    int16_t counter = 0;
-
 };
 
 #endif // XY_SCREENVIEW_HPP
