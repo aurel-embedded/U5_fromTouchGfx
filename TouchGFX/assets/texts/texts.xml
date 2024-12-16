@@ -5,6 +5,17 @@
   </Languages>
   <Texts>
     <TextGroup Id="Group1" />
+    <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_3OLG" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">AMI III</Translation>
+      </Text>
+      <Text Id="__SingleUse_LJUJ" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Midi2</Translation>
+      </Text>
+      <Text Id="__SingleUse_3SGT" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Midi1</Translation>
+      </Text>
+    </TextGroup>
   </Texts>
   <Typographies>
     <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />

@@ -753,7 +753,9 @@ uint8_t USBD_MIDI_GetDeviceState(USBD_HandleTypeDef  *pdev)
   */
 uint8_t USBD_MIDI_GetState(USBD_HandleTypeDef  *pdev)
 {
-  return ((USBD_MIDI_HandleTypeDef *)pdev->pClassData)->state;
+	if((USBD_MIDI_HandleTypeDef *)pdev->pClassData == NULL)
+		return MIDI_NOT_REGISTERED;
+	return ((USBD_MIDI_HandleTypeDef *)pdev->pClassData)->state;
 }
 
 /**

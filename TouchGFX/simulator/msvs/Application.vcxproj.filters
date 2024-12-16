@@ -184,6 +184,12 @@
     <Filter Include="Header Files\generated\simulator\include\simulator\video">
       <UniqueIdentifier>E86D76E7-5B01-6A61-9FB4-160679D02244</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\generated\gui_generated\containers">
+      <UniqueIdentifier>0C17C0A6-A8EC-232B-D7E9-8EF9AA23E043</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\containers">
+      <UniqueIdentifier>B6EF2896-DBC4-8749-8D39-E2B55C033F48</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\driver\touch\SDL2TouchController.cpp">
@@ -675,6 +681,9 @@
     </ClInclude>
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\SoftwareMJPEGDecoder.hpp">
       <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\common\CustomButton.hpp">
+      <Filter>Header Files\gui\common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

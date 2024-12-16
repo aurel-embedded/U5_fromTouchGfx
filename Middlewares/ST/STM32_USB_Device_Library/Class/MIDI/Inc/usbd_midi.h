@@ -143,6 +143,7 @@ typedef enum
 {
   MIDI_IDLE = 0,
   MIDI_BUSY,
+  MIDI_NOT_REGISTERED,
 }
 MIDI_StateTypeDef; 
 
