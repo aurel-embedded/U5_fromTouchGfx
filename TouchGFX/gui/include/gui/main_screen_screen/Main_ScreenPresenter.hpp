@@ -25,6 +25,8 @@ public:
      */
     virtual void deactivate();
 
+    virtual void midiNote(int note, bool state);
+
     virtual ~Main_ScreenPresenter() {}
 
 private:
