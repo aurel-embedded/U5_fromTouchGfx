@@ -28,13 +28,34 @@ void XY_ScreenView::tearDownScreen()
 
 void XY_ScreenView::handleTickEvent()
 {
-    int x = myTouchXYCursor.getX();
-    Unicode::snprintf(coordX_lblBuffer, COORDX_LBL_SIZE, "%d", x);
-    coordX_lbl.invalidate();
+	static int counter = 0;
+	static int x_old = 0;
+	static int y_old = 0;
+	counter++;
+	int x = myTouchXYCursor.getX();
+	int y = myTouchXYCursor.getY();
 
-    int y = myTouchXYCursor.getY();
-    Unicode::snprintf(coordY_lblBuffer, COORDY_LBL_SIZE, "%d", y);
-    coordY_lbl.invalidate();
+	if((x_old == x) && (y_old == y)){
+		return;
+	}
+
+	x_old = x;
+	y_old = y;
+
+	// Display XY coord
+	if(counter % 2 == 0){
+		Unicode::snprintf(coordX_lblBuffer, COORDX_LBL_SIZE, "%d", x);
+		coordX_lbl.invalidate();
+
+		Unicode::snprintf(coordY_lblBuffer, COORDY_LBL_SIZE, "%d", y);
+		coordY_lbl.invalidate();
+
+	}
+
+	// Notify Presenter
+	if(counter % 2 == 0){
+		presenter->handleXYEvent(x, y);
+	}
 }
 
 

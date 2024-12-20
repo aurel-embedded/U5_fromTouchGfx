@@ -27,10 +27,18 @@ public:
 
     virtual ~XY_ScreenPresenter() {}
 
+    void handleXYEvent(int XValue, int YValue);
+
+
 private:
     XY_ScreenPresenter();
 
     XY_ScreenView& view;
+
+	int touchPad_xMin, touchPad_xMax;
+	int touchPad_yMin, touchPad_yMax;
+    int convertXYToMidi(int value, int minValue, int maxValue);
+
 };
 
 #endif // XY_SCREENPRESENTER_HPP

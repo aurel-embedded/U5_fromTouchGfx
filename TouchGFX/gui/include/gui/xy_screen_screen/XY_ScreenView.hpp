@@ -15,6 +15,10 @@ public:
     virtual void tearDownScreen();
     virtual void handleTickEvent();
 
+    int getTouchPictureX() const 		{ return TouchPicture.getX();}
+    int getTouchPictureY() const	    { return TouchPicture.getY();}
+    int getTouchPictureWidth() const 	{ return TouchPicture.getWidth();}
+    int getTouchPictureHeight() const   { return TouchPicture.getHeight();}
 protected:
     Draggable<TouchXYCursor> myTouchXYCursor;
 };
