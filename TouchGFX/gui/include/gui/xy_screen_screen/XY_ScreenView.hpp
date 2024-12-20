@@ -1,6 +1,7 @@
 #ifndef XY_SCREENVIEW_HPP
 #define XY_SCREENVIEW_HPP
 
+#include <custom/TouchXYCursor2.hpp>
 #include <custom/TouchXYCursor.hpp>
 #include <gui_generated/xy_screen_screen/XY_ScreenViewBase.hpp>
 #include <gui/xy_screen_screen/XY_ScreenPresenter.hpp>
@@ -20,7 +21,7 @@ public:
     int getTouchPictureWidth() const 	{ return TouchPicture.getWidth();}
     int getTouchPictureHeight() const   { return TouchPicture.getHeight();}
 protected:
-    Draggable<TouchXYCursor> myTouchXYCursor;
+    Draggable<TouchXYCursor2> myTouchXYCursor;
 };
 
 #endif // XY_SCREENVIEW_HPP

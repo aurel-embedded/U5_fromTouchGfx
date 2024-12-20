@@ -61,16 +61,16 @@ void TouchXYCursor::draw(const touchgfx::Rect& invalidatedArea) const
     coord_height = abs.height;
 
     if(coord_x < collider_xMin){
-    	return;
+    	coord_x = collider_xMin;
     }
     if(coord_x + coord_width > collider_xMax){
-    	return;
+    	coord_x = collider_xMax - coord_width;
     }
     if(coord_y < collider_yMin){
-    	return;
+    	coord_y = collider_yMin;
     }
     if(coord_y + coord_height > collider_yMax){
-    	return;
+    	coord_y = collider_yMax - coord_height;
     }
 
     // since we both read and write the frame buffer, we split the loops in to four sections/quadrants
@@ -83,12 +83,12 @@ void TouchXYCursor::draw(const touchgfx::Rect& invalidatedArea) const
     {
         for (int x = invalidatedArea.x; x < invalidatedArea.right() && x <= middleX; x++)
         {
-            apply(fb, abs.x, abs.y, x, y);
+            apply(fb, coord_x, coord_y, x, y);
         }
 
         for (int x = invalidatedArea.right() - 1; x > middleX && x >= invalidatedArea.x; x--)
         {
-            apply(fb, abs.x, abs.y, x, y);
+            apply(fb, coord_x, coord_y, x, y);
         }
     }
 
@@ -96,19 +96,20 @@ void TouchXYCursor::draw(const touchgfx::Rect& invalidatedArea) const
     {
         for (int x = invalidatedArea.x; x < invalidatedArea.right() && x <= middleX; x++)
         {
-            apply(fb, abs.x, abs.y, x, y);
+            apply(fb, coord_x, coord_y, x, y);
         }
 
         for (int x = invalidatedArea.right() - 1; x > middleX && x >= invalidatedArea.x; x--)
         {
-            apply(fb, abs.x, abs.y, x, y);
+            apply(fb, coord_x, coord_y, x, y);
         }
     }
 
     touchgfx::HAL::getInstance()->unlockFrameBuffer();
 
     touchgfx::Rect dirtyBitmapArea = touchgfx::Bitmap(touchXYCursorImage.getBitmap()).getRect() & invalidatedArea;
-    touchgfx::HAL::lcd().drawPartialBitmap(touchgfx::Bitmap(touchXYCursorImage.getBitmap()), abs.x, abs.y, dirtyBitmapArea, touchXYCursorAlpha);
+//    touchgfx::Rect dirtyBitmapArea = touchgfx::Bitmap(touchXYCursorImage.getBitmap()).getRect();
+    touchgfx::HAL::lcd().drawPartialBitmap(touchgfx::Bitmap(touchXYCursorImage.getBitmap()), coord_x, coord_y, dirtyBitmapArea, touchXYCursorAlpha);
 }
 
 void TouchXYCursor::setBackgroundBitmap(const touchgfx::BitmapId id)
@@ -193,7 +194,6 @@ void TouchXYCursor::apply(uint16_t* fb, int absx, int absy, int x, int y) const
         }
     }
 }
-
 
 // Getter for the center X-coordinate
 int TouchXYCursor::getCenterX() const
