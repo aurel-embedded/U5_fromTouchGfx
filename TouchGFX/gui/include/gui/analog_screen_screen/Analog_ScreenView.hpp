@@ -11,6 +11,7 @@ public:
     virtual ~Analog_ScreenView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+    virtual void handleTickEvent();
 protected:
 };
 

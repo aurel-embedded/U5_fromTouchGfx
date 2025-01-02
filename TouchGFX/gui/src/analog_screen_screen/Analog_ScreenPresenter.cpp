@@ -16,3 +16,8 @@ void Analog_ScreenPresenter::deactivate()
 {
 
 }
+
+drvAdc_values_t Analog_ScreenPresenter::getAdcValues(void)
+{
+	return model->getAdcValues();
+}

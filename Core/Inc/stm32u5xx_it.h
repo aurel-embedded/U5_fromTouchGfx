@@ -61,6 +61,7 @@ void GPDMA1_Channel4_IRQHandler(void);
 void ADC1_2_IRQHandler(void);
 void TIM6_IRQHandler(void);
 void OTG_HS_IRQHandler(void);
+void ADC4_IRQHandler(void);
 void DMA2D_IRQHandler(void);
 void HSPI1_IRQHandler(void);
 void GPU2D_IRQHandler(void);

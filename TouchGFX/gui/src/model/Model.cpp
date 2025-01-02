@@ -1,6 +1,7 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
 #include <MDI_midi/mdi_thread.hpp>
+#include <UserInterfaces/drvAdc/drvAdc.h>
 
 #ifndef SIMULATOR
 #include <MDI_midi/CMidi.h>
@@ -46,6 +47,17 @@ void Model::sendControlChange(CMidiChannel::Channel_e channel, CMidiCfg::cc cc, 
 {
 #ifndef SIMULATOR
 	mdi_thread::getInstance().putMessage(channel, cc, data);
+#endif
+
+}
+
+drvAdc_values_t Model::getAdcValues(void)
+{
+#ifndef SIMULATOR
+	drvAdc_values_t adcValuesDrv;
+	DRVADC_getAdcValues(&adcValuesDrv);
+	return adcValuesDrv;
+
 #endif
 
 }

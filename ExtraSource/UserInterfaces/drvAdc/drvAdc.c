@@ -13,6 +13,8 @@
 #include <UserInterfaces/drvAdc/drvAdc_common.h>
 
 extern ADC_HandleTypeDef hadc1;
+extern ADC_HandleTypeDef hadc2;
+extern ADC_HandleTypeDef hadc4;
 extern TIM_HandleTypeDef htim15;
 
 //-----------------------------------------------------------------------------
@@ -92,17 +94,21 @@ void drvAdc_ConvCpltCallback(ADC_TypeDef *Instance)
 		maxChannelQty = DRVADC_CHANNEL_QTY_ADC2;
 		pDmaBuf = drvAdc_dmaBuf_ADC2;
 		pCallBackBuf = drvAdc_callBackBuf_ADC2[*pActiveInd];
+	}
+	else if (Instance == ADC4){
+		pActiveInd = &drvAdc_callBackBuf_activeInd_ADC4;
+		maxChannelQty = DRVADC_CHANNEL_QTY_ADC4;
+		pDmaBuf = drvAdc_dmaBuf_ADC4;
+		pCallBackBuf = drvAdc_callBackBuf_ADC4[*pActiveInd];
 	}else{
 		return;
 	}
-	// TODO: for futur use
-//	if (Instance == ADC4){
-//		pActiveInd = &drvAdc_callBackBuf_activeInd_ADC4;
-//	}
+
 	for(uint8_t i = 0; i < maxChannelQty; i++){
 		pCallBackBuf[i] = map(pDmaBuf[i], 0, 4095, 0, 100);
 	}
 
+	// Flip Flop the active buffer
 	*pActiveInd = !*pActiveInd;
 }
 
@@ -121,7 +127,17 @@ static void drvAdc_Task_fn(void *argument)
 	// Warning: As we use os object in the ADC callback, we must
 	//				start DMA & Timer here, once the os objects
 	//				are created
-	if(HAL_ADC_Start_DMA(&hadc1, (uint32_t *)drvAdc_dmaBuf_ADC1, 1) != HAL_OK){
+	if(HAL_ADC_Start_DMA(&hadc1, (uint32_t *)drvAdc_dmaBuf_ADC1, 2) != HAL_OK){
+		// Handle error (e.g., log or notify)
+		return;
+	}
+
+	if(HAL_ADC_Start_DMA(&hadc2, (uint32_t *)drvAdc_dmaBuf_ADC2, 2) != HAL_OK){
+		// Handle error (e.g., log or notify)
+		return;
+	}
+
+	if(HAL_ADC_Start_DMA(&hadc4, (uint32_t *)drvAdc_dmaBuf_ADC4, 2) != HAL_OK){
 		// Handle error (e.g., log or notify)
 		return;
 	}
@@ -138,19 +154,13 @@ static void drvAdc_Task_fn(void *argument)
 
 		// Get Memory shared Mutex
 		if(osMutexAcquire(drvAdc_memoryShared.mtx_id, osWaitForever) == osOK){
-			// Copy to memory Shared
-			drvAdc_memoryShared.values.potar1 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0];
-			drvAdc_memoryShared.values.potar2 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0]+10;
-			drvAdc_memoryShared.values.potar3 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0]+20;
-			drvAdc_memoryShared.values.potar4 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0]+15;
-			drvAdc_memoryShared.values.potar5 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0]+5;
-			drvAdc_memoryShared.values.potar6 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0]+25;
-			// TODO: Reactivate when all the Potar are working
-//			drvAdc_memoryShared.values.potar2 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][1];
-//			drvAdc_memoryShared.values.potar3 = drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][0];
-//			drvAdc_memoryShared.values.potar4 = drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][1];
-//			drvAdc_memoryShared.values.potar5 = drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][0];
-//			drvAdc_memoryShared.values.potar6 = drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][1];
+			// Copy to memory Shared (using the unused buffer)
+			drvAdc_memoryShared.values.potar1 = drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][0];
+			drvAdc_memoryShared.values.potar2 = drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][1];
+			drvAdc_memoryShared.values.potar3 = drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][1];
+			drvAdc_memoryShared.values.potar4 = drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][0];
+			drvAdc_memoryShared.values.potar5 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0];
+			drvAdc_memoryShared.values.potar6 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][1];
 
 			// Release Mutex
 			osMutexRelease(drvAdc_memoryShared.mtx_id);

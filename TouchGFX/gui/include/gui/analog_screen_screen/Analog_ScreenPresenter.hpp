@@ -3,6 +3,7 @@
 
 #include <gui/model/ModelListener.hpp>
 #include <mvp/Presenter.hpp>
+#include <UserInterfaces/drvAdc/drvAdc_values.h>
 
 using namespace touchgfx;
 
@@ -26,6 +27,8 @@ public:
     virtual void deactivate();
 
     virtual ~Analog_ScreenPresenter() {}
+
+    drvAdc_values_t getAdcValues(void);
 
 private:
     Analog_ScreenPresenter();
