@@ -44,6 +44,7 @@ protected:
     touchgfx::ButtonWithLabel midi2_btn;
     touchgfx::ButtonWithLabel midi1_btn;
     touchgfx::TextArea Title;
+    touchgfx::ButtonWithLabel Analog_btn;
     touchgfx::ButtonWithLabel XY_btn;
 
 private:

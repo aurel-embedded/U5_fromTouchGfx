@@ -18,6 +18,8 @@
 #include <gui/main_screen_screen/Main_ScreenPresenter.hpp>
 #include <gui/xy_screen_screen/XY_ScreenView.hpp>
 #include <gui/xy_screen_screen/XY_ScreenPresenter.hpp>
+#include <gui/analog_screen_screen/Analog_ScreenView.hpp>
+#include <gui/analog_screen_screen/Analog_ScreenPresenter.hpp>
 
 
 /**
@@ -42,7 +44,8 @@ public:
      */
     typedef touchgfx::meta::TypeList< Main_ScreenView,
             touchgfx::meta::TypeList< XY_ScreenView,
-            touchgfx::meta::Nil >
+            touchgfx::meta::TypeList< Analog_ScreenView,
+            touchgfx::meta::Nil > >
             > GeneratedViewTypes;
 
     /**
@@ -56,7 +59,8 @@ public:
      */
     typedef touchgfx::meta::TypeList< Main_ScreenPresenter,
             touchgfx::meta::TypeList< XY_ScreenPresenter,
-            touchgfx::meta::Nil >
+            touchgfx::meta::TypeList< Analog_ScreenPresenter,
+            touchgfx::meta::Nil > >
             > GeneratedPresenterTypes;
 
     /**

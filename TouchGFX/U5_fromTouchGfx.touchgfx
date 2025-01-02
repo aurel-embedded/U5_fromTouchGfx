@@ -9,7 +9,7 @@
             "Name": "BackGround",
             "Width": 800,
             "Height": 480,
-            "RelativeFilename": "__generated\\glass_theme_images_backgrounds_800x480_bubbles_toxic.png"
+            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_800x480_puzzle.png"
           },
           {
             "Type": "ButtonWithLabel",
@@ -61,7 +61,7 @@
             "Name": "Title",
             "X": 329,
             "Width": 143,
-            "Height": 47,
+            "Height": 48,
             "TextId": "__SingleUse_3OLG",
             "TextRotation": "0",
             "Color": {
@@ -70,6 +70,29 @@
               "Blue": 181
             },
             "AutoSize": true
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "Analog_btn",
+            "X": 10,
+            "Y": 100,
+            "Width": 144,
+            "Height": 60,
+            "Pressed": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_pressed.png",
+            "Released": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_active.png",
+            "TextId": "__SingleUse_ULET",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "dark_theme\\presets\\button\\regular\\height_60\\tiny_rounded_active.json"
           },
           {
             "Type": "ButtonWithLabel",
@@ -129,6 +152,19 @@
               "ScreenTransitionType": "ScreenTransitionSlide",
               "ScreenTransitionDirection": "East",
               "ActionComponent": "XY_Screen"
+            }
+          },
+          {
+            "InteractionName": "Analog_action",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "Analog_btn"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "Analog_Screen"
             }
           }
         ]
@@ -218,6 +254,194 @@
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionSlide",
               "ScreenTransitionDirection": "West",
+              "ActionComponent": "Main_Screen"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Analog_Screen",
+        "CanvasBufferSize": 12000,
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "background",
+            "Width": 800,
+            "Height": 480,
+            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_800x480_puzzle.png"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "Back_btn",
+            "X": 10,
+            "Y": 23,
+            "Width": 144,
+            "Height": 60,
+            "Pressed": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_pressed.png",
+            "Released": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_active.png",
+            "TextId": "__SingleUse_ZXGM",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "dark_theme\\presets\\button\\regular\\height_60\\tiny_rounded_active.json"
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel2_progress",
+            "X": 154,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 50.0,
+            "LineWidth": 10.0,
+            "EndAngle": 360.0,
+            "CapPrecision": "Butt",
+            "Preset": "alternate_theme\\presets\\circleprogress\\action_small.json",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 60
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel6_progress",
+            "X": 661,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 50.0,
+            "LineWidth": 10.0,
+            "EndAngle": 360.0,
+            "CapPrecision": "Butt",
+            "Preset": "alternate_theme\\presets\\circleprogress\\action_small.json",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 60
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel5_progress",
+            "X": 533,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 50.0,
+            "LineWidth": 10.0,
+            "EndAngle": 360.0,
+            "CapPrecision": "Butt",
+            "Preset": "alternate_theme\\presets\\circleprogress\\action_small.json",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 60
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel4_progress",
+            "X": 409,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 50.0,
+            "LineWidth": 10.0,
+            "EndAngle": 360.0,
+            "CapPrecision": "Butt",
+            "Preset": "alternate_theme\\presets\\circleprogress\\action_small.json",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 60
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel3_progress",
+            "X": 279,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 50.0,
+            "LineWidth": 10.0,
+            "EndAngle": 360.0,
+            "CapPrecision": "Butt",
+            "Preset": "alternate_theme\\presets\\circleprogress\\action_small.json",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 60
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel1_progress",
+            "X": 29,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 50.0,
+            "LineWidth": 10.0,
+            "EndAngle": 360.0,
+            "CapPrecision": "Butt",
+            "Preset": "alternate_theme\\presets\\circleprogress\\action_small.json",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 60
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "backToMainScreen_action",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "Back_btn"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Main_Screen"
             }
           }

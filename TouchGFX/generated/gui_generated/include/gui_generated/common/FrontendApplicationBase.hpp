@@ -28,6 +28,9 @@ public:
     // XY_Screen
     void gotoXY_ScreenScreenSlideTransitionEast();
 
+    // Analog_Screen
+    void gotoAnalog_ScreenScreenSlideTransitionEast();
+
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
@@ -40,6 +43,9 @@ protected:
 
     // XY_Screen
     void gotoXY_ScreenScreenSlideTransitionEastImpl();
+
+    // Analog_Screen
+    void gotoAnalog_ScreenScreenSlideTransitionEastImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP
