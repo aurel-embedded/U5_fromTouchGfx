@@ -6,6 +6,24 @@
   <Texts>
     <TextGroup Id="Group1" />
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_MTID" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="__SingleUse_3EMT" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="__SingleUse_IWX2" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">Y:&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_4N89" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">X:&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_AGN0" Alignment="Center" TypographyId="Large">
+        <Translation Language="GB">Back</Translation>
+      </Text>
+      <Text Id="__SingleUse_N03U" Alignment="Center" TypographyId="Large">
+        <Translation Language="GB">X/Y</Translation>
+      </Text>
       <Text Id="__SingleUse_3OLG" Alignment="Left" TypographyId="Large">
         <Translation Language="GB">AMI III</Translation>
       </Text>
@@ -18,8 +36,8 @@
     </TextGroup>
   </Texts>
   <Typographies>
-    <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0x20-0x7E" />
+    <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0x20-0x7E" />
+    <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="0x20-0x7E" />
   </Typographies>
 </TextDatabase>

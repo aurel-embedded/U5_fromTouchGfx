@@ -33,8 +33,8 @@ HAL_StatusTypeDef CMidi::sendNoteOn(const CMidiCfg *pMidiCfg, CMidiNote::Note_e 
 
 HAL_StatusTypeDef CMidi::sendNoteOn(CMidiChannel::Channel_e channel, CMidiNote::Note_e note, uint8_t vel)
 {
-	if(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
-		return HAL_ERROR;
+	while(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
+		osDelay(1);
 	}
 
 	uint8_t msg[4];
@@ -56,8 +56,8 @@ HAL_StatusTypeDef CMidi::sendNoteOff(const CMidiCfg *pMidiCfg, CMidiNote::Note_e
 
 HAL_StatusTypeDef CMidi::sendNoteOff(CMidiChannel::Channel_e channel, CMidiNote::Note_e note, uint8_t vel)
 {
-	if(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
-		return HAL_ERROR;
+	while(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
+		osDelay(1);
 	}
 
 	uint8_t msg[4];
@@ -79,8 +79,8 @@ HAL_StatusTypeDef CMidi::sendControlChange(const CMidiCfg *pMidiCfg, uint8_t dat
 
 HAL_StatusTypeDef CMidi::sendControlChange(CMidiChannel::Channel_e channel, CMidiCfg::cc cc, uint8_t data)
 {
-	if(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
-		return HAL_ERROR;
+	while(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
+		osDelay(1);
 	}
 
 	uint8_t msg[4];
@@ -125,8 +125,8 @@ HAL_StatusTypeDef CMidi::sendAllNotesOff(void)
 
 HAL_StatusTypeDef CMidi::sendTempo(void)
 {
-	if(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
-		return HAL_ERROR;
+	while(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
+		osDelay(1);
 	}
 
 	uint8_t msg[4];
