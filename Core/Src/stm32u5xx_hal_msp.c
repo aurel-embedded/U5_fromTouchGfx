@@ -24,6 +24,24 @@
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
+extern DMA_NodeTypeDef Node_GPDMA1_Channel2;
+
+extern DMA_QListTypeDef List_GPDMA1_Channel2;
+
+extern DMA_HandleTypeDef handle_GPDMA1_Channel2;
+
+extern DMA_NodeTypeDef Node_GPDMA1_Channel3;
+
+extern DMA_QListTypeDef List_GPDMA1_Channel3;
+
+extern DMA_HandleTypeDef handle_GPDMA1_Channel3;
+
+extern DMA_NodeTypeDef Node_GPDMA1_Channel4;
+
+extern DMA_QListTypeDef List_GPDMA1_Channel4;
+
+extern DMA_HandleTypeDef handle_GPDMA1_Channel4;
+
 extern DMA_HandleTypeDef handle_GPDMA1_Channel1;
 
 extern DMA_HandleTypeDef handle_GPDMA1_Channel0;
@@ -73,6 +91,8 @@ void HAL_MspInit(void)
 
   __HAL_RCC_PWR_CLK_ENABLE();
   HAL_PWREx_EnableVddUSB();
+  HAL_PWREx_EnableVddIO2();
+  HAL_PWREx_EnableVddA();
 
   /* System interrupt init*/
   /* PendSV_IRQn interrupt configuration */
@@ -81,6 +101,403 @@ void HAL_MspInit(void)
   /* USER CODE BEGIN MspInit 1 */
 
   /* USER CODE END MspInit 1 */
+}
+
+static uint32_t HAL_RCC_ADC12_CLK_ENABLED=0;
+
+/**
+* @brief ADC MSP Initialization
+* This function configures the hardware resources used in this example
+* @param hadc: ADC handle pointer
+* @retval None
+*/
+void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  DMA_NodeConfTypeDef NodeConfig;
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+  if(hadc->Instance==ADC1)
+  {
+  /* USER CODE BEGIN ADC1_MspInit 0 */
+
+  /* USER CODE END ADC1_MspInit 0 */
+
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADCDAC;
+    PeriphClkInit.AdcDacClockSelection = RCC_ADCDACCLKSOURCE_HSI;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* Peripheral clock enable */
+    HAL_RCC_ADC12_CLK_ENABLED++;
+    if(HAL_RCC_ADC12_CLK_ENABLED==1){
+      __HAL_RCC_ADC12_CLK_ENABLE();
+    }
+
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    /**ADC1 GPIO Configuration
+    PC1     ------> ADC1_IN2
+    PA7     ------> ADC1_IN12
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_1;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = GPIO_PIN_7;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+    /* ADC1 DMA Init */
+    /* GPDMA1_REQUEST_ADC1 Init */
+    NodeConfig.NodeType = DMA_GPDMA_LINEAR_NODE;
+    NodeConfig.Init.Request = GPDMA1_REQUEST_ADC1;
+    NodeConfig.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
+    NodeConfig.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    NodeConfig.Init.SrcInc = DMA_SINC_FIXED;
+    NodeConfig.Init.DestInc = DMA_DINC_FIXED;
+    NodeConfig.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_HALFWORD;
+    NodeConfig.Init.DestDataWidth = DMA_DEST_DATAWIDTH_HALFWORD;
+    NodeConfig.Init.SrcBurstLength = 1;
+    NodeConfig.Init.DestBurstLength = 1;
+    NodeConfig.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT0;
+    NodeConfig.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+    NodeConfig.Init.Mode = DMA_NORMAL;
+    NodeConfig.TriggerConfig.TriggerPolarity = DMA_TRIG_POLARITY_MASKED;
+    NodeConfig.DataHandlingConfig.DataExchange = DMA_EXCHANGE_NONE;
+    NodeConfig.DataHandlingConfig.DataAlignment = DMA_DATA_RIGHTALIGN_ZEROPADDED;
+    if (HAL_DMAEx_List_BuildNode(&NodeConfig, &Node_GPDMA1_Channel2) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    if (HAL_DMAEx_List_InsertNode(&List_GPDMA1_Channel2, NULL, &Node_GPDMA1_Channel2) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    if (HAL_DMAEx_List_SetCircularMode(&List_GPDMA1_Channel2) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    handle_GPDMA1_Channel2.Instance = GPDMA1_Channel2;
+    handle_GPDMA1_Channel2.InitLinkedList.Priority = DMA_LOW_PRIORITY_LOW_WEIGHT;
+    handle_GPDMA1_Channel2.InitLinkedList.LinkStepMode = DMA_LSM_FULL_EXECUTION;
+    handle_GPDMA1_Channel2.InitLinkedList.LinkAllocatedPort = DMA_LINK_ALLOCATED_PORT0;
+    handle_GPDMA1_Channel2.InitLinkedList.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+    handle_GPDMA1_Channel2.InitLinkedList.LinkedListMode = DMA_LINKEDLIST_CIRCULAR;
+    if (HAL_DMAEx_List_Init(&handle_GPDMA1_Channel2) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    if (HAL_DMAEx_List_LinkQ(&handle_GPDMA1_Channel2, &List_GPDMA1_Channel2) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(hadc, DMA_Handle, handle_GPDMA1_Channel2);
+
+    if (HAL_DMA_ConfigChannelAttributes(&handle_GPDMA1_Channel2, DMA_CHANNEL_NPRIV) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* ADC1 interrupt Init */
+    HAL_NVIC_SetPriority(ADC1_2_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
+  /* USER CODE BEGIN ADC1_MspInit 1 */
+
+  /* USER CODE END ADC1_MspInit 1 */
+  }
+  else if(hadc->Instance==ADC2)
+  {
+  /* USER CODE BEGIN ADC2_MspInit 0 */
+
+  /* USER CODE END ADC2_MspInit 0 */
+
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADCDAC;
+    PeriphClkInit.AdcDacClockSelection = RCC_ADCDACCLKSOURCE_HSI;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* Peripheral clock enable */
+    HAL_RCC_ADC12_CLK_ENABLED++;
+    if(HAL_RCC_ADC12_CLK_ENABLED==1){
+      __HAL_RCC_ADC12_CLK_ENABLE();
+    }
+
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    /**ADC2 GPIO Configuration
+    PC2     ------> ADC2_IN3
+    PC3     ------> ADC2_IN4
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_3;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+    /* ADC2 DMA Init */
+    /* GPDMA1_REQUEST_ADC2 Init */
+    NodeConfig.NodeType = DMA_GPDMA_LINEAR_NODE;
+    NodeConfig.Init.Request = GPDMA1_REQUEST_ADC2;
+    NodeConfig.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
+    NodeConfig.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    NodeConfig.Init.SrcInc = DMA_SINC_FIXED;
+    NodeConfig.Init.DestInc = DMA_DINC_FIXED;
+    NodeConfig.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_HALFWORD;
+    NodeConfig.Init.DestDataWidth = DMA_DEST_DATAWIDTH_HALFWORD;
+    NodeConfig.Init.SrcBurstLength = 1;
+    NodeConfig.Init.DestBurstLength = 1;
+    NodeConfig.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT0;
+    NodeConfig.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+    NodeConfig.Init.Mode = DMA_NORMAL;
+    NodeConfig.TriggerConfig.TriggerPolarity = DMA_TRIG_POLARITY_MASKED;
+    NodeConfig.DataHandlingConfig.DataExchange = DMA_EXCHANGE_NONE;
+    NodeConfig.DataHandlingConfig.DataAlignment = DMA_DATA_RIGHTALIGN_ZEROPADDED;
+    if (HAL_DMAEx_List_BuildNode(&NodeConfig, &Node_GPDMA1_Channel3) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    if (HAL_DMAEx_List_InsertNode(&List_GPDMA1_Channel3, NULL, &Node_GPDMA1_Channel3) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    if (HAL_DMAEx_List_SetCircularMode(&List_GPDMA1_Channel3) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    handle_GPDMA1_Channel3.Instance = GPDMA1_Channel3;
+    handle_GPDMA1_Channel3.InitLinkedList.Priority = DMA_LOW_PRIORITY_LOW_WEIGHT;
+    handle_GPDMA1_Channel3.InitLinkedList.LinkStepMode = DMA_LSM_FULL_EXECUTION;
+    handle_GPDMA1_Channel3.InitLinkedList.LinkAllocatedPort = DMA_LINK_ALLOCATED_PORT0;
+    handle_GPDMA1_Channel3.InitLinkedList.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+    handle_GPDMA1_Channel3.InitLinkedList.LinkedListMode = DMA_LINKEDLIST_CIRCULAR;
+    if (HAL_DMAEx_List_Init(&handle_GPDMA1_Channel3) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    if (HAL_DMAEx_List_LinkQ(&handle_GPDMA1_Channel3, &List_GPDMA1_Channel3) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(hadc, DMA_Handle, handle_GPDMA1_Channel3);
+
+    if (HAL_DMA_ConfigChannelAttributes(&handle_GPDMA1_Channel3, DMA_CHANNEL_NPRIV) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* ADC2 interrupt Init */
+    HAL_NVIC_SetPriority(ADC1_2_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
+  /* USER CODE BEGIN ADC2_MspInit 1 */
+
+  /* USER CODE END ADC2_MspInit 1 */
+  }
+  else if(hadc->Instance==ADC4)
+  {
+  /* USER CODE BEGIN ADC4_MspInit 0 */
+
+  /* USER CODE END ADC4_MspInit 0 */
+
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADCDAC;
+    PeriphClkInit.AdcDacClockSelection = RCC_ADCDACCLKSOURCE_HSI;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* Peripheral clock enable */
+    __HAL_RCC_ADC4_CLK_ENABLE();
+
+    __HAL_RCC_GPIOG_CLK_ENABLE();
+    /**ADC4 GPIO Configuration
+    PG0     ------> ADC4_IN7
+    PG1     ------> ADC4_IN8
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+    /* ADC4 DMA Init */
+    /* GPDMA1_REQUEST_ADC4 Init */
+    NodeConfig.NodeType = DMA_GPDMA_LINEAR_NODE;
+    NodeConfig.Init.Request = GPDMA1_REQUEST_ADC4;
+    NodeConfig.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
+    NodeConfig.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    NodeConfig.Init.SrcInc = DMA_SINC_FIXED;
+    NodeConfig.Init.DestInc = DMA_DINC_FIXED;
+    NodeConfig.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_HALFWORD;
+    NodeConfig.Init.DestDataWidth = DMA_DEST_DATAWIDTH_HALFWORD;
+    NodeConfig.Init.SrcBurstLength = 1;
+    NodeConfig.Init.DestBurstLength = 1;
+    NodeConfig.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT0;
+    NodeConfig.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+    NodeConfig.Init.Mode = DMA_NORMAL;
+    NodeConfig.TriggerConfig.TriggerPolarity = DMA_TRIG_POLARITY_MASKED;
+    NodeConfig.DataHandlingConfig.DataExchange = DMA_EXCHANGE_NONE;
+    NodeConfig.DataHandlingConfig.DataAlignment = DMA_DATA_RIGHTALIGN_ZEROPADDED;
+    if (HAL_DMAEx_List_BuildNode(&NodeConfig, &Node_GPDMA1_Channel4) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    if (HAL_DMAEx_List_InsertNode(&List_GPDMA1_Channel4, NULL, &Node_GPDMA1_Channel4) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    if (HAL_DMAEx_List_SetCircularMode(&List_GPDMA1_Channel4) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    handle_GPDMA1_Channel4.Instance = GPDMA1_Channel4;
+    handle_GPDMA1_Channel4.InitLinkedList.Priority = DMA_LOW_PRIORITY_LOW_WEIGHT;
+    handle_GPDMA1_Channel4.InitLinkedList.LinkStepMode = DMA_LSM_FULL_EXECUTION;
+    handle_GPDMA1_Channel4.InitLinkedList.LinkAllocatedPort = DMA_LINK_ALLOCATED_PORT0;
+    handle_GPDMA1_Channel4.InitLinkedList.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+    handle_GPDMA1_Channel4.InitLinkedList.LinkedListMode = DMA_LINKEDLIST_CIRCULAR;
+    if (HAL_DMAEx_List_Init(&handle_GPDMA1_Channel4) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    if (HAL_DMAEx_List_LinkQ(&handle_GPDMA1_Channel4, &List_GPDMA1_Channel4) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(hadc, DMA_Handle, handle_GPDMA1_Channel4);
+
+    if (HAL_DMA_ConfigChannelAttributes(&handle_GPDMA1_Channel4, DMA_CHANNEL_NPRIV) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+  /* USER CODE BEGIN ADC4_MspInit 1 */
+
+  /* USER CODE END ADC4_MspInit 1 */
+  }
+
+}
+
+/**
+* @brief ADC MSP De-Initialization
+* This function freeze the hardware resources used in this example
+* @param hadc: ADC handle pointer
+* @retval None
+*/
+void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
+{
+  if(hadc->Instance==ADC1)
+  {
+  /* USER CODE BEGIN ADC1_MspDeInit 0 */
+
+  /* USER CODE END ADC1_MspDeInit 0 */
+    /* Peripheral clock disable */
+    HAL_RCC_ADC12_CLK_ENABLED--;
+    if(HAL_RCC_ADC12_CLK_ENABLED==0){
+      __HAL_RCC_ADC12_CLK_DISABLE();
+    }
+
+    /**ADC1 GPIO Configuration
+    PC1     ------> ADC1_IN2
+    PA7     ------> ADC1_IN12
+    */
+    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_1);
+
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_7);
+
+    /* ADC1 DMA DeInit */
+    HAL_DMA_DeInit(hadc->DMA_Handle);
+
+    /* ADC1 interrupt DeInit */
+  /* USER CODE BEGIN ADC1:ADC1_2_IRQn disable */
+    /**
+    * Uncomment the line below to disable the "ADC1_2_IRQn" interrupt
+    * Be aware, disabling shared interrupt may affect other IPs
+    */
+    /* HAL_NVIC_DisableIRQ(ADC1_2_IRQn); */
+  /* USER CODE END ADC1:ADC1_2_IRQn disable */
+
+  /* USER CODE BEGIN ADC1_MspDeInit 1 */
+
+  /* USER CODE END ADC1_MspDeInit 1 */
+  }
+  else if(hadc->Instance==ADC2)
+  {
+  /* USER CODE BEGIN ADC2_MspDeInit 0 */
+
+  /* USER CODE END ADC2_MspDeInit 0 */
+    /* Peripheral clock disable */
+    HAL_RCC_ADC12_CLK_ENABLED--;
+    if(HAL_RCC_ADC12_CLK_ENABLED==0){
+      __HAL_RCC_ADC12_CLK_DISABLE();
+    }
+
+    /**ADC2 GPIO Configuration
+    PC2     ------> ADC2_IN3
+    PC3     ------> ADC2_IN4
+    */
+    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_2|GPIO_PIN_3);
+
+    /* ADC2 DMA DeInit */
+    HAL_DMA_DeInit(hadc->DMA_Handle);
+
+    /* ADC2 interrupt DeInit */
+  /* USER CODE BEGIN ADC2:ADC1_2_IRQn disable */
+    /**
+    * Uncomment the line below to disable the "ADC1_2_IRQn" interrupt
+    * Be aware, disabling shared interrupt may affect other IPs
+    */
+    /* HAL_NVIC_DisableIRQ(ADC1_2_IRQn); */
+  /* USER CODE END ADC2:ADC1_2_IRQn disable */
+
+  /* USER CODE BEGIN ADC2_MspDeInit 1 */
+
+  /* USER CODE END ADC2_MspDeInit 1 */
+  }
+  else if(hadc->Instance==ADC4)
+  {
+  /* USER CODE BEGIN ADC4_MspDeInit 0 */
+
+  /* USER CODE END ADC4_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_ADC4_CLK_DISABLE();
+
+    /**ADC4 GPIO Configuration
+    PG0     ------> ADC4_IN7
+    PG1     ------> ADC4_IN8
+    */
+    HAL_GPIO_DeInit(GPIOG, GPIO_PIN_0|GPIO_PIN_1);
+
+    /* ADC4 DMA DeInit */
+    HAL_DMA_DeInit(hadc->DMA_Handle);
+  /* USER CODE BEGIN ADC4_MspDeInit 1 */
+
+  /* USER CODE END ADC4_MspDeInit 1 */
+  }
+
 }
 
 /**
@@ -869,6 +1286,51 @@ void HAL_RNG_MspDeInit(RNG_HandleTypeDef* hrng)
   /* USER CODE BEGIN RNG_MspDeInit 1 */
 
   /* USER CODE END RNG_MspDeInit 1 */
+  }
+
+}
+
+/**
+* @brief TIM_Base MSP Initialization
+* This function configures the hardware resources used in this example
+* @param htim_base: TIM_Base handle pointer
+* @retval None
+*/
+void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
+{
+  if(htim_base->Instance==TIM15)
+  {
+  /* USER CODE BEGIN TIM15_MspInit 0 */
+
+  /* USER CODE END TIM15_MspInit 0 */
+    /* Peripheral clock enable */
+    __HAL_RCC_TIM15_CLK_ENABLE();
+  /* USER CODE BEGIN TIM15_MspInit 1 */
+
+  /* USER CODE END TIM15_MspInit 1 */
+
+  }
+
+}
+
+/**
+* @brief TIM_Base MSP De-Initialization
+* This function freeze the hardware resources used in this example
+* @param htim_base: TIM_Base handle pointer
+* @retval None
+*/
+void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
+{
+  if(htim_base->Instance==TIM15)
+  {
+  /* USER CODE BEGIN TIM15_MspDeInit 0 */
+
+  /* USER CODE END TIM15_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_TIM15_CLK_DISABLE();
+  /* USER CODE BEGIN TIM15_MspDeInit 1 */
+
+  /* USER CODE END TIM15_MspDeInit 1 */
   }
 
 }

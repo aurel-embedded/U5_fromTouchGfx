@@ -24,6 +24,8 @@
 #include "cmsis_os2.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <subModule/BAL_Core/bal_api.h>
+#include <UserInterfaces/drvAdc/drvAdc.h>
 #include "usb_device.h"
 #include "MDI_midi/mdi_wrapper.h"
 /* USER CODE END Includes */
@@ -147,7 +149,17 @@ void MX_FREERTOS_Init(void) {
   GUI_TaskHandle = osThreadNew(TouchGFX_Task, NULL, &GUI_Task_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
-  MDI_Init();
+  if(MDI_Init() != HAL_OK){
+	  //TODO: Debug Printf???
+  }
+
+  if(DRVADC_init() != osOK){
+	  //TODO: Debug Printf???
+  }
+
+  if(BAL_init(bal_ledList, bal_ledList_size, NULL, 0) != HAL_OK){
+	  //TODO: Debug Printf???
+  }
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -169,7 +181,7 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	  HAL_GPIO_TogglePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin);
+//	  HAL_GPIO_TogglePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin);
 	  osDelay(100);
   }
   /* USER CODE END defaultTask */
