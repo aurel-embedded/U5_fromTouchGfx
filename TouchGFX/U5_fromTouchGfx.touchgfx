@@ -60,8 +60,8 @@
             "Type": "TextArea",
             "Name": "Title",
             "X": 329,
-            "Width": 143,
-            "Height": 48,
+            "Width": 109,
+            "Height": 36,
             "TextId": "__SingleUse_3OLG",
             "TextRotation": "0",
             "Color": {

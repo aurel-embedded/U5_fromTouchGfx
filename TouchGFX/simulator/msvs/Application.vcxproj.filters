@@ -218,10 +218,10 @@
       <UniqueIdentifier>8A6E0ACC-5E55-2B60-DD6A-5024C21BB849</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\include">
-      <UniqueIdentifier>9648706C-73C1-BF22-A245-CD02EDC61F9E</UniqueIdentifier>
+      <UniqueIdentifier>D23B164D-3B31-139C-F0E3-711968B6DCEB</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\include\custom">
-      <UniqueIdentifier>1FDB30E9-6043-4A91-A5F9-A830097F9FF8</UniqueIdentifier>
+      <UniqueIdentifier>54C85080-B3BA-96E0-F0B5-D886FF95ADC3</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
