@@ -157,8 +157,8 @@ static void drvAdc_Task_fn(void *argument)
 			// Copy to memory Shared (using the unused buffer)
 			drvAdc_memoryShared.values.potar1 = drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][0];
 			drvAdc_memoryShared.values.potar2 = drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][1];
-			drvAdc_memoryShared.values.potar3 = drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][1];
-			drvAdc_memoryShared.values.potar4 = drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][0];
+			drvAdc_memoryShared.values.potar3 = drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][0];
+			drvAdc_memoryShared.values.potar4 = drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][1];
 			drvAdc_memoryShared.values.potar5 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0];
 			drvAdc_memoryShared.values.potar6 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][1];
 
