@@ -5,6 +5,7 @@
  *      Author: apajadon
  */
 #include <cmsis_os2.h>
+#include <Config/task_config.h>
 #include <stm32u5xx.h>
 #include <UserInterfaces/drvAdc/drvAdc.h>
 #include <string.h>
@@ -21,8 +22,8 @@ extern TIM_HandleTypeDef htim15;
 osThreadId_t drvAdc_TaskHandle;
 const osThreadAttr_t drvAdc_Task_attributes = {
 		.name = "ADC tsk",
-		.stack_size = 128 * 4,
-		.priority = (osPriority_t) osPriorityLow,
+		.stack_size = TSK_CFG__STACK__TSK_ADC,
+		.priority = TSK_CFG__PRIO__TSK_ADC,
 };
 static void drvAdc_Task_fn(void *argument);
 
