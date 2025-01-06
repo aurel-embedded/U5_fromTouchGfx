@@ -16,12 +16,12 @@ extern "C" {
 #endif
 
 typedef struct{
-	uint8_t 		potar1;
-	uint8_t 		potar2;
-	uint8_t 		potar3;
-	uint8_t 		potar4;
-	uint8_t 		potar5;
-	uint8_t 		potar6;
+	uint16_t 		potar1;
+	uint16_t 		potar2;
+	uint16_t 		potar3;
+	uint16_t 		potar4;
+	uint16_t 		potar5;
+	uint16_t 		potar6;
 }drvAdc_values_t;
 
 #ifdef __cplusplus

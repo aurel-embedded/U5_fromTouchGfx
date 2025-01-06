@@ -21,7 +21,7 @@ public:
     void sendMidiOn(int note);
     void sendMidiOff(int note);
     void sendControlChange(CMidiChannel::Channel_e channel, CMidiCfg::cc cc, uint8_t data);
-    drvAdc_values_t getAdcValues(void);
+    drvAdc_values_t getAdcValuesMapped(uint16_t maxMappedVal);
 protected:
     ModelListener* modelListener;
 };

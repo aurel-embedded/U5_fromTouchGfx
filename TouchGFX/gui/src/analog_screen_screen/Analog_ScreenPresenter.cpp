@@ -17,7 +17,7 @@ void Analog_ScreenPresenter::deactivate()
 
 }
 
-drvAdc_values_t Analog_ScreenPresenter::getAdcValues(void)
+drvAdc_values_t Analog_ScreenPresenter::getAdcValues(uint16_t maxMappedVal)
 {
-	return model->getAdcValues();
+	return model->getAdcValuesMapped(maxMappedVal);
 }

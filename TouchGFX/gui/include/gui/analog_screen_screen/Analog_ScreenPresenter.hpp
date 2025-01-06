@@ -28,7 +28,7 @@ public:
 
     virtual ~Analog_ScreenPresenter() {}
 
-    drvAdc_values_t getAdcValues(void);
+    drvAdc_values_t getAdcValues(uint16_t maxMappedVal);
 
 private:
     Analog_ScreenPresenter();

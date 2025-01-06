@@ -2,6 +2,7 @@
 #include <gui/model/ModelListener.hpp>
 #include <MDI_midi/mdi_thread.hpp>
 #include <UserInterfaces/drvAdc/drvAdc.h>
+#include <Tools/Tools.h>
 
 #ifndef SIMULATOR
 #include <MDI_midi/CMidi.h>
@@ -51,11 +52,17 @@ void Model::sendControlChange(CMidiChannel::Channel_e channel, CMidiCfg::cc cc, 
 
 }
 
-drvAdc_values_t Model::getAdcValues(void)
+drvAdc_values_t Model::getAdcValuesMapped(uint16_t maxMappedVal)
 {
 #ifndef SIMULATOR
 	drvAdc_values_t adcValuesDrv;
 	DRVADC_getAdcValues(&adcValuesDrv);
+	adcValuesDrv.potar1 = map(adcValuesDrv.potar1, 0, 3300, 0, maxMappedVal);
+	adcValuesDrv.potar2 = map(adcValuesDrv.potar2, 0, 3300, 0, maxMappedVal);
+	adcValuesDrv.potar3 = map(adcValuesDrv.potar3, 0, 3300, 0, maxMappedVal);
+	adcValuesDrv.potar4 = map(adcValuesDrv.potar4, 0, 3300, 0, maxMappedVal);
+	adcValuesDrv.potar5 = map(adcValuesDrv.potar5, 0, 3300, 0, maxMappedVal);
+	adcValuesDrv.potar6 = map(adcValuesDrv.potar6, 0, 3300, 0, maxMappedVal);
 	return adcValuesDrv;
 
 #endif
