@@ -12,6 +12,7 @@
 #include <touchgfx/widgets/ButtonWithLabel.hpp>
 #include <touchgfx/containers/progress_indicators/CircleProgress.hpp>
 #include <touchgfx/widgets/canvas/PainterRGB565.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class Analog_ScreenViewBase : public touchgfx::View<Analog_ScreenPresenter>
 {
@@ -43,6 +44,28 @@ protected:
     touchgfx::PainterRGB565 channel3_progressPainter;
     touchgfx::CircleProgress channel1_progress;
     touchgfx::PainterRGB565 channel1_progressPainter;
+    touchgfx::TextAreaWithOneWildcard channel5_val;
+    touchgfx::TextAreaWithOneWildcard channel3_val;
+    touchgfx::TextAreaWithOneWildcard channel6_val;
+    touchgfx::TextAreaWithOneWildcard channel4_val;
+    touchgfx::TextAreaWithOneWildcard channel2_val;
+    touchgfx::TextAreaWithOneWildcard channel1_val;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t CHANNEL5_VAL_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar channel5_valBuffer[CHANNEL5_VAL_SIZE];
+    static const uint16_t CHANNEL3_VAL_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar channel3_valBuffer[CHANNEL3_VAL_SIZE];
+    static const uint16_t CHANNEL6_VAL_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar channel6_valBuffer[CHANNEL6_VAL_SIZE];
+    static const uint16_t CHANNEL4_VAL_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar channel4_valBuffer[CHANNEL4_VAL_SIZE];
+    static const uint16_t CHANNEL2_VAL_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar channel2_valBuffer[CHANNEL2_VAL_SIZE];
+    static const uint16_t CHANNEL1_VAL_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar channel1_valBuffer[CHANNEL1_VAL_SIZE];
 
 private:
 

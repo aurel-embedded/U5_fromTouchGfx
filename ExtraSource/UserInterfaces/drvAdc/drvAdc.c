@@ -20,7 +20,7 @@ extern TIM_HandleTypeDef htim15;
 //-----------------------------------------------------------------------------
 // Task
 //-----------------------------------------------------------------------------
-#define DRVADC_TASK_DELAY 20
+#define DRVADC_TASK_DELAY 10
 osThreadId_t drvAdc_TaskHandle;
 const osThreadAttr_t drvAdc_Task_attributes = {
 		.name = "ADC tsk",
@@ -46,9 +46,9 @@ uint16_t drvAdc_dmaBuf_ADC4[DRVADC_CHANNEL_QTY_ADC4] __ALIGNED(32);
 //-----------------------------------------------------------------------------
 // CALLBACK BUFFER - Double Buffer
 //-----------------------------------------------------------------------------
-uint8_t drvAdc_callBackBuf_ADC1[2][DRVADC_CHANNEL_QTY_ADC1];
-uint8_t drvAdc_callBackBuf_ADC2[2][DRVADC_CHANNEL_QTY_ADC2];
-uint8_t drvAdc_callBackBuf_ADC4[2][DRVADC_CHANNEL_QTY_ADC4];
+uint16_t drvAdc_callBackBuf_ADC1[2][DRVADC_CHANNEL_QTY_ADC1];
+uint16_t drvAdc_callBackBuf_ADC2[2][DRVADC_CHANNEL_QTY_ADC2];
+uint16_t drvAdc_callBackBuf_ADC4[2][DRVADC_CHANNEL_QTY_ADC4];
 volatile uint8_t drvAdc_callBackBuf_activeInd_ADC1 = 0; // Index du buffer actif
 volatile uint8_t drvAdc_callBackBuf_activeInd_ADC2 = 0; // Index du buffer actif
 volatile uint8_t drvAdc_callBackBuf_activeInd_ADC4 = 0; // Index du buffer actif
@@ -69,6 +69,19 @@ const osMutexAttr_t drvAdc_memoryShared_mtx_attr = {
 		0U                                       	// size for control block
 };
 
+//-----------------------------------------------------------------------------
+// AVERAGE
+//-----------------------------------------------------------------------------
+#define MOVING_AVERAGE_WINDOW_SIZE 10
+
+static float drvAdc_potar1_avg = 0;
+static float drvAdc_potar2_avg = 0;
+static float drvAdc_potar3_avg = 0;
+static float drvAdc_potar4_avg = 0;
+static float drvAdc_potar5_avg = 0;
+static float drvAdc_potar6_avg = 0;
+static uint32_t drvAdc_sample_count = 0;
+
 
 uint16_t adcVal = 0;
 int converted_value = 0;
@@ -80,7 +93,7 @@ void drvAdc_ConvCpltCallback(ADC_TypeDef *Instance)
 {
 	volatile uint8_t *pActiveInd = NULL;
 	uint8_t maxChannelQty = 0;
-	uint8_t *pCallBackBuf = NULL;
+	uint16_t *pCallBackBuf = NULL;
 	uint16_t *pDmaBuf = NULL;
 
 	if (Instance == ADC1){
@@ -105,7 +118,8 @@ void drvAdc_ConvCpltCallback(ADC_TypeDef *Instance)
 	}
 
 	for(uint8_t i = 0; i < maxChannelQty; i++){
-		pCallBackBuf[i] = map(pDmaBuf[i], 0, 4095, 0, 100);
+		// Conversion en mV
+		pCallBackBuf[i] = map(pDmaBuf[i], 0, 4095, 0, 3300);
 	}
 
 	// Flip Flop the active buffer
@@ -154,13 +168,26 @@ static void drvAdc_Task_fn(void *argument)
 
 		// Get Memory shared Mutex
 		if(osMutexAcquire(drvAdc_memoryShared.mtx_id, osWaitForever) == osOK){
-			// Copy to memory Shared (using the unused buffer)
-			drvAdc_memoryShared.values.potar1 = drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][0];
-			drvAdc_memoryShared.values.potar2 = drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][1];
-			drvAdc_memoryShared.values.potar3 = drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][0];
-			drvAdc_memoryShared.values.potar4 = drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][1];
-			drvAdc_memoryShared.values.potar5 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0];
-			drvAdc_memoryShared.values.potar6 = drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][1];
+            // Mise à jour du compteur d'échantillons (jusqu'à MOVING_AVERAGE_WINDOW_SIZE)
+            if (drvAdc_sample_count < MOVING_AVERAGE_WINDOW_SIZE) {
+            	drvAdc_sample_count++;
+            }
+
+            // Mise à jour des moyennes glissantes incrémentales
+            drvAdc_potar1_avg += (drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][0] - drvAdc_potar1_avg) / drvAdc_sample_count;
+            drvAdc_potar2_avg += (drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][1] - drvAdc_potar2_avg) / drvAdc_sample_count;
+            drvAdc_potar3_avg += (drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][0] - drvAdc_potar3_avg) / drvAdc_sample_count;
+            drvAdc_potar4_avg += (drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][1] - drvAdc_potar4_avg) / drvAdc_sample_count;
+            drvAdc_potar5_avg += (drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0] - drvAdc_potar5_avg) / drvAdc_sample_count;
+            drvAdc_potar6_avg += (drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][1] - drvAdc_potar6_avg) / drvAdc_sample_count;
+
+            // Stockage des moyennes dans la mémoire partagée
+            drvAdc_memoryShared.values.potar1 = (uint16_t)drvAdc_potar1_avg;
+            drvAdc_memoryShared.values.potar2 = (uint16_t)drvAdc_potar2_avg;
+            drvAdc_memoryShared.values.potar3 = (uint16_t)drvAdc_potar3_avg;
+            drvAdc_memoryShared.values.potar4 = (uint16_t)drvAdc_potar4_avg;
+            drvAdc_memoryShared.values.potar5 = (uint16_t)drvAdc_potar5_avg;
+            drvAdc_memoryShared.values.potar6 = (uint16_t)drvAdc_potar6_avg;
 
 			// Release Mutex
 			osMutexRelease(drvAdc_memoryShared.mtx_id);

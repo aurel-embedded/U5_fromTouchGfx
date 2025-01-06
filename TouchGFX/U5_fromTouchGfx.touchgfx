@@ -313,7 +313,7 @@
             "EndAngle": 520.0,
             "CapPrecision": "Butt",
             "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
-            "ProgressRangeMax": 100,
+            "ProgressRangeMax": 320,
             "ProgressInitialValue": 30
           },
           {
@@ -336,7 +336,7 @@
             "EndAngle": 520.0,
             "CapPrecision": "Butt",
             "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
-            "ProgressRangeMax": 100,
+            "ProgressRangeMax": 320,
             "ProgressInitialValue": 70
           },
           {
@@ -359,7 +359,7 @@
             "EndAngle": 520.0,
             "CapPrecision": "Butt",
             "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
-            "ProgressRangeMax": 100,
+            "ProgressRangeMax": 320,
             "ProgressInitialValue": 60
           },
           {
@@ -382,7 +382,7 @@
             "EndAngle": 520.0,
             "CapPrecision": "Butt",
             "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
-            "ProgressRangeMax": 100,
+            "ProgressRangeMax": 320,
             "ProgressInitialValue": 50
           },
           {
@@ -405,7 +405,7 @@
             "EndAngle": 520.0,
             "CapPrecision": "Butt",
             "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
-            "ProgressRangeMax": 100,
+            "ProgressRangeMax": 320,
             "ProgressInitialValue": 40
           },
           {
@@ -428,8 +428,98 @@
             "EndAngle": 520.0,
             "CapPrecision": "Butt",
             "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
-            "ProgressRangeMax": 100,
+            "ProgressRangeMax": 320,
             "ProgressInitialValue": 20
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel5_val",
+            "X": 10,
+            "Y": 253,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_QCJL",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_QN2F",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel3_val",
+            "X": 10,
+            "Y": 175,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_71WA",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_K13N",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel6_val",
+            "X": 10,
+            "Y": 292,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_YKFO",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_KR4F",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel4_val",
+            "X": 10,
+            "Y": 214,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_S2YY",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_W9F8",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel2_val",
+            "X": 10,
+            "Y": 136,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_AHW5",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_4IQL",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel1_val",
+            "X": 10,
+            "Y": 97,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_8VP5",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_6E1H",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
           }
         ],
         "Interactions": [

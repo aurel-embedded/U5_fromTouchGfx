@@ -6,6 +6,45 @@
   <Texts>
     <TextGroup Id="Group1" />
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_KR4F" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="__SingleUse_YKFO" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">Channel6:&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_QN2F" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="__SingleUse_QCJL" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">Channel5:&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_W9F8" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="__SingleUse_S2YY" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">Channel4:&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_K13N" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="__SingleUse_71WA" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">Channel3:&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_4IQL" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="__SingleUse_AHW5" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">Channel2:&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_6E1H" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="channel1_val" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="__SingleUse_8VP5" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">Channel1:&lt;value&gt;</Translation>
+      </Text>
       <Text Id="__SingleUse_ZXGM" Alignment="Center" TypographyId="Large">
         <Translation Language="GB">Back</Translation>
       </Text>

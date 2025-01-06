@@ -30,7 +30,7 @@ Analog_ScreenViewBase::Analog_ScreenViewBase() :
 
     channel2_progress.setXY(154, 352);
     channel2_progress.setProgressIndicatorPosition(0, 0, 110, 110);
-    channel2_progress.setRange(0, 100);
+    channel2_progress.setRange(0, 320);
     channel2_progress.setCenter(55, 55);
     channel2_progress.setRadius(30);
     channel2_progress.setLineWidth(50);
@@ -44,7 +44,7 @@ Analog_ScreenViewBase::Analog_ScreenViewBase() :
 
     channel6_progress.setXY(661, 352);
     channel6_progress.setProgressIndicatorPosition(0, 0, 110, 110);
-    channel6_progress.setRange(0, 100);
+    channel6_progress.setRange(0, 320);
     channel6_progress.setCenter(55, 55);
     channel6_progress.setRadius(30);
     channel6_progress.setLineWidth(50);
@@ -58,7 +58,7 @@ Analog_ScreenViewBase::Analog_ScreenViewBase() :
 
     channel5_progress.setXY(533, 352);
     channel5_progress.setProgressIndicatorPosition(0, 0, 110, 110);
-    channel5_progress.setRange(0, 100);
+    channel5_progress.setRange(0, 320);
     channel5_progress.setCenter(55, 55);
     channel5_progress.setRadius(30);
     channel5_progress.setLineWidth(50);
@@ -72,7 +72,7 @@ Analog_ScreenViewBase::Analog_ScreenViewBase() :
 
     channel4_progress.setXY(409, 352);
     channel4_progress.setProgressIndicatorPosition(0, 0, 110, 110);
-    channel4_progress.setRange(0, 100);
+    channel4_progress.setRange(0, 320);
     channel4_progress.setCenter(55, 55);
     channel4_progress.setRadius(30);
     channel4_progress.setLineWidth(50);
@@ -86,7 +86,7 @@ Analog_ScreenViewBase::Analog_ScreenViewBase() :
 
     channel3_progress.setXY(279, 352);
     channel3_progress.setProgressIndicatorPosition(0, 0, 110, 110);
-    channel3_progress.setRange(0, 100);
+    channel3_progress.setRange(0, 320);
     channel3_progress.setCenter(55, 55);
     channel3_progress.setRadius(30);
     channel3_progress.setLineWidth(50);
@@ -100,7 +100,7 @@ Analog_ScreenViewBase::Analog_ScreenViewBase() :
 
     channel1_progress.setXY(27, 352);
     channel1_progress.setProgressIndicatorPosition(0, 0, 110, 110);
-    channel1_progress.setRange(0, 100);
+    channel1_progress.setRange(0, 320);
     channel1_progress.setCenter(55, 55);
     channel1_progress.setRadius(30);
     channel1_progress.setLineWidth(50);
@@ -111,6 +111,54 @@ Analog_ScreenViewBase::Analog_ScreenViewBase() :
     channel1_progress.setPainter(channel1_progressPainter);
     channel1_progress.setValue(20);
     add(channel1_progress);
+
+    channel5_val.setPosition(10, 253, 234, 39);
+    channel5_val.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    channel5_val.setLinespacing(0);
+    Unicode::snprintf(channel5_valBuffer, CHANNEL5_VAL_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_QN2F).getText());
+    channel5_val.setWildcard(channel5_valBuffer);
+    channel5_val.setTypedText(touchgfx::TypedText(T___SINGLEUSE_QCJL));
+    add(channel5_val);
+
+    channel3_val.setPosition(10, 175, 234, 39);
+    channel3_val.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    channel3_val.setLinespacing(0);
+    Unicode::snprintf(channel3_valBuffer, CHANNEL3_VAL_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_K13N).getText());
+    channel3_val.setWildcard(channel3_valBuffer);
+    channel3_val.setTypedText(touchgfx::TypedText(T___SINGLEUSE_71WA));
+    add(channel3_val);
+
+    channel6_val.setPosition(10, 292, 234, 39);
+    channel6_val.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    channel6_val.setLinespacing(0);
+    Unicode::snprintf(channel6_valBuffer, CHANNEL6_VAL_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_KR4F).getText());
+    channel6_val.setWildcard(channel6_valBuffer);
+    channel6_val.setTypedText(touchgfx::TypedText(T___SINGLEUSE_YKFO));
+    add(channel6_val);
+
+    channel4_val.setPosition(10, 214, 234, 39);
+    channel4_val.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    channel4_val.setLinespacing(0);
+    Unicode::snprintf(channel4_valBuffer, CHANNEL4_VAL_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_W9F8).getText());
+    channel4_val.setWildcard(channel4_valBuffer);
+    channel4_val.setTypedText(touchgfx::TypedText(T___SINGLEUSE_S2YY));
+    add(channel4_val);
+
+    channel2_val.setPosition(10, 136, 234, 39);
+    channel2_val.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    channel2_val.setLinespacing(0);
+    Unicode::snprintf(channel2_valBuffer, CHANNEL2_VAL_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_4IQL).getText());
+    channel2_val.setWildcard(channel2_valBuffer);
+    channel2_val.setTypedText(touchgfx::TypedText(T___SINGLEUSE_AHW5));
+    add(channel2_val);
+
+    channel1_val.setPosition(10, 97, 234, 39);
+    channel1_val.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    channel1_val.setLinespacing(0);
+    Unicode::snprintf(channel1_valBuffer, CHANNEL1_VAL_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_6E1H).getText());
+    channel1_val.setWildcard(channel1_valBuffer);
+    channel1_val.setTypedText(touchgfx::TypedText(T___SINGLEUSE_8VP5));
+    add(channel1_val);
 }
 
 Analog_ScreenViewBase::~Analog_ScreenViewBase()
