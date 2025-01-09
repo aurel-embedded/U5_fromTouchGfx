@@ -8,7 +8,7 @@
 #include <MDI_midi/CMidi.h>
 #endif
 
-Model::Model() : modelListener(0)
+Model::Model() : modelListener(0), activeViewId(ViewId::Unknown)
 {
 
 }

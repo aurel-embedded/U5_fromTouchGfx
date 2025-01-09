@@ -29,11 +29,14 @@ public:
     virtual ~Analog_ScreenPresenter() {}
 
     drvAdc_values_t getAdcValues(uint16_t maxMappedVal);
+    void handleChannelEvent(int channel, int value);
 
 private:
     Analog_ScreenPresenter();
 
     Analog_ScreenView& view;
+
+
 };
 
 #endif // ANALOG_SCREENPRESENTER_HPP

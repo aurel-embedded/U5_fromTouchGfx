@@ -18,7 +18,7 @@ HAL_StatusTypeDef MDI_Init(void)
     return mdi_thread::getInstance().init();
 }
 
-// Wrapper for MDIThread::exit
+// Wrapper for mdi_thread::exit
 HAL_StatusTypeDef MDI_Exit(void)
 {
     return mdi_thread::getInstance().exit();

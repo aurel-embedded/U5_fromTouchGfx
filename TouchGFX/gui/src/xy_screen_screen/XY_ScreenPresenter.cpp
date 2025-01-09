@@ -26,12 +26,12 @@ void XY_ScreenPresenter::deactivate()
 void XY_ScreenPresenter::handleXYEvent(int XValue, int YValue)
 {
     // Vérification des limites & conversion
-    XValue = convertXYToMidi(XValue, touchPad_xMin, touchPad_xMax);
-    YValue = convertXYToMidi(YValue, touchPad_yMin, touchPad_yMax);
+    int XValue_loc = convertXYToMidi(XValue, touchPad_xMin, touchPad_xMax);
+    int YValue_loc = convertXYToMidi(YValue, touchPad_yMin, touchPad_yMax);
 
     // Envoi des messages MIDI
-    model->sendControlChange(CMidiChannel::Channel_e::Ch01, CMidiCfg::cc::effectControl1, XValue);
-    model->sendControlChange(CMidiChannel::Channel_e::Ch02, CMidiCfg::cc::effectControl1, YValue);
+    model->sendControlChange(CMidiChannel::Channel_e::Ch01, CMidiCfg::cc::effectControl1, XValue_loc);
+    model->sendControlChange(CMidiChannel::Channel_e::Ch02, CMidiCfg::cc::effectControl1, YValue_loc);
 }
 
 
