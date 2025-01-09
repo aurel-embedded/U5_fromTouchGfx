@@ -17,12 +17,13 @@ public:
 	CMidi();
 	virtual ~CMidi();
 
+	static HAL_StatusTypeDef waitForMidiIdle(uint32_t timeout_ms);
 	static HAL_StatusTypeDef sendNoteOn(const CMidiCfg *pMidiCfg, CMidiNote::Note_e note, uint8_t vel);
 	static HAL_StatusTypeDef sendNoteOn(CMidiChannel::Channel_e channel, CMidiNote::Note_e note, uint8_t vel);
 	static HAL_StatusTypeDef sendNoteOff(const CMidiCfg *pMidiCfg, CMidiNote::Note_e note, uint8_t vel);
 	static HAL_StatusTypeDef sendNoteOff(CMidiChannel::Channel_e channel, CMidiNote::Note_e note, uint8_t vel);
 	static HAL_StatusTypeDef sendControlChange(const CMidiCfg *pMidiCfg, uint8_t data);
-	static HAL_StatusTypeDef sendControlChange(CMidiChannel::Channel_e channel, CMidiCfg::cc cc, uint8_t data);
+	static HAL_StatusTypeDef sendControlChange(uint8_t channel, uint8_t cc, uint8_t data);
 	static HAL_StatusTypeDef sendPlay(void);
 	static HAL_StatusTypeDef sendStop(void);
 	static HAL_StatusTypeDef sendMetro(void);

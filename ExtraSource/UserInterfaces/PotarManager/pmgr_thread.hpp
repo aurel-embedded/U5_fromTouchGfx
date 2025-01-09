@@ -24,6 +24,11 @@ public:
     HAL_StatusTypeDef exit();
 
 private:
+    static constexpr uint8_t minMidiMsgValue = 0;
+    static constexpr uint8_t maxMidiMsgValue = 127;
+    static constexpr uint16_t minVoltageValue = 0;
+    static constexpr uint16_t maxVoltageValue = 3300;
+
     // Constructeur privé
     pmgr_thread();
     ~pmgr_thread();

@@ -35,6 +35,7 @@ void mdi_thread::threadFunction(void* argument)
 	mdi_thread* self  = static_cast<mdi_thread*>(argument); // Conversion en instance de la classe
     while (true)
     {
+    	// TODO: Add Note for midi message
 		status = osMessageQueueGet(mq_id, &msg, NULL, osWaitForever);   // wait for message
 		if (status == osOK)
 		{
@@ -108,7 +109,7 @@ HAL_StatusTypeDef mdi_thread::exit()
 /// \fn 		HAL_StatusTypeDef mdi_thread::putMessage(reg_ctaId_t msg)
 /// \brief
 //------------------------------------------------------------------------------
-HAL_StatusTypeDef mdi_thread::putMessage(CMidiChannel::Channel_e channel, CMidiCfg::cc cc, uint8_t data)
+HAL_StatusTypeDef mdi_thread::putMessage(uint8_t channel, uint8_t cc, uint8_t data)
 {
 	if(mq_id == NULL)
 		return HAL_ERROR;

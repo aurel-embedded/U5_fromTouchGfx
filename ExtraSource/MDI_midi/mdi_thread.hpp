@@ -20,9 +20,9 @@ class mdi_thread
 {
 public:
 	typedef struct {
-	    CMidiChannel::Channel_e channel; // Canal MIDI
-	    CMidiCfg::cc cc;                 // Contrôle MIDI
-	    uint8_t data;                    // Données MIDI
+	    uint8_t channel; // Canal MIDI
+	    uint8_t cc;      // Contrôle MIDI
+	    uint8_t data;    // Données MIDI
 	} MsgQueueMessage;
 
 public:
@@ -30,7 +30,7 @@ public:
 
     HAL_StatusTypeDef init();
     HAL_StatusTypeDef exit();
-    HAL_StatusTypeDef putMessage(CMidiChannel::Channel_e channel, CMidiCfg::cc cc, uint8_t data);
+    HAL_StatusTypeDef putMessage(uint8_t channel, uint8_t cc, uint8_t data);
 
 private:
     // Constructeur privé

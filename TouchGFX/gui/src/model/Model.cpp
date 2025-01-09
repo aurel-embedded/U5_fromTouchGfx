@@ -20,6 +20,7 @@ void Model::tick()
 
 void Model::sendMidiOn(int note)
 {
+	// TODO: Passer par mdi_thread::getInstance().putMessage
 #ifndef SIMULATOR
 	if(note == 1)
 		CMidi::sendNoteOn(CMidiChannel::Ch02, CMidiNote::C3, 127);
@@ -33,6 +34,7 @@ void Model::sendMidiOn(int note)
 
 void Model::sendMidiOff(int note)
 {
+	// TODO: Passer par mdi_thread::getInstance().putMessage
 #ifndef SIMULATOR
 	if(note == 1)
 		CMidi::sendNoteOff(CMidiChannel::Ch02, CMidiNote::C3, 127);
