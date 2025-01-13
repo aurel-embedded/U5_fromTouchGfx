@@ -1,3 +1,4 @@
+#include <custom/ScreenManager.hpp>
 #include <gui/analog_screen_screen/Analog_ScreenView.hpp>
 #include <Tools/Utilities.hpp>
 
@@ -8,7 +9,9 @@ Analog_ScreenView::Analog_ScreenView()
 
 void Analog_ScreenView::setupScreen()
 {
+	ScreenManager::getInstance().setCurrentScreen(this);
     Analog_ScreenViewBase::setupScreen();
+
 }
 
 void Analog_ScreenView::tearDownScreen()
@@ -18,37 +21,37 @@ void Analog_ScreenView::tearDownScreen()
 
 void Analog_ScreenView::handleTickEvent()
 {
-	static drvAdc_values_t adc_old;
+	static userTypes_6Uint16_t adc_old;
 
-	drvAdc_values_t adc_actual = presenter->getAdcValues(potarDisplayRange);
+	userTypes_6Uint16_t adc_actual = presenter->getAdcValues(potarDisplayRange);
 
-	if(adc_old.potar1 != adc_actual.potar1){
+	handleTickEvent_Item(adc_actual.val1, &(adc_old.val1), &channel1_progress, &channel1_val, channel1_valBuffer, CHANNEL1_VAL_SIZE);
+	handleTickEvent_Item(adc_actual.val2, &(adc_old.val2), &channel2_progress, &channel2_val, channel2_valBuffer, CHANNEL2_VAL_SIZE);
+	handleTickEvent_Item(adc_actual.val3, &(adc_old.val3), &channel3_progress, &channel3_val, channel3_valBuffer, CHANNEL3_VAL_SIZE);
+	handleTickEvent_Item(adc_actual.val4, &(adc_old.val4), &channel4_progress, &channel4_val, channel4_valBuffer, CHANNEL4_VAL_SIZE);
+	handleTickEvent_Item(adc_actual.val5, &(adc_old.val5), &channel5_progress, &channel5_val, channel5_valBuffer, CHANNEL5_VAL_SIZE);
+	handleTickEvent_Item(adc_actual.val6, &(adc_old.val6), &channel6_progress, &channel6_val, channel6_valBuffer, CHANNEL6_VAL_SIZE);
+
+}
+
+void Analog_ScreenView::handleTickEvent_Item(	uint16_t actualValue, uint16_t *pOldValue,
+												touchgfx::CircleProgress *pProgress,
+												touchgfx::TextAreaWithOneWildcard *pText,
+												touchgfx::Unicode::UnicodeChar *pBuf,
+												uint16_t bufSize)
+{
+	if(*pOldValue != actualValue){
 		// Display Rotary Progress
-		channel1_progress.setValue(potarDisplayRange - adc_actual.potar1 + 1);
-		channel1_progress.invalidate();
+		pProgress->setValue(potarDisplayRange - actualValue + 1);
+		pProgress->invalidate();
 
 		// Display Value
-		Unicode::snprintf(channel1_valBuffer, CHANNEL1_VAL_SIZE, "%d", adc_actual.potar1);
-		channel1_val.invalidate();
-
-	    // Vérification des limites & conversion
-		int value_loc = convertToMidi(adc_actual.potar1, 0, potarDisplayRange);
-
-		// Send Midi
-		presenter->handleChannelEvent(1, value_loc);
+		Unicode::snprintf(pBuf, bufSize, "%d", actualValue);
+		pText->invalidate();
 
 		// Store old Value
-		adc_old.potar1 = adc_actual.potar1;
+		*pOldValue = actualValue;
 	}
-
 }
 
 
-int Analog_ScreenView::convertToMidi(int value, int minValue, int maxValue)
-{
-    // Clamp la valeur pour rester dans les limites
-    value = clamp(value, minValue, maxValue);
-
-    // Convertit en plage MIDI 0-127
-    return (value - minValue) * 127 / (maxValue - minValue);
-}

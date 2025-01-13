@@ -13,13 +13,17 @@ public:
     virtual void tearDownScreen();
     virtual void handleTickEvent();
 
+
 protected:
 
 private:
     const int potarDisplayRange = 320;
 
-    int convertToMidi(int value, int minValue, int maxValue);
-
+    void handleTickEvent_Item(	uint16_t actualValue, uint16_t *pOldValue,
+    							touchgfx::CircleProgress *pProgress,
+    							touchgfx::TextAreaWithOneWildcard *pText,
+    							touchgfx::Unicode::UnicodeChar *pBuf,
+    							uint16_t bufSize);
 };
 
 #endif // ANALOG_SCREENVIEW_HPP

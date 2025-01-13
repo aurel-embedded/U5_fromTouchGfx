@@ -18,15 +18,15 @@ void Analog_ScreenPresenter::deactivate()
 
 }
 
-drvAdc_values_t Analog_ScreenPresenter::getAdcValues(uint16_t maxMappedVal)
+userTypes_6Uint16_t Analog_ScreenPresenter::getAdcValues(uint16_t maxMappedVal)
 {
 	return model->getAdcValuesMapped(maxMappedVal);
 }
 
-void Analog_ScreenPresenter::handleChannelEvent(int channel, int value)
+void Analog_ScreenPresenter::handleChannelEvent(int CC, int value)
 {
     // Envoi des messages MIDI
-    model->sendControlChange(CMidiChannel::Channel_e::Ch01, CMidiCfg::cc::effectControl1, value);
+    model->sendControlChange(CMidiChannel::Channel_e::Ch01, CC, value);
 }
 
 

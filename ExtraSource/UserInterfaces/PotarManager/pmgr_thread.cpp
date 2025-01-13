@@ -28,6 +28,7 @@ pmgr_thread::~pmgr_thread()
 //=============================================================================
 //									TASK
 //=============================================================================
+
 // Fonction du thread (statique)
 void pmgr_thread::threadFunction(void* argument)
 {
@@ -41,29 +42,7 @@ void pmgr_thread::threadFunction(void* argument)
 				break;
 
 			case FsmState::Mode1:
-				// Get ADC Values
-				//----------------
-				drvAdc_values_t adcValuesDrv;
-				DRVADC_getAdcValues(&adcValuesDrv);
-
-				// Convert Adc Values to Midi Values
-				//-----------------------------------
-				adcValuesDrv.potar1 = map(adcValuesDrv.potar1, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
-				adcValuesDrv.potar2 = map(adcValuesDrv.potar2, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
-				adcValuesDrv.potar3 = map(adcValuesDrv.potar3, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
-				adcValuesDrv.potar4 = map(adcValuesDrv.potar4, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
-				adcValuesDrv.potar5 = map(adcValuesDrv.potar5, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
-				adcValuesDrv.potar6 = map(adcValuesDrv.potar6, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
-
-				// Send Midi Values
-				//------------------
-				mdi_thread::getInstance().putMessage(CMidiChannel::Channel_e::Ch01, 70, adcValuesDrv.potar1);
-				mdi_thread::getInstance().putMessage(CMidiChannel::Channel_e::Ch01, 71, adcValuesDrv.potar2);
-				mdi_thread::getInstance().putMessage(CMidiChannel::Channel_e::Ch01, 72, adcValuesDrv.potar3);
-				mdi_thread::getInstance().putMessage(CMidiChannel::Channel_e::Ch01, 73, adcValuesDrv.potar4);
-				mdi_thread::getInstance().putMessage(CMidiChannel::Channel_e::Ch01, 74, adcValuesDrv.potar5);
-				mdi_thread::getInstance().putMessage(CMidiChannel::Channel_e::Ch01, 75, adcValuesDrv.potar6);
-
+				threadFunction_mode1(argument);
 				break;
 
 			case FsmState::Error:
@@ -77,6 +56,56 @@ void pmgr_thread::threadFunction(void* argument)
     }
 }
 
+//=============================================================================
+//								Private Methods
+//=============================================================================
+
+// Fonction du thread (statique)
+void pmgr_thread::threadFunction_mode1(void* argument)
+{
+	userTypes_6Uint8_t midiValues;
+	static userTypes_6Uint8_t midiValues_old;
+
+	// Get ADC Values
+	//----------------
+	userTypes_6Uint16_t adcValuesDrv;
+	DRVADC_getAdcValues(&adcValuesDrv);
+
+	// Convert Adc Values to Midi Values
+	//-----------------------------------
+	midiValues.val1 = maxMidiMsgValue - map(adcValuesDrv.val1, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
+	midiValues.val2 = maxMidiMsgValue - map(adcValuesDrv.val2, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
+	midiValues.val3 = maxMidiMsgValue - map(adcValuesDrv.val3, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
+	midiValues.val4 = maxMidiMsgValue - map(adcValuesDrv.val4, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
+	midiValues.val5 = maxMidiMsgValue - map(adcValuesDrv.val5, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
+	midiValues.val6 = maxMidiMsgValue - map(adcValuesDrv.val6, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
+
+	// Send Midi Values if different
+	//-------------------------------
+	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x46, &(midiValues_old.val1), midiValues.val1);
+	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x47, &(midiValues_old.val2), midiValues.val2);
+	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x48, &(midiValues_old.val3), midiValues.val3);
+	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x49, &(midiValues_old.val4), midiValues.val4);
+	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x4A, &(midiValues_old.val5), midiValues.val5);
+	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x4B, &(midiValues_old.val6), midiValues.val6);
+}
+
+//------------------------------------------------------------------------------
+/// \fn 		void pmgr_thread::sendCCIfDifferent(uint8_t channel, uint8_t cc, uint8_t *pOldData, uint8_t actualData)
+/// \brief		Send Midi Values if different
+//------------------------------------------------------------------------------
+void pmgr_thread::sendCCIfDifferent(uint8_t channel, uint8_t cc, uint8_t *pOldData, uint8_t actualData)
+{
+	if(*pOldData != actualData){
+		mdi_thread::getInstance().putMessage(channel, cc, actualData);
+		*pOldData = actualData;
+	}
+
+}
+
+//=============================================================================
+//								Public Methods
+//=============================================================================
 
 //------------------------------------------------------------------------------
 /// \fn 		pmgr_thread& pmgr_thread::getInstance()
@@ -127,4 +156,13 @@ HAL_StatusTypeDef pmgr_thread::exit()
     return HAL_OK;
 }
 
+
+//------------------------------------------------------------------------------
+/// \fn 		HAL_StatusTypeDef pmgr_thread::setMode(FsmState state)
+/// \brief		Set Mode
+//------------------------------------------------------------------------------
+void pmgr_thread::setMode(FsmState state)
+{
+	currentState = state;
+}
 

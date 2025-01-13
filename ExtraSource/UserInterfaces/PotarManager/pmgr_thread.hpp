@@ -23,6 +23,9 @@ public:
     HAL_StatusTypeDef init();
     HAL_StatusTypeDef exit();
 
+    enum class FsmState {Idle, Mode1, Error};
+    void setMode(FsmState state);
+
 private:
     static constexpr uint8_t minMidiMsgValue = 0;
     static constexpr uint8_t maxMidiMsgValue = 127;
@@ -43,14 +46,15 @@ private:
     //----------
     std::atomic<bool> thread_stopRequested{false};
     static void threadFunction(void* argument); 						// Fonction statique pour le thread
+    static void threadFunction_mode1(void* argument); 					// Fonction statique pour le thread
+    static void sendCCIfDifferent(uint8_t channel, uint8_t cc, uint8_t *pOldData, uint8_t actualData);
     osThreadId_t threadId;                      						// ID du thread
     static constexpr uint32_t stackSize = TSK_CFG__STACK__TSK_PMGR; 	// Taille de la pile
     static constexpr osPriority_t priority = TSK_CFG__PRIO__TSK_PMGR; 	// Priorité
-    static constexpr uint32_t taskDelay = 100;
+    static constexpr uint32_t taskDelay = 50;
 
     // Fsm
     //----------
-    enum class FsmState {Idle, Mode1, Error};
     FsmState currentState = FsmState::Idle;
 
 };

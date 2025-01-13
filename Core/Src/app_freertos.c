@@ -28,6 +28,7 @@
 #include <UserInterfaces/drvAdc/drvAdc.h>
 #include "usb_device.h"
 #include "MDI_midi/mdi_wrapper.h"
+#include "UserInterfaces/PotarManager/pmgr_wrapper.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -158,6 +159,10 @@ void MX_FREERTOS_Init(void) {
   }
 
   if(BAL_init(bal_ledList, bal_ledList_size, NULL, 0) != HAL_OK){
+	  //TODO: Debug Printf???
+  }
+
+  if(PMGR_Init() != HAL_OK){
 	  //TODO: Debug Printf???
   }
   /* USER CODE END RTOS_THREADS */

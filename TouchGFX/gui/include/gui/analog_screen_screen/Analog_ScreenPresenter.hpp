@@ -3,7 +3,6 @@
 
 #include <gui/model/ModelListener.hpp>
 #include <mvp/Presenter.hpp>
-#include <UserInterfaces/drvAdc/drvAdc_values.h>
 
 using namespace touchgfx;
 
@@ -28,8 +27,8 @@ public:
 
     virtual ~Analog_ScreenPresenter() {}
 
-    drvAdc_values_t getAdcValues(uint16_t maxMappedVal);
-    void handleChannelEvent(int channel, int value);
+    userTypes_6Uint16_t getAdcValues(uint16_t maxMappedVal);
+    void handleChannelEvent(int CC, int value);
 
 private:
     Analog_ScreenPresenter();

@@ -10,7 +10,6 @@
 
 #include <cmsis_os2.h>
 #include <stdint.h>
-#include <UserInterfaces/drvAdc/drvAdc_values.h>
 
 #ifdef __cplusplus
 extern "C" {
