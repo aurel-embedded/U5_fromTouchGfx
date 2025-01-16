@@ -6,6 +6,7 @@
  */
 #include <cmsis_os2.h>
 #include <Config/task_config.h>
+#include <stdbool.h>
 #include <stm32u5xx.h>
 #include <UserInterfaces/drvAdc/drvAdc.h>
 #include <string.h>
@@ -17,6 +18,9 @@ extern ADC_HandleTypeDef hadc1;
 extern ADC_HandleTypeDef hadc2;
 extern ADC_HandleTypeDef hadc4;
 extern TIM_HandleTypeDef htim15;
+
+
+bool drvAdc_isAdcRunning = false;
 
 //-----------------------------------------------------------------------------
 // Task
@@ -134,59 +138,40 @@ void drvAdc_ConvCpltCallback(ADC_TypeDef *Instance)
 //=============================================================================
 static void drvAdc_Task_fn(void *argument)
 {
-	// Warning: As we use os object in the ADC callback, we must
-	//				start DMA & Timer here, once the os objects
-	//				are created
-	if(HAL_ADC_Start_DMA(&hadc1, (uint32_t *)drvAdc_dmaBuf_ADC1, 2) != HAL_OK){
-		// Handle error (e.g., log or notify)
-		return;
-	}
-
-	if(HAL_ADC_Start_DMA(&hadc2, (uint32_t *)drvAdc_dmaBuf_ADC2, 2) != HAL_OK){
-		// Handle error (e.g., log or notify)
-		return;
-	}
-
-	if(HAL_ADC_Start_DMA(&hadc4, (uint32_t *)drvAdc_dmaBuf_ADC4, 2) != HAL_OK){
-		// Handle error (e.g., log or notify)
-		return;
-	}
-
-    if (HAL_TIM_Base_Start(&htim15) != HAL_OK) {
-        // Handle error (e.g., log or notify)
-        return;
-    }
+//	DRVADC_startAdc();
 
 	/* Infinite loop */
 	for(;;)
 	{
-		// Read From unactiv CallBack Buffer
+		if(drvAdc_isAdcRunning == true)
+		{
+			// Get Memory shared Mutex
+			if(osMutexAcquire(drvAdc_memoryShared.mtx_id, osWaitForever) == osOK){
+				// Mise à jour du compteur d'échantillons (jusqu'à MOVING_AVERAGE_WINDOW_SIZE)
+				if (drvAdc_sample_count < MOVING_AVERAGE_WINDOW_SIZE) {
+					drvAdc_sample_count++;
+				}
 
-		// Get Memory shared Mutex
-		if(osMutexAcquire(drvAdc_memoryShared.mtx_id, osWaitForever) == osOK){
-            // Mise à jour du compteur d'échantillons (jusqu'à MOVING_AVERAGE_WINDOW_SIZE)
-            if (drvAdc_sample_count < MOVING_AVERAGE_WINDOW_SIZE) {
-            	drvAdc_sample_count++;
-            }
+				// Mise à jour des moyennes glissantes incrémentales
+				drvAdc_potar_avg.val1 += (drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][0] - drvAdc_potar_avg.val1) / drvAdc_sample_count;
+				drvAdc_potar_avg.val2 += (drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][1] - drvAdc_potar_avg.val2) / drvAdc_sample_count;
+				drvAdc_potar_avg.val3 += (drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][0] - drvAdc_potar_avg.val3) / drvAdc_sample_count;
+				drvAdc_potar_avg.val4 += (drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][1] - drvAdc_potar_avg.val4) / drvAdc_sample_count;
+				drvAdc_potar_avg.val5 += (drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0] - drvAdc_potar_avg.val5) / drvAdc_sample_count;
+				drvAdc_potar_avg.val6 += (drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][1] - drvAdc_potar_avg.val6) / drvAdc_sample_count;
 
-            // Mise à jour des moyennes glissantes incrémentales
-            drvAdc_potar_avg.val1 += (drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][0] - drvAdc_potar_avg.val1) / drvAdc_sample_count;
-            drvAdc_potar_avg.val2 += (drvAdc_callBackBuf_ADC2[!drvAdc_callBackBuf_activeInd_ADC2][1] - drvAdc_potar_avg.val2) / drvAdc_sample_count;
-            drvAdc_potar_avg.val3 += (drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][0] - drvAdc_potar_avg.val3) / drvAdc_sample_count;
-            drvAdc_potar_avg.val4 += (drvAdc_callBackBuf_ADC4[!drvAdc_callBackBuf_activeInd_ADC4][1] - drvAdc_potar_avg.val4) / drvAdc_sample_count;
-            drvAdc_potar_avg.val5 += (drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][0] - drvAdc_potar_avg.val5) / drvAdc_sample_count;
-            drvAdc_potar_avg.val6 += (drvAdc_callBackBuf_ADC1[!drvAdc_callBackBuf_activeInd_ADC1][1] - drvAdc_potar_avg.val6) / drvAdc_sample_count;
+				// Stockage des moyennes dans la mémoire partagée
+				drvAdc_memoryShared.values.val1 = (uint16_t)drvAdc_potar_avg.val1;
+				drvAdc_memoryShared.values.val2 = (uint16_t)drvAdc_potar_avg.val2;
+				drvAdc_memoryShared.values.val3 = (uint16_t)drvAdc_potar_avg.val3;
+				drvAdc_memoryShared.values.val4 = (uint16_t)drvAdc_potar_avg.val4;
+				drvAdc_memoryShared.values.val5 = (uint16_t)drvAdc_potar_avg.val5;
+				drvAdc_memoryShared.values.val6 = (uint16_t)drvAdc_potar_avg.val6;
 
-            // Stockage des moyennes dans la mémoire partagée
-            drvAdc_memoryShared.values.val1 = (uint16_t)drvAdc_potar_avg.val1;
-            drvAdc_memoryShared.values.val2 = (uint16_t)drvAdc_potar_avg.val2;
-            drvAdc_memoryShared.values.val3 = (uint16_t)drvAdc_potar_avg.val3;
-            drvAdc_memoryShared.values.val4 = (uint16_t)drvAdc_potar_avg.val4;
-            drvAdc_memoryShared.values.val5 = (uint16_t)drvAdc_potar_avg.val5;
-            drvAdc_memoryShared.values.val6 = (uint16_t)drvAdc_potar_avg.val6;
+				// Release Mutex
+				osMutexRelease(drvAdc_memoryShared.mtx_id);
+			}
 
-			// Release Mutex
-			osMutexRelease(drvAdc_memoryShared.mtx_id);
 		}
 
 
@@ -212,6 +197,68 @@ osStatus_t DRVADC_init()
 	return osOK;
 }
 
+osStatus_t DRVADC_exit()
+{
+	if(drvAdc_isAdcRunning == true){
+		DRVADC_stopAdc();
+	}
+
+	osMutexDelete(drvAdc_memoryShared.mtx_id);
+	osThreadTerminate(drvAdc_TaskHandle);
+
+	return osOK;
+}
+
+HAL_StatusTypeDef DRVADC_startAdc()
+{
+	// Warning: As we use os object in the ADC callback, we must
+	//				start DMA & Timer here, once the os objects
+	//				are created
+	if(osKernelGetState() != osKernelRunning)
+		return HAL_ERROR;
+
+	if(drvAdc_isAdcRunning == true)
+		return HAL_OK;
+
+	if(HAL_ADC_Start_DMA(&hadc1, (uint32_t *)drvAdc_dmaBuf_ADC1, 2) != HAL_OK){
+		return HAL_ERROR;
+	}
+
+	if(HAL_ADC_Start_DMA(&hadc2, (uint32_t *)drvAdc_dmaBuf_ADC2, 2) != HAL_OK){
+		return HAL_ERROR;
+	}
+
+	if(HAL_ADC_Start_DMA(&hadc4, (uint32_t *)drvAdc_dmaBuf_ADC4, 2) != HAL_OK){
+		return HAL_ERROR;
+	}
+
+    if (HAL_TIM_Base_Start(&htim15) != HAL_OK) {
+		return HAL_ERROR;
+    }
+
+    drvAdc_isAdcRunning = true;
+
+	return HAL_OK;
+}
+
+HAL_StatusTypeDef DRVADC_stopAdc()
+{
+	// Warning: As we use os object in the ADC callback, we must
+	//				start DMA & Timer here, once the os objects
+	//				are created
+	if(osKernelGetState() != osKernelRunning)
+		return HAL_ERROR;
+
+    drvAdc_isAdcRunning = false;
+
+    HAL_ADC_Stop_DMA(&hadc1);
+	HAL_ADC_Stop_DMA(&hadc2);
+	HAL_ADC_Stop_DMA(&hadc4);
+    HAL_TIM_Base_Stop(&htim15);
+
+    return HAL_OK;
+}
+
 
 osStatus_t DRVADC_getAdcValues(userTypes_6Uint16_t 	*pValues)
 {
@@ -235,3 +282,7 @@ osStatus_t DRVADC_getAdcValues(userTypes_6Uint16_t 	*pValues)
 	return osOK;
 }
 
+bool DRVADC_isAdcRunning(void)
+{
+	return drvAdc_isAdcRunning;
+}

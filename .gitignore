@@ -4,3 +4,5 @@
 *.cache
 *.cyclo
 /DebugNoload/*
+*.su
+/THW/*

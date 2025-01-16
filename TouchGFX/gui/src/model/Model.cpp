@@ -3,7 +3,6 @@
 #include <MDI_midi/mdi_thread.hpp>
 #include <UserInterfaces/drvAdc/drvAdc.h>
 #include <Tools/Tools.h>
-#include <UserInterfaces/PotarManager/pmgr_thread.hpp>
 
 #ifndef SIMULATOR
 #include <MDI_midi/CMidi.h>

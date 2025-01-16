@@ -10,7 +10,7 @@
 #include <MDI_midi/mdi_thread.hpp>
 #include <Tools/Tools.h>
 #include <UserInterfaces/drvAdc/drvAdc.h>
-#include <UserInterfaces/PotarManager/pmgr_thread.hpp>
+#include <PotarManager/pmgr_thread.hpp>
 
 
 
@@ -33,7 +33,10 @@ pmgr_thread::~pmgr_thread()
 void pmgr_thread::threadFunction(void* argument)
 {
 	pmgr_thread* self  = static_cast<pmgr_thread*>(argument); // Conversion en instance de la classe
-    while (!self->thread_stopRequested)
+
+	DRVADC_startAdc();
+
+	while (!self->thread_stopRequested)
     {
 
     	// Manage Component State
