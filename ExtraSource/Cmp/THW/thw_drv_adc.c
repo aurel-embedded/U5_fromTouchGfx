@@ -16,7 +16,6 @@
 #include <stddef.h>
 #include <THW_core/THW_testHardware_common.h>
 #include <THW/thw.h>
-#include <FAN/drvTachy/drvTachy.h>
 #include <drvAdc/drvAdc_api.h>
 
 

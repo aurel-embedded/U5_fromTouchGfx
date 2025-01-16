@@ -53,7 +53,7 @@ typedef enum{
 extern volatile uint8_t thw_line[RX_BUF_SIZE+1];
 extern HAL_StatusTypeDef	thw_com_init(void);
 extern HAL_StatusTypeDef	thw_com_exit(void);
-extern uint16_t 			thw_com_transmit(uint8_t *pData, uint16_t Size);
+//extern uint16_t 			thw_com_transmit(uint8_t *pData, uint16_t Size);
 extern bool 				thw_com_manageRx(void);
 extern HAL_StatusTypeDef 	THW_COM_printf(const char *fmt, ...);
 

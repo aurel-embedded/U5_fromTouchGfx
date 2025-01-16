@@ -25,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <subModule/BAL_Core/bal_api.h>
+#include <THW_core/THW_testHardware_API.h>
 #include <UserInterfaces/drvAdc/drvAdc.h>
 #include "usb_device.h"
 #include "MDI_midi/mdi_wrapper.h"
@@ -143,6 +144,7 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
+#ifndef MODE_THW
   /* USER CODE END RTOS_QUEUES */
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
@@ -166,6 +168,9 @@ void MX_FREERTOS_Init(void) {
   if(PMGR_Init() != HAL_OK){
 	  ASSERT_ERROR("PMGR_Init");
   }
+#else
+  THW_init();
+#endif
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */

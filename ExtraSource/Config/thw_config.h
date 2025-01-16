@@ -9,7 +9,7 @@
 #define THW_CONFIG_H_
 
 
-#define THW_UART USART3
+#define THW_UART USART1
 
 static const uint8_t 	THW_SoftwareReference[]	= "AMI2";
 static const uint8_t 	THW_SoftwareVersion[]	= "0.0.1";

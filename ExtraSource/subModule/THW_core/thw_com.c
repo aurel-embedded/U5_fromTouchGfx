@@ -10,7 +10,6 @@
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <stm32h7xx_ll_usart.h>
 #include <string.h>
 #include <thw_config.h>
 #include <THW_core/THW_testHardware_common.h>
@@ -44,10 +43,11 @@ static void thw_com_lock(void)
 {
 	if(osKernelGetState() == osKernelRunning){
 		if(thw_com_mtx_id != NULL){
-			osMutexWait(thw_com_mtx_id, osWaitForever);
+			osMutexAcquire(thw_com_mtx_id, osWaitForever);
 		}
 	}
 }
+
 /******************************************************************************
  ** Function name:		thw_com_unlock()
  ** Descriptions:		Unloock le mutex de l'affichage DBG
@@ -155,38 +155,38 @@ bool thw_com_manageRx(void)
 char thw_comfmt[THW_COM_MAX_FORMAT_LENGTH];
 
 
-
-/******************************************************************************
- ** Function name:		THW_comTransmit
- ** Descriptions:		Transmission
- ******************************************************************************/
-uint16_t thw_com_transmit(uint8_t *data, uint16_t len)
-{
-	uint16_t ubSend = 0;
-	while (ubSend < len)
-	{
-		/* Wait for TXE flag to be raised */
-		while (!LL_USART_IsActiveFlag_TXE(thw_uartHdl.Instance)){
-			osDelay(1);
-		}
-
-		/* If last char to be sent, clear TC flag */
-		if (ubSend == (len - 1)){
-			LL_USART_ClearFlag_TC(thw_uartHdl.Instance);
-		}
-
-		/* Write character in Transmit Data register.
-	       TXE flag is cleared by writing data in TDR register */
-		LL_USART_TransmitData8(thw_uartHdl.Instance, *(data + ubSend++));
-	}
-
-	/* Wait for TC flag to be raised for last char */
-	while (!LL_USART_IsActiveFlag_TC(thw_uartHdl.Instance)){
-		osDelay(1);
-	}
-
-	return len;
-}
+//
+///******************************************************************************
+// ** Function name:		THW_comTransmit
+// ** Descriptions:		Transmission
+// ******************************************************************************/
+//uint16_t thw_com_transmit(uint8_t *data, uint16_t len)
+//{
+//	uint16_t ubSend = 0;
+//	while (ubSend < len)
+//	{
+//		/* Wait for TXE flag to be raised */
+//		while (!LL_USART_IsActiveFlag_TXE(thw_uartHdl.Instance)){
+//			osDelay(1);
+//		}
+//
+//		/* If last char to be sent, clear TC flag */
+//		if (ubSend == (len - 1)){
+//			LL_USART_ClearFlag_TC(thw_uartHdl.Instance);
+//		}
+//
+//		/* Write character in Transmit Data register.
+//	       TXE flag is cleared by writing data in TDR register */
+//		LL_USART_TransmitData8(thw_uartHdl.Instance, *(data + ubSend++));
+//	}
+//
+//	/* Wait for TC flag to be raised for last char */
+//	while (!LL_USART_IsActiveFlag_TC(thw_uartHdl.Instance)){
+//		osDelay(1);
+//	}
+//
+//	return len;
+//}
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

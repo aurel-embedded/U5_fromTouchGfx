@@ -14,7 +14,6 @@
 #include <stdint.h>
 #include <THW/thw.h>
 #include <THW_core/THW_testHardware_common.h>
-#include "APP.h"
 
 const char thw_HardFault_menuName[] = "HardFault";
 

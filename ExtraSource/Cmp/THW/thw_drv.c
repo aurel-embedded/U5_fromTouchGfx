@@ -14,7 +14,6 @@
 #include <stdint.h>
 #include <THW/thw.h>
 #include <THW_core/THW_testHardware_common.h>
-#include "APP.h"
 
 const char thw_drv_menuName[] = "Driver";
 
@@ -26,18 +25,8 @@ const char thw_drv_menuName[] = "Driver";
 //****************************************
 st_thw_menuItem thw_drv_menuTab[] = {
 		{.name = "Uart THW", 			.pActionFn = thw_drv_uartThw_setActive, 	.info = 0},
-		{.name = "CAN", 				.pActionFn = thw_drv_can_setActive, 		.info = 0},
-		{.name = "FAN", 				.pActionFn = thw_drv_fan_setActive, 		.info = 0},
-		{.name = "EVP", 				.pActionFn = thw_drv_evp_setActive, 		.info = 0},
-		{.name = "EVS", 				.pActionFn = thw_drv_evs_setActive, 		.info = 0},
-		{.name = "ADC", 				.pActionFn = thw_drv_adc_setActive, 		.info = 0},
-		{.name = "ADC/FDC/EVT",			.pActionFn = thw_drv_adcFdcEvt_setActive, 	.info = 0},
-		{.name = "FLASH", 				.pActionFn = thw_drv_flash_setActive, 		.info = 0},
-		{.name = "VEE", 				.pActionFn = thw_drv_vee_setActive, 		.info = 0},
-		{.name = "VEE Force Format",	.pActionFn = thw_drv_veeF_setActive, 		.info = 0},
-		{.name = "CEM",					.pActionFn = thw_drv_cem_setActive, 		.info = 0},
-		{.name = "WDG",					.pActionFn = thw_drv_wdg_setActive, 		.info = 0},
-		{.name = "HotSwap/Rterm",		.pActionFn = thw_drv_hotSwap_setActive,		.info = 0},
+//		{.name = "VEE", 				.pActionFn = thw_drv_vee_setActive, 		.info = 0},
+//		{.name = "VEE Force Format",	.pActionFn = thw_drv_veeF_setActive, 		.info = 0},
 };
 
 

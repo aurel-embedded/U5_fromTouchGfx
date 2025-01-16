@@ -1,5 +1,3 @@
-#include <THW_core/THW_testHardware_API.h>
-
 /*
  * THW_hardwareTest.c
  *
@@ -11,11 +9,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <stm32h7xx.h>
-#include <stm32h7xx_hal_def.h>
+#include "main.h"
 #include <THW/thw.h>
 #include <THW_core/THW_testHardware_common.h>
 #include "task_config.h"
+#include <THW_core/THW_testHardware_API.h>
+
 
 //-----------------------------------------------------------------------------
 // THREAD RX

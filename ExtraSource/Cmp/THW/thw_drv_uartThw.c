@@ -11,10 +11,8 @@
 #ifdef MODE_THW
 
 #include <cmsis_os2.h>
-#include "APP.h"
 #include <stddef.h>
-#include <stm32h7xx.h>
-#include <stm32h7xx_hal_def.h>
+#include <main.h>
 #include <THW_core/THW_testHardware_common.h>
 
 const char thw_drv_uartThw_menuName[] = "Driver | Uart THW";

@@ -14,7 +14,6 @@
 #include <stdint.h>
 #include <THW/thw.h>
 #include <THW_core/THW_testHardware_common.h>
-#include "APP.h"
 
 const char thw_main_menuName[] = "Main";
 
@@ -26,7 +25,6 @@ const char thw_main_menuName[] = "Main";
 //****************************************
 st_thw_menuItem thw_main_menuTab[] = {
 		{.name = "Test Driver", 		.pActionFn = thw_drv_setActive, .info = 0},
-		{.name = "Test Component", 		.pActionFn = thw_cmp_setActive, .info = 0},
 		{.name = "Test HardFault", 		.pActionFn = thw_HardFault_setActive, .info = 0},
 };
 
