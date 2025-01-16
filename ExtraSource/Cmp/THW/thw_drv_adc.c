@@ -21,6 +21,7 @@
 
 const char thw_drv_adc_menuName[] = "Driver | ADC";
 
+static userTypes_6Uint16_t thw_drv_adc_values;
 
 //-------------------------
 static void thw_drv_adc_startStop(void);
@@ -104,7 +105,7 @@ static void thw_drv_adc_ManageChoice(char CodeToManage)
 		DRVADC_exit();
 
 		// Return to the previous menu
-		thw_drv_setActive();
+		thw_main_setActive();
 	}
 }
 
@@ -118,67 +119,15 @@ void thw_drv_adc_RefreshFn(void)
 	THW_goto(4, 20); 	(isAdcRunning)? THW_printf("Running\r\n"): THW_printf("Stopped\r\n");
 
 	if(isAdcRunning){
-		drvAdc_adcVal_t adcVal_3v3 = DRVADC_getV_3_3();
-		drvAdc_adcVal_t adcVal_v12 = DRVADC_getV_12();
-		drvAdc_adcVal_t adcVal_v24 = DRVADC_getV_24();
-		drvAdc_adcVal_t adcVal_intTemp = DRVADC_tempInt_getValue();
-		drvAdc_adcVal_t adcVal_extTemp = DRVADC_tempExt_getValue();
-		drvAdc_adcVal_t adcVal_depExt1 = DRVADC_depExt1_getVal();
-		drvAdc_adcVal_t adcVal_depExt2 = DRVADC_depExt2_getVal();
-		drvAdc_adcVal_t adcVal_depInt = DRVADC_depInt_getVal();
-		drvAdc_adcVal_t adcVal_bras1Imon = DRVADC_bras1Imon_getVal();
-
-
-		THW_goto(6, 20); 	THW_printf("%d mV"VT100_CLEAREOL, DRVADC_getVref());
-		THW_goto(7, 20); 	THW_printf("%d °C"VT100_CLEAREOL, DRVADC_getCpuTemp());
-
-		THW_goto(10, 20); 	THW_printf("%d"VT100_CLEAREOL, adcVal_3v3.reg);
-		THW_goto(11, 20); 	THW_printf("%d"VT100_CLEAREOL, adcVal_v12.reg);
-		THW_goto(12, 20); 	THW_printf("%d"VT100_CLEAREOL, adcVal_v24.reg);
-		THW_goto(14, 20); 	THW_printf("%d"VT100_CLEAREOL, adcVal_intTemp.reg);
-		THW_goto(16, 20); 	THW_printf("%d"VT100_CLEAREOL, adcVal_extTemp.reg);
-		THW_goto(19, 20); 	THW_printf("%d"VT100_CLEAREOL, adcVal_depExt1.reg);
-		THW_goto(21, 20); 	THW_printf("%d"VT100_CLEAREOL, adcVal_depExt2.reg);
-		THW_goto(23, 20); 	THW_printf("%d"VT100_CLEAREOL, adcVal_depInt.reg);
-		THW_goto(25, 20); 	THW_printf("%d"VT100_CLEAREOL, adcVal_bras1Imon.reg);
-
-		THW_goto(10, 35); 	THW_printf("%d mV"VT100_CLEAREOL, adcVal_3v3.Vadc);
-		THW_goto(11, 35); 	THW_printf("%d mV"VT100_CLEAREOL, adcVal_v12.Vadc);
-		THW_goto(12, 35); 	THW_printf("%d mV"VT100_CLEAREOL, adcVal_v24.Vadc);
-		THW_goto(14, 35); 	THW_printf("%d mV"VT100_CLEAREOL, adcVal_intTemp.Vadc);
-		THW_goto(16, 35); 	THW_printf("%d mV"VT100_CLEAREOL, adcVal_extTemp.Vadc);
-		THW_goto(19, 35); 	THW_printf("%d mV"VT100_CLEAREOL, adcVal_depExt1.Vadc);
-		THW_goto(21, 35); 	THW_printf("%d mV"VT100_CLEAREOL, adcVal_depExt2.Vadc);
-		THW_goto(23, 35); 	THW_printf("%d mV"VT100_CLEAREOL, adcVal_depInt.Vadc);
-		THW_goto(25, 35); 	THW_printf("%d mV"VT100_CLEAREOL, adcVal_bras1Imon.Vadc);
-
-		THW_goto(10, 50); 	THW_printf("%.0f mV"VT100_CLEAREOL, adcVal_3v3.Sensor);
-		THW_goto(11, 50); 	THW_printf("%.0f mV"VT100_CLEAREOL, adcVal_v12.Sensor);
-		THW_goto(12, 50); 	THW_printf("%.0f mV"VT100_CLEAREOL, adcVal_v24.Sensor);
-		THW_goto(14, 50); 	THW_printf("%.0f Ohms"VT100_CLEAREOL, adcVal_intTemp.Sensor);
-		THW_goto(16, 50); 	THW_printf("%.0f Ohms"VT100_CLEAREOL, adcVal_extTemp.Sensor);
-		if(DRVADC_depExt1_getMode() == DRVADC_deptExt_mode_420mA){
-			THW_goto(19, 50); 	THW_printf("%.0f mA"VT100_CLEAREOL, adcVal_depExt1.Sensor);
-		}else{
-			THW_goto(19, 50); 	THW_printf("%.2f V"VT100_CLEAREOL, adcVal_depExt1.Sensor);
+		osStatus_t status = DRVADC_getAdcValues(&thw_drv_adc_values);
+		if(status == osOK){
+			THW_goto(5, 20); 	THW_printf("%d"VT100_CLEAREOL, thw_drv_adc_values.val1);
+			THW_goto(6, 20); 	THW_printf("%d"VT100_CLEAREOL, thw_drv_adc_values.val2);
+			THW_goto(7, 20); 	THW_printf("%d"VT100_CLEAREOL, thw_drv_adc_values.val3);
+			THW_goto(8, 20); 	THW_printf("%d"VT100_CLEAREOL, thw_drv_adc_values.val4);
+			THW_goto(9, 20); 	THW_printf("%d"VT100_CLEAREOL, thw_drv_adc_values.val5);
+			THW_goto(10, 20); 	THW_printf("%d"VT100_CLEAREOL, thw_drv_adc_values.val6);
 		}
-		if(DRVADC_depExt2_getMode() == DRVADC_deptExt_mode_420mA){
-			THW_goto(21, 50); 	THW_printf("%.0f mA"VT100_CLEAREOL, adcVal_depExt2.Sensor);
-		}else{
-			THW_goto(21, 50); 	THW_printf("%.2f V"VT100_CLEAREOL, adcVal_depExt2.Sensor);
-		}
-		THW_goto(23, 50); 	THW_printf("%.0f mV"VT100_CLEAREOL, adcVal_depInt.Sensor);
-		THW_goto(25, 50); 	THW_printf("%.0f mV"VT100_CLEAREOL, adcVal_bras1Imon.Sensor);
-
-		THW_goto(10, 65); 	THW_printf("%.0f mV"VT100_CLEAREOL, adcVal_3v3.Physical);
-		THW_goto(11, 65); 	THW_printf("%.0f mV"VT100_CLEAREOL, adcVal_v12.Physical);
-		THW_goto(12, 65); 	THW_printf("%.0f mV"VT100_CLEAREOL, adcVal_v24.Physical);
-		THW_goto(14, 65); 	THW_printf("%.0f °C"VT100_CLEAREOL, adcVal_intTemp.Physical);
-		THW_goto(16, 65); 	THW_printf("%.0f °C"VT100_CLEAREOL, adcVal_extTemp.Physical);
-		THW_goto(19, 65); 	THW_printf("%.2f mbar"VT100_CLEAREOL, adcVal_depExt1.Physical);
-		THW_goto(21, 65); 	THW_printf("%.2f mbar"VT100_CLEAREOL, adcVal_depExt2.Physical);
-		THW_goto(23, 65); 	THW_printf("%.2f mbar"VT100_CLEAREOL, adcVal_depInt.Physical);
-		THW_goto(25, 65); 	THW_printf("%.2f mA"VT100_CLEAREOL, adcVal_bras1Imon.Physical);
 
 	}
 }

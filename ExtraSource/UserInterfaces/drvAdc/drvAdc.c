@@ -197,6 +197,18 @@ osStatus_t DRVADC_init()
 	return osOK;
 }
 
+osStatus_t DRVADC_exit()
+{
+	if(drvAdc_isAdcRunning == true){
+		DRVADC_stopAdc();
+	}
+
+	osMutexDelete(drvAdc_memoryShared.mtx_id);
+	osThreadTerminate(drvAdc_TaskHandle);
+
+	return osOK;
+}
+
 HAL_StatusTypeDef DRVADC_startAdc()
 {
 	// Warning: As we use os object in the ADC callback, we must
@@ -270,3 +282,7 @@ osStatus_t DRVADC_getAdcValues(userTypes_6Uint16_t 	*pValues)
 	return osOK;
 }
 
+bool DRVADC_isAdcRunning(void)
+{
+	return drvAdc_isAdcRunning;
+}
