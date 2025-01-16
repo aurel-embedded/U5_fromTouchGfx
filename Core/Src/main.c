@@ -26,6 +26,7 @@
 /* USER CODE BEGIN Includes */
 #include <usbd_def.h>
 #include "BSP/Components/mx66uw1g45g/mx66uw1g45g.h"
+#include <Tools/assertError.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -1170,6 +1171,7 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
 //  __disable_irq();
+	ASSERT_ERROR("Error_Handler");
   while (1)
   {
 	  HAL_GPIO_TogglePin(USER_LD2_RED_GPIO_Port, USER_LD2_RED_Pin);

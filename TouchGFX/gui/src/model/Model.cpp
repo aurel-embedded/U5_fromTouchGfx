@@ -76,7 +76,7 @@ userTypes_6Uint16_t Model::getAdcValuesMapped(uint16_t maxMappedVal)
 void Model::setPmgrMode(pmgr_thread::FsmState state)
 {
 #ifndef SIMULATOR
-	pmgr_thread::getInstance().setMode(pmgr_thread::FsmState::Mode1);
+	pmgr_thread::getInstance().setMode(state);
 
 #endif
 

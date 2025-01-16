@@ -29,6 +29,7 @@
 #include "usb_device.h"
 #include "MDI_midi/mdi_wrapper.h"
 #include "UserInterfaces/PotarManager/pmgr_wrapper.h"
+#include "Tools/assertError.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -151,19 +152,19 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   if(MDI_Init() != HAL_OK){
-	  //TODO: Debug Printf???
+	  ASSERT_ERROR("MDI_Init");
   }
 
   if(DRVADC_init() != osOK){
-	  //TODO: Debug Printf???
+	  ASSERT_ERROR("DRVADC_init");
   }
 
   if(BAL_init(bal_ledList, bal_ledList_size, NULL, 0) != HAL_OK){
-	  //TODO: Debug Printf???
+	  ASSERT_ERROR("BAL_init");
   }
 
   if(PMGR_Init() != HAL_OK){
-	  //TODO: Debug Printf???
+	  ASSERT_ERROR("PMGR_Init");
   }
   /* USER CODE END RTOS_THREADS */
 
