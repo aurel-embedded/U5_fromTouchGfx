@@ -1,3 +1,4 @@
+#include <UserInterfaces/drvAdc/drvAdc.h>
 
 /*
  * thw_drv_adc.c
@@ -16,7 +17,6 @@
 #include <stddef.h>
 #include <THW_core/THW_testHardware_common.h>
 #include <THW/thw.h>
-#include <drvAdc/drvAdc_api.h>
 
 
 const char thw_drv_adc_menuName[] = "Driver | ADC";
@@ -24,22 +24,9 @@ const char thw_drv_adc_menuName[] = "Driver | ADC";
 
 //-------------------------
 static void thw_drv_adc_startStop(void);
-static void thw_drv_adc_toggleVref(void);
-static void thw_drv_adc_toggleDepExt1(void);
-static void thw_drv_adc_toggleDepExt2(void);
-static void thw_drv_adc_toggleDepInt(void);
-
-static void thw_drv_adc_dep1_setOffset(void);
-static void thw_drv_adc_toggleTempExt1(void);
 
 st_thw_menuItem thw_drv_adc_menuTab[] = {
-		{.name = "ADC       :  start/stop",							.pActionFn = thw_drv_adc_startStop, 		.info = 0},
-		{.name = "ADC       :  Vref Int/Ext",						.pActionFn = thw_drv_adc_toggleVref, 		.info = 0},
-		{.name = "Dep Ext 1 :  \"4-20mA\"/\"0-5V K\"\"0-5V P\"",	.pActionFn = thw_drv_adc_toggleDepExt1, 	.info = 0},
-		{.name = "Dep Ext 2 :  \"4-20mA\"/\"0-5V K\"\"0-5V P\"",	.pActionFn = thw_drv_adc_toggleDepExt2, 	.info = 0},
-		{.name = "Dep Int   :  \"Nxp\"/\"HoneyWell\"",				.pActionFn = thw_drv_adc_toggleDepInt, 		.info = 0},
-		{.name = "Dep Int   :  Set offset",							.pActionFn = thw_drv_adc_dep1_setOffset, 	.info = 0},
-		{.name = "Temp Ext1 :  \"NTC\"/\"PT1000\"",					.pActionFn = thw_drv_adc_toggleTempExt1,	.info = 0},
+		{.name = "ADC       :  start/stop",		.pActionFn = thw_drv_adc_startStop, 		.info = 0},
 };
 uint16_t thw_drv_adc_menuTabSize = sizeof(thw_drv_adc_menuTab) / sizeof(st_thw_menuItem);
 
@@ -86,27 +73,12 @@ static void thw_drv_adc_DisplayMenu(void)
 
 	THW_printf("ADC\r\n");
 	THW_printf("  State          : \r\n");
-	THW_printf("  Vref           : \r\n");
-	THW_printf("  Vref Value     : \r\n");
-	THW_printf("  Cpu Temp       :\r\n");
-	THW_printf("\r\n");
-	THW_printf("                   Register       Adc            Converted      Physical\r\n");
-	THW_printf("  3.3 V          :\r\n");
-	THW_printf("  12 V           :\r\n");
-	THW_printf("  24 V           :\r\n");
-	THW_printf("\r\n");
-	THW_printf("  Int Temp       :\r\n");
-	THW_printf("  Ext Temp  Mode : \"%s\"\r\n", DRVADC_tempExt_getModeStr());
-	THW_printf("  Ext Temp       :\r\n");
-	THW_printf("\r\n");
-	THW_printf("  Dep Ext 1 Mode : \"%s\"\r\n", DRVADC_depExt1_getModeStr());
-	THW_printf("  Dep Ext 1      :\r\n");
-	THW_printf("  Dep Ext 2 Mode : \"%s\"\r\n", DRVADC_depExt2_getModeStr());
-	THW_printf("  Dep Ext 2      :\r\n");
-	THW_printf("  Dep Int Mode   : \"%s\"\r\n", DRVADC_depInt_getModeStr());
-	THW_printf("  Dep Int        :\r\n");
-	THW_printf("\r\n");
-	THW_printf("  Imon           :\r\n");
+	THW_printf("  Potar1 : \r\n");
+	THW_printf("  Potar2 : \r\n");
+	THW_printf("  Potar3 : \r\n");
+	THW_printf("  Potar4 : \r\n");
+	THW_printf("  Potar5 : \r\n");
+	THW_printf("  Potar6 : \r\n");
 	THW_printf("\r\n");
 
 	// Affichage du menu
@@ -144,11 +116,6 @@ void thw_drv_adc_RefreshFn(void)
 {
 	bool isAdcRunning = DRVADC_isAdcRunning();
 	THW_goto(4, 20); 	(isAdcRunning)? THW_printf("Running\r\n"): THW_printf("Stopped\r\n");
-	THW_goto(5, 20); 	(DRVADC_isUsingVrefInt())? THW_printf("Internal\r\n"): THW_printf("External\r\n");
-	THW_goto(15, 20); 	THW_printf("\"%s\""VT100_CLEAREOL, DRVADC_tempExt_getModeStr());
-	THW_goto(18, 20); 	THW_printf("\"%s\""VT100_CLEAREOL, DRVADC_depExt1_getModeStr());
-	THW_goto(20, 20); 	THW_printf("\"%s\""VT100_CLEAREOL, DRVADC_depExt2_getModeStr());
-	THW_goto(22, 20); 	THW_printf("\"%s\""VT100_CLEAREOL, DRVADC_depInt_getModeStr());
 
 	if(isAdcRunning){
 		drvAdc_adcVal_t adcVal_3v3 = DRVADC_getV_3_3();
@@ -223,7 +190,6 @@ void thw_drv_adc_RefreshFn(void)
 //*************************************************************************************************
 //*************************************************************************************************
 
-
 //------------------------------------------------------------------------------
 /// \fn 		void thw_drv_adc_startStop(void)
 /// \brief
@@ -238,92 +204,10 @@ static void thw_drv_adc_startStop(void)
 	}
 }
 
-//------------------------------------------------------------------------------
-/// \fn 		void thw_drv_adc_toggleVref(void)
-/// \brief
-//------------------------------------------------------------------------------
-static void thw_drv_adc_toggleVref(void)
-{
-	if(DRVADC_isUsingVrefInt() == true){
-		DRVADC_selectVref(drvAdc_vref_ext);
-	}else{
-		DRVADC_selectVref(drvAdc_vref_int);
-	}
-}
-
-
-//------------------------------------------------------------------------------
-/// \fn 		void thw_drv_adc_toggleDepExt1(void)
-/// \brief
-//------------------------------------------------------------------------------
-static void thw_drv_adc_toggleDepExt1(void)
-{
-	if(DRVADC_depExt1_getMode() == DRVADC_deptExt_mode_420mA){
-		DRVADC_depExt1_setMode(DRVADC_deptExt_mode_05V_K);
-	}else if(DRVADC_depExt1_getMode() == DRVADC_deptExt_mode_05V_K){
-		DRVADC_depExt1_setMode(DRVADC_deptExt_mode_05V_P);
-	}else{
-		DRVADC_depExt1_setMode(DRVADC_deptExt_mode_420mA);
-	}
-}
-
-
-//------------------------------------------------------------------------------
-/// \fn 		void thw_drv_adc_toggleDepExt2(void)
-/// \brief
-//------------------------------------------------------------------------------
-static void thw_drv_adc_toggleDepExt2(void)
-{
-	if(DRVADC_depExt2_getMode() == DRVADC_deptExt_mode_420mA){
-		DRVADC_depExt2_setMode(DRVADC_deptExt_mode_05V_K);
-	}else if(DRVADC_depExt2_getMode() == DRVADC_deptExt_mode_05V_K){
-		DRVADC_depExt2_setMode(DRVADC_deptExt_mode_05V_P);
-	}else{
-		DRVADC_depExt2_setMode(DRVADC_deptExt_mode_420mA);
-	}
-}
-
-
-//------------------------------------------------------------------------------
-/// \fn 		void thw_drv_adc_toggleDepInt(void)
-/// \brief
-//------------------------------------------------------------------------------
-static void thw_drv_adc_toggleDepInt(void)
-{
-	if(DRVADC_depInt_getMode() == DRVADC_deptInt_mode_Nxp){
-				DRVADC_depInt_setMode(DRVADC_deptInt_mode_HoneyWell_ABP2);
-	}else if(DRVADC_depInt_getMode() == DRVADC_deptInt_mode_HoneyWell_ABP2){
-		DRVADC_depInt_setMode(DRVADC_deptInt_mode_Nxp);
-	}else{
-		DRVADC_depInt_setMode(DRVADC_deptInt_mode_Nxp);
-	}
-}
 
 
 
-//------------------------------------------------------------------------------
-/// \fn 		void thw_drv_dep1_setOffset(void)
-/// \brief
-//------------------------------------------------------------------------------
-static void thw_drv_adc_dep1_setOffset(void)
-{
-	DRVADC_depInt_setOffset(DRVADC_depInt_getVal().Physical);
-}
 
-//------------------------------------------------------------------------------
-/// \fn 		void thw_drv_adc_toggleTempExt1(void)
-/// \brief
-//------------------------------------------------------------------------------
-static void thw_drv_adc_toggleTempExt1(void)
-{
-	if(DRVADC_tempExt_getMode() == DRVADC_tempExt_mode_NTC){
-		DRVADC_tempExt_setMode(DRVADC_tempExt_mode_PT1000);
-	}else if(DRVADC_tempExt_getMode() == DRVADC_tempExt_mode_PT1000){
-		DRVADC_tempExt_setMode(DRVADC_tempExt_mode_NTC);
-	}else{
-		DRVADC_tempExt_setMode(DRVADC_tempExt_mode_NTC);
-	}
-}
 
 
 #endif //MODE_THW

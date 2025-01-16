@@ -15,9 +15,11 @@
 extern "C" {
 #endif
 
-extern void 		drvAdc_ConvCpltCallback(ADC_TypeDef *Instance);
-extern osStatus_t 	DRVADC_init(void);
-extern osStatus_t 	DRVADC_getAdcValues(userTypes_6Uint16_t *pValues);
+extern void 				drvAdc_ConvCpltCallback(ADC_TypeDef *Instance);
+extern osStatus_t 			DRVADC_init(void);
+extern HAL_StatusTypeDef 	DRVADC_startAdc();
+extern HAL_StatusTypeDef 	DRVADC_stopAdc();
+extern osStatus_t 			DRVADC_getAdcValues(userTypes_6Uint16_t *pValues);
 
 #ifdef __cplusplus
 }

@@ -4,7 +4,7 @@
 #include <MDI_midi/CMidiCfg.h>
 #include <MDI_midi/CMidiChannel.h>
 #include <Tools/UserTypes.h>
-#include <UserInterfaces/PotarManager/pmgr_thread.hpp>
+#include <PotarManager/pmgr_thread.hpp>
 
 class ModelListener;
 

@@ -29,7 +29,7 @@
 #include <UserInterfaces/drvAdc/drvAdc.h>
 #include "usb_device.h"
 #include "MDI_midi/mdi_wrapper.h"
-#include "UserInterfaces/PotarManager/pmgr_wrapper.h"
+#include "PotarManager/pmgr_wrapper.h"
 #include "Tools/assertError.h"
 /* USER CODE END Includes */
 
