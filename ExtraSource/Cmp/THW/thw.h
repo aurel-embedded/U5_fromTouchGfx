@@ -19,7 +19,6 @@ extern void thw_HardFault_setActive(void);
 
 // Driver
 //--------
-extern void thw_drv_setActive(void);
 extern void thw_drv_uartThw_setActive(void);
 //extern void thw_drv_adc_setActive(void);
 //extern void thw_drv_adcFdcEvt_setActive(void);

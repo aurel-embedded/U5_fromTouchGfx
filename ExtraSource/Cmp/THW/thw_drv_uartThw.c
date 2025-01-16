@@ -101,7 +101,7 @@ static void thw_drv_uartThw_ManageChoice(char CodeToManage)
 	else if(CodeToManage == 0){
 
 		// Return to the previous menu
-		thw_drv_setActive();
+		thw_main_setActive();
 	}
 }
 

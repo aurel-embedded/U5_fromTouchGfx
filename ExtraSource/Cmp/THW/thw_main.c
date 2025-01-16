@@ -24,8 +24,8 @@ const char thw_main_menuName[] = "Main";
 //			*** Main Menu ***
 //****************************************
 st_thw_menuItem thw_main_menuTab[] = {
-		{.name = "Test Driver", 		.pActionFn = thw_drv_setActive, .info = 0},
-		{.name = "Test HardFault", 		.pActionFn = thw_HardFault_setActive, .info = 0},
+		{.name = "Uart THW", 			.pActionFn = thw_drv_uartThw_setActive, .info = 0},
+		{.name = "Test HardFault", 		.pActionFn = thw_HardFault_setActive, 	.info = 0},
 };
 
 

@@ -113,7 +113,6 @@ static void MX_ADC2_Init(void);
 static void MX_ADC4_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -1191,6 +1190,17 @@ int _getentropy(void *buffer, size_t length)
 
     return 0; // Succès
 }
+
+#ifdef MODE_THW
+void MX_TouchGFX_Init(void)
+{
+    // Dummy function
+}
+void MX_TouchGFX_PreOSInit(void)
+{
+    // Dummy function
+}
+#endif
 /* USER CODE END 4 */
 
 /**
