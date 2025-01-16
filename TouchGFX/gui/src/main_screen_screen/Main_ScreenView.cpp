@@ -1,13 +1,14 @@
+#include <custom/ScreenManager.hpp>
 #include <gui/main_screen_screen/Main_ScreenView.hpp>
 
 Main_ScreenView::Main_ScreenView()
 {
-
 }
 
 void Main_ScreenView::setupScreen()
 {
     Main_ScreenViewBase::setupScreen();
+	ScreenManager::getInstance().setCurrentScreen(this);
 }
 
 void Main_ScreenView::tearDownScreen()

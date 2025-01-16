@@ -205,11 +205,23 @@
     <Filter Include="Source Files\gui\custom">
       <UniqueIdentifier>F7C1159D-1370-E05B-8BD8-2281B603A9DE</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\gui\analog_screen_screen">
+      <UniqueIdentifier>A32E3D1D-2EE0-684C-4F9A-E6870564DEF2</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\analog_screen_screen">
+      <UniqueIdentifier>A055BD15-7DF2-C735-498D-96835149D381</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\analog_screen_screen">
+      <UniqueIdentifier>0FB91681-8D04-D738-2D57-1BDD4CF089A8</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\analog_screen_screen">
+      <UniqueIdentifier>8A6E0ACC-5E55-2B60-DD6A-5024C21BB849</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\gui\include">
-      <UniqueIdentifier>5244E6C1-D035-4290-DE7C-A5FFC4D031A1</UniqueIdentifier>
+      <UniqueIdentifier>7FF2A840-776B-2626-486E-B810C261337C</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\include\custom">
-      <UniqueIdentifier>860CEA63-32FF-BF9F-9856-474815795384</UniqueIdentifier>
+      <UniqueIdentifier>B20D47D4-2664-DE97-2BB2-E31D7F1B12AD</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +274,18 @@
       <Filter>Source Files\generated\gui_generated\main_screen_screen</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gui\src\custom\TouchXYCursor.cpp">
+      <Filter>Source Files\gui\custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\analog_screen_screen\Analog_ScreenPresenter.cpp">
+      <Filter>Source Files\gui\analog_screen_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\analog_screen_screen\Analog_ScreenView.cpp">
+      <Filter>Source Files\gui\analog_screen_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\analog_screen_screen\Analog_ScreenViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\analog_screen_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\custom\TouchXYCursor2.cpp">
       <Filter>Source Files\gui\custom</Filter>
     </ClCompile>
   </ItemGroup>
@@ -728,6 +752,18 @@
       <Filter>Header Files\generated\gui_generated\main_screen_screen</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gui\include\custom\TouchXYCursor.hpp">
+      <Filter>Header Files\gui\include\custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\analog_screen_screen\Analog_ScreenPresenter.hpp">
+      <Filter>Header Files\gui\analog_screen_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\analog_screen_screen\Analog_ScreenView.hpp">
+      <Filter>Header Files\gui\analog_screen_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\analog_screen_screen\Analog_ScreenViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\analog_screen_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\custom\TouchXYCursor2.hpp">
       <Filter>Header Files\gui\include\custom</Filter>
     </ClInclude>
   </ItemGroup>

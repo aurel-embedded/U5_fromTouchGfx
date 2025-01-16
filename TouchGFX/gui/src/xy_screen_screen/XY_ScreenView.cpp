@@ -1,11 +1,11 @@
 #include <gui/xy_screen_screen/XY_ScreenView.hpp>
 #include <BitmapDatabase.hpp>
+#include <custom/ScreenManager.hpp>
 
 using touchgfx::Unicode;
 
 XY_ScreenView::XY_ScreenView()
 {
-
 }
 
 void XY_ScreenView::setupScreen()
@@ -18,6 +18,7 @@ void XY_ScreenView::setupScreen()
     myTouchXYCursor.setCollider(TouchPicture.getX(), TouchPicture.getY(), TouchPicture.getWidth(), TouchPicture.getHeight());
     myTouchXYCursor.setBackgroundBitmap(BITMAP_CURSORXY2_ID);
     add(myTouchXYCursor);
+	ScreenManager::getInstance().setCurrentScreen(this);
 }
 
 void XY_ScreenView::tearDownScreen()

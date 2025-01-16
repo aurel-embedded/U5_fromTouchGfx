@@ -15,6 +15,8 @@
 #include <gui/main_screen_screen/Main_ScreenPresenter.hpp>
 #include <gui/xy_screen_screen/XY_ScreenView.hpp>
 #include <gui/xy_screen_screen/XY_ScreenPresenter.hpp>
+#include <gui/analog_screen_screen/Analog_ScreenView.hpp>
+#include <gui/analog_screen_screen/Analog_ScreenPresenter.hpp>
 
 using namespace touchgfx;
 
@@ -72,4 +74,17 @@ void FrontendApplicationBase::gotoXY_ScreenScreenSlideTransitionEast()
 void FrontendApplicationBase::gotoXY_ScreenScreenSlideTransitionEastImpl()
 {
     touchgfx::makeTransition<XY_ScreenView, XY_ScreenPresenter, touchgfx::SlideTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+// Analog_Screen
+
+void FrontendApplicationBase::gotoAnalog_ScreenScreenSlideTransitionEast()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoAnalog_ScreenScreenSlideTransitionEastImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoAnalog_ScreenScreenSlideTransitionEastImpl()
+{
+    touchgfx::makeTransition<Analog_ScreenView, Analog_ScreenPresenter, touchgfx::SlideTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }

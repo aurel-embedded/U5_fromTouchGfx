@@ -14,7 +14,7 @@ Main_ScreenViewBase::Main_ScreenViewBase() :
     add(__background);
 
     BackGround.setXY(0, 0);
-    BackGround.setBitmap(touchgfx::Bitmap(BITMAP_GLASS_THEME_IMAGES_BACKGROUNDS_800X480_BUBBLES_TOXIC_ID));
+    BackGround.setBitmap(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_BACKGROUNDS_800X480_PUZZLE_ID));
     add(BackGround);
 
     midi2_btn.setXY(560, 50);
@@ -38,6 +38,14 @@ Main_ScreenViewBase::Main_ScreenViewBase() :
     Title.setLinespacing(0);
     Title.setTypedText(touchgfx::TypedText(T___SINGLEUSE_3OLG));
     add(Title);
+
+    Analog_btn.setXY(10, 100);
+    Analog_btn.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_60_TINY_ROUNDED_ACTIVE_ID), touchgfx::Bitmap(BITMAP_DARK_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_60_TINY_ROUNDED_PRESSED_ID));
+    Analog_btn.setLabelText(touchgfx::TypedText(T___SINGLEUSE_ULET));
+    Analog_btn.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    Analog_btn.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    Analog_btn.setAction(buttonCallback);
+    add(Analog_btn);
 
     XY_btn.setXY(10, 23);
     XY_btn.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_60_TINY_ROUNDED_ACTIVE_ID), touchgfx::Bitmap(BITMAP_DARK_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_60_TINY_ROUNDED_PRESSED_ID));
@@ -80,5 +88,12 @@ void Main_ScreenViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& 
         //When XY_btn clicked change screen to XY_Screen
         //Go to XY_Screen with screen transition towards East
         application().gotoXY_ScreenScreenSlideTransitionEast();
+    }
+    if (&src == &Analog_btn)
+    {
+        //Analog_action
+        //When Analog_btn clicked change screen to Analog_Screen
+        //Go to Analog_Screen with screen transition towards East
+        application().gotoAnalog_ScreenScreenSlideTransitionEast();
     }
 }

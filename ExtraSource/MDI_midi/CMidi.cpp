@@ -25,6 +25,20 @@ CMidi::~CMidi()
 	// TODO Auto-generated destructor stub
 }
 
+
+HAL_StatusTypeDef CMidi::waitForMidiIdle(uint32_t timeout_ms)
+{
+    uint32_t timeout = osKernelGetTickCount() + timeout_ms;
+    while (USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE) {
+        if (osKernelGetTickCount() > timeout) {
+            return HAL_TIMEOUT;
+        }
+        osDelay(1);
+    }
+    return HAL_OK;
+}
+
+
 HAL_StatusTypeDef CMidi::sendNoteOn(const CMidiCfg *pMidiCfg, CMidiNote::Note_e note, uint8_t vel)
 {
 	return sendNoteOn(pMidiCfg->getChannel(), note, vel);
@@ -33,20 +47,12 @@ HAL_StatusTypeDef CMidi::sendNoteOn(const CMidiCfg *pMidiCfg, CMidiNote::Note_e 
 
 HAL_StatusTypeDef CMidi::sendNoteOn(CMidiChannel::Channel_e channel, CMidiNote::Note_e note, uint8_t vel)
 {
-	while(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
-		osDelay(1);
-	}
+    if (waitForMidiIdle(100) != HAL_OK) {
+        return HAL_TIMEOUT;
+    }
 
-	uint8_t msg[4];
-	msg[0] = 0x09;						// Send to cable 0, note on
-//	msg[1] = 0x90 + ((uint8_t)(channel) & 0x0F);	// note on (again!) high byte, channel low byte
-	msg[1] = 0x90 + ((channel) & 0x0F);	// note on (again!) high byte, channel low byte
-	msg[2] = note;						// note
-	msg[3] = vel;						// velocity
-	if(USBD_MIDI_SendReport(&hUsbDeviceHS, msg, 4) != USBD_OK){
-		return HAL_ERROR;
-	}
-	return HAL_OK;
+    uint8_t msg[4] = {0x09, static_cast<uint8_t>(0x90 + (channel & 0x0F)), note, vel};
+    return (USBD_MIDI_SendReport(&hUsbDeviceHS, msg, 4) == USBD_OK) ? HAL_OK : HAL_ERROR;
 }
 
 HAL_StatusTypeDef CMidi::sendNoteOff(const CMidiCfg *pMidiCfg, CMidiNote::Note_e note, uint8_t vel)
@@ -56,20 +62,12 @@ HAL_StatusTypeDef CMidi::sendNoteOff(const CMidiCfg *pMidiCfg, CMidiNote::Note_e
 
 HAL_StatusTypeDef CMidi::sendNoteOff(CMidiChannel::Channel_e channel, CMidiNote::Note_e note, uint8_t vel)
 {
-	while(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
-		osDelay(1);
-	}
+    if (waitForMidiIdle(100) != HAL_OK) {
+        return HAL_TIMEOUT;
+    }
 
-	uint8_t msg[4];
-	msg[0] = 0x08;												// Send to cable 0, note off
-	msg[1] = 0x80 + ((uint8_t)(channel) & 0x0F);	// note off (again!) high byte, channel low byte
-	msg[2] = note;												// note
-	msg[3] = vel;												// velocity
-	if(USBD_MIDI_SendReport(&hUsbDeviceHS, msg, 4) != USBD_OK){
-		return HAL_ERROR;
-	}
-
-	return HAL_OK;
+    uint8_t msg[4] = {0x08, static_cast<uint8_t>(0x80 + (channel & 0x0F)), note, vel};
+    return (USBD_MIDI_SendReport(&hUsbDeviceHS, msg, 4) == USBD_OK) ? HAL_OK : HAL_ERROR;
 }
 
 HAL_StatusTypeDef CMidi::sendControlChange(const CMidiCfg *pMidiCfg, uint8_t data)
@@ -77,24 +75,19 @@ HAL_StatusTypeDef CMidi::sendControlChange(const CMidiCfg *pMidiCfg, uint8_t dat
 		return sendControlChange(pMidiCfg->getChannel(), pMidiCfg->getCcVal(), data);
 }
 
-HAL_StatusTypeDef CMidi::sendControlChange(CMidiChannel::Channel_e channel, CMidiCfg::cc cc, uint8_t data)
+HAL_StatusTypeDef CMidi::sendControlChange(uint8_t channel, uint8_t cc, uint8_t data)
 {
-	while(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
-		osDelay(1);
+	if (data > 127 || cc > 127) {
+	    return HAL_ERROR;
 	}
 
-	uint8_t msg[4];
-	msg[0] = 0x0B;												// Send to cable 0, control Change
-	msg[1] = 0xB0 + ((uint8_t)(channel) & 0x0F);	// CC (again!) high byte, channel low byte
-	msg[2] = (uint8_t)(cc);						// control Number
-	msg[3] = data;												// data
-	if(USBD_MIDI_SendReport(&hUsbDeviceHS, msg, 4) != USBD_OK){
-		return HAL_ERROR;
-	}
+    if (waitForMidiIdle(100) != HAL_OK) {
+        return HAL_TIMEOUT;
+    }
 
-	return HAL_OK;
+    uint8_t msg[4] = {0x0B, static_cast<uint8_t>(0xB0 + (channel & 0x0F)), static_cast<uint8_t>(cc), data};
+    return (USBD_MIDI_SendReport(&hUsbDeviceHS, msg, 4) == USBD_OK) ? HAL_OK : HAL_ERROR;
 }
-
 
 
 HAL_StatusTypeDef CMidi::sendPlay(void)
@@ -125,20 +118,12 @@ HAL_StatusTypeDef CMidi::sendAllNotesOff(void)
 
 HAL_StatusTypeDef CMidi::sendTempo(void)
 {
-	while(USBD_MIDI_GetState(&hUsbDeviceHS) != MIDI_IDLE){
-		osDelay(1);
-	}
+    if (waitForMidiIdle(100) != HAL_OK) {
+        return HAL_TIMEOUT;
+    }
 
-	uint8_t msg[4];
-	msg[0] = 0x0F;		// Default Midi Cable + CIN.
-	msg[1] = 0xF8;		// Tempo
-	msg[2] = 0x00;		// unused
-	msg[3] = 0x00;		// unused
-	if(USBD_MIDI_SendReport(&hUsbDeviceHS, msg, 4) != USBD_OK){
-		return HAL_ERROR;
-	}
-
-	return HAL_OK;
+    uint8_t msg[4] = {0x0F, 0xF8, 0x00, 0x00};
+    return (USBD_MIDI_SendReport(&hUsbDeviceHS, msg, 4) == USBD_OK) ? HAL_OK : HAL_ERROR;
 }
 
 

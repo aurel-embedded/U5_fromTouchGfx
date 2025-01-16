@@ -10,6 +10,7 @@
 #ifndef MDI_MIDI_MDI_THREAD_HPP_
 #define MDI_MIDI_MDI_THREAD_HPP_
 
+#include <Config/task_config.h>
 #include <MDI_midi/CMidiCfg.h>
 #include <MDI_midi/CMidiChannel.h>
 #include "cmsis_os2.h"
@@ -19,9 +20,9 @@ class mdi_thread
 {
 public:
 	typedef struct {
-	    CMidiChannel::Channel_e channel; // Canal MIDI
-	    CMidiCfg::cc cc;                 // Contrôle MIDI
-	    uint8_t data;                    // Données MIDI
+	    uint8_t channel; // Canal MIDI
+	    uint8_t cc;      // Contrôle MIDI
+	    uint8_t data;    // Données MIDI
 	} MsgQueueMessage;
 
 public:
@@ -29,7 +30,7 @@ public:
 
     HAL_StatusTypeDef init();
     HAL_StatusTypeDef exit();
-    HAL_StatusTypeDef putMessage(CMidiChannel::Channel_e channel, CMidiCfg::cc cc, uint8_t data);
+    HAL_StatusTypeDef putMessage(uint8_t channel, uint8_t cc, uint8_t data);
 
 private:
     // Constructeur privé
@@ -43,10 +44,10 @@ private:
     // Attributs privés
 
     // Thread
-    static void threadFunction(void* argument); // Fonction statique pour le thread
-    osThreadId_t threadId;                      // ID du thread
-    static constexpr uint32_t stackSize = 128 * 32; // Taille de la pile
-    static constexpr osPriority_t priority = osPriorityNormal; // Priorité
+    static void threadFunction(void* argument); 						// Fonction statique pour le thread
+    osThreadId_t threadId;                      						// ID du thread
+    static constexpr uint32_t stackSize = TSK_CFG__STACK__TSK_MIDI; 	// Taille de la pile
+    static constexpr osPriority_t priority = TSK_CFG__PRIO__TSK_MDI; 	// Priorité
     static constexpr uint32_t period = 500;    // Période du thread en ms
 
     // Message Queue

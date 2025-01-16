@@ -24,8 +24,12 @@
 #include "cmsis_os2.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <subModule/BAL_Core/bal_api.h>
+#include <UserInterfaces/drvAdc/drvAdc.h>
 #include "usb_device.h"
 #include "MDI_midi/mdi_wrapper.h"
+#include "UserInterfaces/PotarManager/pmgr_wrapper.h"
+#include "Tools/assertError.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -147,7 +151,21 @@ void MX_FREERTOS_Init(void) {
   GUI_TaskHandle = osThreadNew(TouchGFX_Task, NULL, &GUI_Task_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
-  MDI_Init();
+  if(MDI_Init() != HAL_OK){
+	  ASSERT_ERROR("MDI_Init");
+  }
+
+  if(DRVADC_init() != osOK){
+	  ASSERT_ERROR("DRVADC_init");
+  }
+
+  if(BAL_init(bal_ledList, bal_ledList_size, NULL, 0) != HAL_OK){
+	  ASSERT_ERROR("BAL_init");
+  }
+
+  if(PMGR_Init() != HAL_OK){
+	  ASSERT_ERROR("PMGR_Init");
+  }
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -169,7 +187,7 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	  HAL_GPIO_TogglePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin);
+//	  HAL_GPIO_TogglePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin);
 	  osDelay(100);
   }
   /* USER CODE END defaultTask */
