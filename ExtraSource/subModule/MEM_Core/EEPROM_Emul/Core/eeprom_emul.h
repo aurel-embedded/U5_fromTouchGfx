@@ -148,6 +148,7 @@ EE_Status EE_FlashEraseAll(void);
 
 // Extra API
 extern uint32_t 	EE_ex_get_variablesQty(void);
+extern uint32_t 	EE_ex_get_pagesQty(void);
 extern uint32_t 	EE_ex_get_activePage(void);
 extern uint32_t 	EE_ex_get_activePageAddress(void);
 extern uint32_t 	EE_ex_get_nbMaxElementsByPage(void);
@@ -155,8 +156,10 @@ extern uint32_t 	EE_ex_get_pagesQty(void);
 extern uint32_t 	EE_ex_get_nbMaxWrittenElements(void);
 extern uint32_t 	EE_ex_get_startPage(void);
 extern uint32_t 	EE_ex_get_endPage(void);
+extern uint32_t 	EE_ex_get_PageSize(void);
 extern uint32_t 	EE_ex_get_startEepromAddress(void);
 extern uint32_t 	EE_ex_get_endEepromAddress(void);
+extern uint8_t 		EE_ex_get_pageState(uint16_t page);
 
 #ifdef __cplusplus
 }

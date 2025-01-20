@@ -89,8 +89,8 @@ vee_error_e VEE_init(void)
 	HAL_FLASH_Unlock();
 
 	// Init VEE
-//	EE_Status ret = EE_Init(EE_CONDITIONAL_ERASE);
-	EE_Status ret = EE_Init(EE_FORCED_ERASE);
+	EE_Status ret = EE_Init(EE_CONDITIONAL_ERASE);
+//	EE_Status ret = EE_Init(EE_FORCED_ERASE);
 	if(ret != EE_OK){
 		EE_Format(EE_FORCED_ERASE);
 		return vee_error__veeInitError;

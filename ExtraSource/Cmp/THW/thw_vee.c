@@ -52,6 +52,7 @@ uint16_t thw_drv_vee_menuTabSize = sizeof(thw_drv_vee_menuTab) / sizeof(st_thw_m
 static void thw_drv_vee_DisplayMenu(void);
 static void thw_drv_vee_ManageChoice(char CodeToManage);
 
+uint16_t thw_drv_vee_varQty = 10;
 
 
 //------------------------------------------------------------------------------
@@ -73,6 +74,7 @@ void thw_drv_vee_setActive(void)
 		thw_main_setActive();		// back to previous menu
 	}
 
+	thw_drv_vee_varQty = EE_ex_get_variablesQty();
 }
 
 
@@ -93,10 +95,11 @@ static void thw_drv_vee_DisplayMenu(void)
 	THW_printf("\r\n");
 
 	THW_printf("                         VEE\r\n");
-	THW_printf("Variable Qty (1 pack)  : %d  \r\n", 			EE_ex_get_variablesQty());
-	THW_printf("Page Active            : %d\t(0x%08X)  \r\n", 	EE_ex_get_activePage(), 		EE_ex_get_activePageAddress());
-	THW_printf("nbMaxElementsByPage    : %d  \r\n", 			EE_ex_get_nbMaxElementsByPage());
-	THW_printf("nbMaxWrittenElements   : %d  \r\n", 			EE_ex_get_nbMaxWrittenElements());
+	THW_printf("Variable Qty (1 pack)  : %d\t(max: %d)\r\n", 		thw_drv_vee_varQty, EE_ex_get_variablesQty());
+	THW_printf("Page Active            : %d\t(0x%08X)  \r\n", 		EE_ex_get_activePage(), 		EE_ex_get_activePageAddress());
+	THW_printf("pagesQty               : %d  (from %d to %d)\r\n", 	EE_ex_get_pagesQty(), EE_ex_get_startPage(), EE_ex_get_endPage());
+	THW_printf("nbMaxElementsByPage    : %d  \r\n", 				EE_ex_get_nbMaxElementsByPage());
+	THW_printf("nbMaxWrittenElements   : %d  \r\n", 				EE_ex_get_nbMaxWrittenElements());
 
 
 	THW_printf("\r\n");
@@ -190,9 +193,9 @@ static void thw_drv_vee_writeNPacks(uint16_t packQty)
 
 	// Write N times Variables (with Cleanup or not)(!!!!!value = item.virtAddrStart + i)
 	//------------------------------------------------------------------------------------
-	if(EE_ex_get_variablesQty() != 0){
+	if((thw_drv_vee_varQty <= EE_ex_get_variablesQty()) && (thw_drv_vee_varQty != 0)){
 		for(uint16_t pack = 0; pack < packQty; pack++){
-			for(uint16_t i = 0; i < EE_ex_get_variablesQty(); i++){
+			for(uint16_t i = 0; i < thw_drv_vee_varQty; i++){
 				uint16_t virtAdd = i + 1;
 				// Write 32 bits (don't write on 0 address)
 				writeStatus = VEE_write(virtAdd, (virtAdd << 16) + i);
@@ -206,12 +209,10 @@ static void thw_drv_vee_writeNPacks(uint16_t packQty)
 					}
 				}
 			}
+			// Log page consumption after each pack
+			THW_printf("Pack %d written - Active Page: %d\r\n", pack + 1, EE_ex_get_activePage());
 		}
 	}
-
-
-	THW_goto(THW_DRV_VEE_OFFSET_DISPLAY + thw_drv_vee_menuTabSize, 0);
-	THW_clearEndOfScreen();
 
 	// Compute time
 	time = (HAL_GetTick() - tickStart);
@@ -228,6 +229,12 @@ static void thw_drv_vee_writeNPacks(uint16_t packQty)
 	THW_printf("VEE active Page:  %2d --> %2d      \r\n", activePage_old, EE_ex_get_activePage());
 
 
+	// Additional page state logging for debugging
+	THW_printf("Page State Check:\r\n");
+	for(uint16_t i = EE_ex_get_startPage(); i <= EE_ex_get_endPage(); i++) {
+		THW_printf("Page %d: State = %d\r\n", i, EE_ex_get_pageState(i));
+	}
+
 	THW_avoidClearScreen();
 
 }
@@ -242,23 +249,27 @@ static void thw_drv_vee_writeAndVerifyNPacks(uint16_t packQty)
 	uint32_t 	activePage_old = 0;
 	EE_Status 	writeStatus = EE_OK;
 	EE_Status 	readStatus = EE_OK;
-	uint32_t	nbOfVariables = 0;
 	uint32_t	valRead = 0;
+	uint32_t tickStart = 0;
+	uint32_t time = 0;
 
-	nbOfVariables = EE_ex_get_variablesQty();
 	// Get VEE Page before write
 	activePage_old = EE_ex_get_activePage();
 	THW_goto(THW_DRV_VEE_OFFSET_DISPLAY + thw_drv_vee_menuTabSize, 0);
 	THW_clearEndOfScreen();
+
+	// Start time watching
+	tickStart = HAL_GetTick();
+
 	// Write N times Variables (with Cleanup or not)(!!!!!value = item.virtAddrStart + i)
 	//------------------------------------------------------------------------------------
 
-	if(nbOfVariables!= 0)
+	if((thw_drv_vee_varQty <= EE_ex_get_variablesQty()) && (thw_drv_vee_varQty != 0))
 	{
 		for(uint16_t pack = 0; pack < packQty; pack++)
 		{
 			// Write Pack
-			for(uint16_t i = 0; i < nbOfVariables; i++)
+			for(uint16_t i = 0; i < thw_drv_vee_varQty; i++)
 			{
 				uint16_t virtAdd = i + 1; // Don't write on 0 address
 				// Write 32 bits
@@ -270,32 +281,35 @@ static void thw_drv_vee_writeAndVerifyNPacks(uint16_t packQty)
 					return;
 				}
 			}
-
+			// Log page consumption after each pack
+			THW_printf("Pack %d written - Active Page: %d\r\n", pack + 1, EE_ex_get_activePage());
 		}
-		for(uint16_t pack = 0; pack < packQty; pack++)
+
+			// Read Variables & Compare
+		for(uint16_t i = 0; i < thw_drv_vee_varQty; i++)
 		{
-			// Read Pack & Compare
-			for(uint16_t i = 0; i < nbOfVariables; i++)
+			uint16_t virtAdd = i + 1; // don't read on 0 address
+			// Read 32 bits
+			readStatus = VEE_read(virtAdd, &valRead);
+			if(readStatus != EE_OK) {
+				THW_printf(" ==> At Least one error when reading (&:0x%04X) - Status %d\r\n",
+						virtAdd, readStatus);
+				return;
+			}else
 			{
-				uint16_t virtAdd = i + 1; // don't read on 0 address
-				// Read 32 bits
-				readStatus = VEE_read(virtAdd, &valRead);
-				if(readStatus != EE_OK) {
-					THW_printf(" ==> At Least one error when reading (&:0x%04X) - Status %d\r\n",
-							virtAdd, readStatus);
-					return;
-				}else
+				// Compare
+				if(valRead != (virtAdd << 16) + i)
 				{
-					// Compare
-					if(valRead != (virtAdd << 16) + i)
-					{
-						THW_printf(" ==> Comparing: ERROR\r\n");
-					}
+					THW_printf(" ==> Comparing: ERROR\r\n");
 				}
 			}
 		}
 	}
-	THW_printf(" ==> Comparing OK\r\n");
+
+	// Compute time
+	time = (HAL_GetTick() - tickStart);
+
+	THW_printf(" ==> Comparing OK (in %d ms)      \r\n", time);
 	// Display VEE Page (Old --> New)
 	THW_printf("VEE active Page:  %2d --> %2d      \r\n", activePage_old, EE_ex_get_activePage());
 	THW_avoidClearScreen();

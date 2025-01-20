@@ -2131,6 +2131,11 @@ uint32_t EE_ex_get_variablesQty(void)
 	return NB_OF_VARIABLES;
 }
 
+uint32_t EE_ex_get_pagesQty(void)
+{
+	return PAGES_NUMBER;
+}
+
 uint32_t EE_ex_get_activePage(void)
 {
 	return FindPage(FIND_WRITE_PAGE);
@@ -2164,25 +2169,35 @@ uint32_t EE_ex_get_nbMaxWrittenElements(void)
 	return NB_MAX_WRITTEN_ELEMENTS;
 }
 
-//uint32_t EE_ex_get_startPage(void)
-//{
-//	return VEE1_START_PAGE;
-//}
+uint32_t EE_ex_get_startPage(void)
+{
+	return START_PAGE;
+}
 
-//uint32_t EE_ex_get_endPage(void)
-//{
-//	return VEE1_END_PAGE;
-//}
+uint32_t EE_ex_get_endPage(void)
+{
+	return START_PAGE + PAGES_NUMBER - 1;
+}
 
-//uint32_t EE_ex_get_startEepromAddress(void)
-//{
-//	return ADDR_FLASH_BANK2(VEE1_START_PAGE);
-//}
-//
-//uint32_t EE_ex_get_endEepromAddress(void)
-//{
-//	return VEE1_END_EEPROM_ADDRESS;
-//}
+uint32_t EE_ex_get_PageSize(void)
+{
+	return PAGE_SIZE;
+}
 
+uint32_t EE_ex_get_startEepromAddress(void)
+{
+	return START_PAGE_ADDRESS;
+}
+
+uint32_t EE_ex_get_endEepromAddress(void)
+{
+	return END_EEPROM_ADDRESS;
+}
+
+uint8_t EE_ex_get_pageState(uint16_t page)
+{
+    uint32_t *pageAddress = (uint32_t *)(EE_ex_get_startEepromAddress() + (page * EE_ex_get_PageSize()));
+    return (uint8_t)(*pageAddress);
+}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
