@@ -4,7 +4,6 @@
  *  Created on: 4 nov. 2022
  *      Author: apajadon
  */
-#ifdef MODE_THW
 
 #include <cmsis_os2.h>
 #include <stdarg.h>
@@ -238,4 +237,3 @@ void THW_displayActionMenu(st_thw_menuItem *pMenuItems, uint8_t menuItemsQty)
 	THW_saveCurPos();
 
 }
-#endif //MODE_THW

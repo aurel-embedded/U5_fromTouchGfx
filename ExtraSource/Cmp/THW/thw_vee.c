@@ -10,7 +10,6 @@
  * la mémoire Flash.\n
  * Ces fonctions sont appelées par le composant principal THW.\n\n
  */
-#ifdef MODE_THW
 
 #include <cmsis_os2.h>
 #include <MEM_Core/EEPROM_Emul/Core/eeprom_emul_types.h>
@@ -97,7 +96,10 @@ static void thw_drv_vee_DisplayMenu(void)
 	THW_printf("                         VEE\r\n");
 	THW_printf("Variable Qty (1 pack)  : %d\t(max: %d)\r\n", 		thw_drv_vee_varQty, EE_ex_get_variablesQty());
 	THW_printf("Page Active            : %d\t(0x%08X)  \r\n", 		EE_ex_get_activePage(), 		EE_ex_get_activePageAddress());
-	THW_printf("pagesQty               : %d  (from %d to %d)\r\n", 	EE_ex_get_pagesQty(), EE_ex_get_startPage(), EE_ex_get_endPage());
+	THW_printf("pagesQty               : %d  (from %d to %d)(from 0x%08X to 0x%08X)\r\n",
+			EE_ex_get_pagesQty(),
+			EE_ex_get_startPage(), EE_ex_get_endPage(),
+			EE_ex_get_startEepromAddress(), EE_ex_get_endEepromAddress());
 	THW_printf("nbMaxElementsByPage    : %d  \r\n", 				EE_ex_get_nbMaxElementsByPage());
 	THW_printf("nbMaxWrittenElements   : %d  \r\n", 				EE_ex_get_nbMaxWrittenElements());
 
@@ -360,14 +362,17 @@ static void thw_drv_vee_veeFormat()
 
 	// Format Vee
 	activePage_old = EE_ex_get_activePage();
-	EE_Format(EE_FORCED_ERASE);
+	EE_Status status = EE_Format(EE_FORCED_ERASE);
 	// Compute time
 	time = (HAL_GetTick() - tickStart);
 
-	THW_printf("Format in %d ms      \r\n", time);
-	THW_printf("VEE active Page:  %2d --> %2d      \r\n", activePage_old, EE_ex_get_activePage());
+	if(status != EE_OK){
+		THW_printf("Format ERROR\r\n");
+	}else{
+		THW_printf("Format in %d ms\r\n", time);
+		THW_printf("VEE active Page:  %2d --> %2d      \r\n", activePage_old, EE_ex_get_activePage());
+	}
 	THW_avoidClearScreen();
 
 }
 
-#endif //MODE_THW

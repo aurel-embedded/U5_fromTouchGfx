@@ -8,7 +8,6 @@
  *  Created on: 7 nov. 2022
  *      Author: apajadon
  */
-#ifdef MODE_THW
 
 #include <stddef.h>
 #include <stdint.h>
@@ -27,7 +26,7 @@ st_thw_menuItem thw_main_menuTab[] = {
 		{.name = "Uart THW", 			.pActionFn = thw_drv_uartThw_setActive, .info = 0},
 		{.name = "Driver Adc", 			.pActionFn = thw_drv_adc_setActive, 	.info = 0},
 		{.name = "Vee", 				.pActionFn = thw_drv_vee_setActive, 	.info = 0},
-		{.name = "Test HardFault", 		.pActionFn = thw_HardFault_setActive, 	.info = 0},
+//		{.name = "Test HardFault", 		.pActionFn = thw_HardFault_setActive, 	.info = 0},
 };
 
 
@@ -95,4 +94,3 @@ void thw_MainMenu_ManageChoice(char CodeToManage)
 	}
 }
 
-#endif	// MODE_THW

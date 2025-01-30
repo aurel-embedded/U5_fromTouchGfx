@@ -9,7 +9,6 @@
  * la mémoire Flash.\n
  * Ces fonctions sont appelées par le composant principal THW.\n\n
  */
-#ifdef MODE_THW
 
 #include <cmsis_os2.h>
 #include <MEM_Core/EEPROM_Emul/Core/eeprom_emul_types.h>
@@ -778,4 +777,3 @@ static void thw_drv_vee_veeFormat(vee_number_e vee_number)
 
 }
 
-#endif //MODE_THW

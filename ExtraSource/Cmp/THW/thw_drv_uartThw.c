@@ -8,7 +8,6 @@
  * la communincation utilisé par le THW\n
  * Ces fonctions sont appelées par le composant principal THW.\n\n
  */
-#ifdef MODE_THW
 
 #include <cmsis_os2.h>
 #include <stddef.h>
@@ -125,4 +124,3 @@ void thw_drv_uartThw_RefreshFn(void)
 //*************************************************************************************************
 //*************************************************************************************************
 
-#endif //MODE_THW

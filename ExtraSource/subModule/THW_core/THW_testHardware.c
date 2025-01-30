@@ -4,7 +4,6 @@
  *  Created on: 7 nov. 2022
  *      Author: apajadon
  */
-#ifdef MODE_THW
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -192,4 +191,3 @@ static HAL_StatusTypeDef thw_stopRefreshTask(void)
 }
 
 
-#endif //MODE_THW

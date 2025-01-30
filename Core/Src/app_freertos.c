@@ -145,6 +145,9 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
 #ifndef MODE_THW
+if(HAL_GPIO_ReadPin(USER_BUTTON_GPIO_Port, USER_BUTTON_Pin) == GPIO_PIN_RESET)
+{
+
   /* USER CODE END RTOS_QUEUES */
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
@@ -168,6 +171,9 @@ void MX_FREERTOS_Init(void) {
   if(PMGR_Init() != HAL_OK){
 	  ASSERT_ERROR("PMGR_Init");
   }
+}else{
+  THW_init();
+}
 #else
   THW_init();
 #endif

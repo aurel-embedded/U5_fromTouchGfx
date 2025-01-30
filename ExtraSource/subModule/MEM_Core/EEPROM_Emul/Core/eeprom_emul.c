@@ -2159,11 +2159,6 @@ uint32_t EE_ex_get_nbMaxElementsByPage(void)
 	return NB_MAX_ELEMENTS_BY_PAGE;
 }
 
-//uint32_t EE_ex_get_pagesQty(void)
-//{
-//	return VEE1_PAGES_QTY;
-//}
-
 uint32_t EE_ex_get_nbMaxWrittenElements(void)
 {
 	return NB_MAX_WRITTEN_ELEMENTS;
