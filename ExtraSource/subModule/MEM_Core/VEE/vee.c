@@ -61,14 +61,6 @@ mem_vee_confEmul_t mem_vee_confItem_vee1 = {
 //=====================================================================================================================
 //=====================================================================================================================
 
-//------------------------------------------------------------------------------
-/// \fn 		mem_vee_confEmul_t * vee_getConfigurationInstance(vee_number_e vee_number)
-/// \brief
-//------------------------------------------------------------------------------
-static mem_vee_confEmul_t * vee_getConfigurationInstance()
-{
-	return &mem_vee_confItem_vee1;
-}
 
 //=====================================================================================================================
 //=====================================================================================================================
@@ -119,24 +111,17 @@ vee_error_e VEE_exit(void)
 //--------------------------------------------------------------------------------------------------------
 vee_error_e VEE_write(uint16_t VirtAddress, uint32_t data)
 {
-	// Get Vee Configuration
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-	if(pConfEmulToUse == NULL)
-		return vee_error__VeeNotFound;
-
 	// Write to Vee
-	EE_Status 	status = pConfEmulToUse->writeVariable32bits((uint16_t)VirtAddress, data);
+	EE_Status 	status = EE_WriteVariable32bits((uint16_t)VirtAddress, data);
 	if(status == EE_CLEANUP_REQUIRED)
 	{
 		// Execute CleanUp if required
-		status = pConfEmulToUse->cleanUp();
+		status = EE_CleanUp();
 		if(status == EE_ERROR_NOERASING_PAGE)
 			status = EE_OK;
 	}
 	if(status == EE_OK)
 	{
-		// Increment Variable Qty
-		pConfEmulToUse->variableCpt++;
 		return vee_error__OK;
 	}
 	else
@@ -152,17 +137,12 @@ vee_error_e VEE_write(uint16_t VirtAddress, uint32_t data)
 //---------------------------------------------------------------------------------------------------------------------
 vee_error_e VEE_read(uint16_t VirtAddress, uint32_t* pData)
 {
-	// Get Vee Configuration
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-	if(pConfEmulToUse == NULL)
-		return vee_error__VeeNotFound;
-
 	// Read from Vee
-	EE_Status 	status = pConfEmulToUse->readVariable32bits((uint16_t)VirtAddress, pData);
+	EE_Status 	status = EE_ReadVariable32bits((uint16_t)VirtAddress, pData);
 	if(status == EE_CLEANUP_REQUIRED)
 	{
 		// Execute CleanUp if required
-		status = pConfEmulToUse->cleanUp();
+		status = EE_CleanUp();
 		if(status == EE_ERROR_NOERASING_PAGE)
 			status = EE_OK;
 	}
@@ -183,19 +163,12 @@ vee_error_e VEE_read(uint16_t VirtAddress, uint32_t* pData)
 /// \fn 		vee_error_e VEE_format(vee_number_e vee_number)
 /// \brief		Format VEE
 //------------------------------------------------------------------------------
-vee_error_e VEE_format()
+vee_error_e VEE_format(EE_Erase_type EraseType)
 {
-	// Get Vee Configuration
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-	if(pConfEmulToUse == NULL)
-		return vee_error__VeeNotFound;
-
 	// Format Vee
-	EE_Status 	status = pConfEmulToUse->format(EE_FORCED_ERASE);
+	EE_Status 	status = EE_Format(EE_FORCED_ERASE);
 	if(status == EE_OK)
 	{
-		// Raz Variable Qty
-		pConfEmulToUse->variableCpt = 0;
 		return vee_error__OK;
 	}
 	else
@@ -211,13 +184,8 @@ vee_error_e VEE_format()
 //------------------------------------------------------------------------------
 vee_error_e VEE_cleanUp()
 {
-	// Get Vee Configuration
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-	if(pConfEmulToUse == NULL)
-		return vee_error__VeeNotFound;
-
 	// Cleanup Vee
-	EE_Status 	status = pConfEmulToUse->cleanUp();
+	EE_Status 	status = EE_CleanUp();
 	if(status == EE_OK)
 		return vee_error__OK;
 	else if(status == EE_ERROR_NOERASING_PAGE)
@@ -241,13 +209,7 @@ vee_error_e VEE_cleanUp()
 //------------------------------------------------------------------------------
 uint32_t VEE_get_variablesQty()
 {
-	uint32_t var = 0;
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-
-	if(pConfEmulToUse != NULL)
-		var = pConfEmulToUse->get_variablesQty();
-
-	return var;
+	return EE_ex_get_variablesQty();
 }
 
 //------------------------------------------------------------------------------
@@ -256,13 +218,7 @@ uint32_t VEE_get_variablesQty()
 //------------------------------------------------------------------------------
 uint32_t VEE_get_activePage()
 {
-	uint32_t var = 0;
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-
-	if(pConfEmulToUse != NULL)
-		var = pConfEmulToUse->get_activePage();
-
-	return var;
+	return EE_ex_get_activePage();
 }
 
 //------------------------------------------------------------------------------
@@ -271,13 +227,7 @@ uint32_t VEE_get_activePage()
 //------------------------------------------------------------------------------
 uint32_t VEE_get_activePageAddress()
 {
-	uint32_t var = 0;
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-
-	if(pConfEmulToUse != NULL)
-		var = pConfEmulToUse->get_activePageAddress();
-
-	return var;
+	return EE_ex_get_activePageAddress();
 }
 
 //------------------------------------------------------------------------------
@@ -286,13 +236,7 @@ uint32_t VEE_get_activePageAddress()
 //------------------------------------------------------------------------------
 uint32_t VEE_get_nbMaxElementsByPage()
 {
-	uint32_t var = 0;
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-
-	if(pConfEmulToUse != NULL)
-		var = pConfEmulToUse->get_nbMaxElementsByPage();
-
-	return var;
+	return EE_ex_get_nbMaxElementsByPage();
 }
 
 //------------------------------------------------------------------------------
@@ -300,13 +244,7 @@ uint32_t VEE_get_nbMaxElementsByPage()
 //------------------------------------------------------------------------------
 uint32_t VEE_get_pagesQty()
 {
-	uint32_t var = 0;
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-
-	if(pConfEmulToUse != NULL)
-		var = pConfEmulToUse->get_pagesQty();
-
-	return var;
+	return EE_ex_get_pagesQty();
 }
 
 //------------------------------------------------------------------------------
@@ -315,13 +253,7 @@ uint32_t VEE_get_pagesQty()
 //------------------------------------------------------------------------------
 uint32_t VEE_get_nbMaxWrittenElements()
 {
-	uint32_t var = 0;
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-
-	if(pConfEmulToUse != NULL)
-		var = pConfEmulToUse->get_nbMaxWrittenElements();
-
-	return var;
+	return EE_ex_get_nbMaxWrittenElements();
 }
 
 //------------------------------------------------------------------------------
@@ -330,13 +262,7 @@ uint32_t VEE_get_nbMaxWrittenElements()
 //------------------------------------------------------------------------------
 uint32_t VEE_get_startPage()
 {
-	uint32_t var = 0;
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-
-	if(pConfEmulToUse != NULL)
-		var = pConfEmulToUse->get_startPage();
-
-	return var;
+	return EE_ex_get_startPage();
 }
 
 //------------------------------------------------------------------------------
@@ -345,13 +271,7 @@ uint32_t VEE_get_startPage()
 //------------------------------------------------------------------------------
 uint32_t VEE_get_endPage()
 {
-	uint32_t var = 0;
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-
-	if(pConfEmulToUse != NULL)
-		var = pConfEmulToUse->get_endPage();
-
-	return var;
+	return EE_ex_get_endPage();
 }
 
 //------------------------------------------------------------------------------
@@ -360,26 +280,24 @@ uint32_t VEE_get_endPage()
 //------------------------------------------------------------------------------
 uint32_t VEE_get_startEepromAddress()
 {
-	uint32_t var = 0;
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-
-	if(pConfEmulToUse != NULL)
-		var = pConfEmulToUse->get_startEepromAddress();
-
-	return var;
+	return EE_ex_get_startEepromAddress();
 }
 
 //------------------------------------------------------------------------------
 /// \fn 		uint32_t VEE_get_endEepromAddress(vee_number_e vee_number)
-/// \brief		Finalize component
+/// \brief
 //------------------------------------------------------------------------------
 uint32_t VEE_get_endEepromAddress()
 {
-	uint32_t var = 0;
-	mem_vee_confEmul_t *pConfEmulToUse = vee_getConfigurationInstance();
-
-	if(pConfEmulToUse != NULL)
-		var = pConfEmulToUse->get_endEepromAddress();
-
-	return var;
+	return EE_ex_get_endEepromAddress();
 }
+
+//------------------------------------------------------------------------------
+/// \fn 		uint32_t VEE_get_pageState(vee_number_e vee_number)
+/// \brief
+//------------------------------------------------------------------------------
+uint8_t VEE_get_pageState(uint16_t page)
+{
+	return EE_ex_get_pageState(page);
+}
+
