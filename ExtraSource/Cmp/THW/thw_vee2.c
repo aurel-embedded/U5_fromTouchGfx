@@ -32,6 +32,7 @@ uint16_t VirtAddVarTab[NB_OF_VARIABLES*2+1];
 static void 	thw_drv_vee2_writeAndVerify(void);
 static void 	thw_drv_vee2_veeCleanup();
 static void 	thw_drv_vee2_veeFormat();
+static void 	thw_drv_vee2_veeFormat2();
 
 
 
@@ -39,6 +40,7 @@ st_thw_menuItem thw_drv_vee2_menuTab[] = {
 		{.name = "VEE - Write & verify", 	.pActionFn = thw_drv_vee2_writeAndVerify, 	.info = 0},
 		{.name = "VEE - cleanup", 			.pActionFn = thw_drv_vee2_veeCleanup, 		.info = 0},
 		{.name = "VEE - format", 			.pActionFn = thw_drv_vee2_veeFormat, 		.info = 0},
+		{.name = "VEE - format2", 			.pActionFn = thw_drv_vee2_veeFormat2, 		.info = 0},
 };
 uint16_t thw_drv_vee2_menuTabSize = sizeof(thw_drv_vee2_menuTab) / sizeof(st_thw_menuItem);
 
@@ -118,7 +120,7 @@ void thw_drv_vee2_setActive(void)
 
 	  PVD_Config();
 
-
+	  __HAL_FLASH_ENABLE_IT(FLASH_IT_EOP);
 }
 
 
@@ -214,6 +216,7 @@ static void thw_drv_vee2_writeAndVerify()
 	      tmp[0] = Index*VarValue96bits;
 	      tmp[1] = (Index+1)*VarValue96bits;
 	      thw_drv_vee2_ee_status = EE_WriteVariable96bits(VirtAddVarTab[Index-1], tmp);   //write line of 128 bits
+	      thw_drv_vee2_ee_status = EE_WriteVariable96bits(VirtAddVarTab[Index-1], tmp);   //write line of 128 bits
 	      thw_drv_vee2_ee_status|= EE_ReadVariable96bits(VirtAddVarTab[Index-1], &a_VarData96Tab[Index-1]);
 
 	      if (Index*VarValue96bits != a_VarData96Tab[Index-1]){
@@ -281,14 +284,18 @@ static void thw_drv_vee2_veeCleanup(void)
 
 	// Clean Vee
 	ErasingOnGoing = 1;
-	EE_CleanUp_IT();// Compute time
-    while (ErasingOnGoing == 1)
-    {
-  	  osDelay(1);
-    }
-	time = (HAL_GetTick() - tickStart);
+	EE_Status status = EE_CleanUp_IT();// Compute time
+	if(status == EE_OK){
+		while (ErasingOnGoing == 1)
+		{
+		  osDelay(1);
+		}
+		time = (HAL_GetTick() - tickStart);
 
-	THW_printf("Cleanup in %d ms      \r\n", time);
+		THW_printf("Cleanup in %d ms      \r\n", time);
+	}else{
+		THW_printf("Cleanup error\r\n");
+	}
 
 	// Display VEE Page (Old --> New)
 	THW_printf("VEE active Page:  %2d      \r\n", EE_ex_get_activePage());
@@ -325,6 +332,29 @@ static void thw_drv_vee2_veeFormat()
 	}
 	THW_avoidClearScreen();
 
+}
+
+//------------------------------------------------------------------------------
+/// \fn 		void thw_drv_vee2_veeFormat2(void)
+/// \brief
+//------------------------------------------------------------------------------
+static void thw_drv_vee2_veeFormat2()
+{
+	FLASH_EraseInitTypeDef EraseInitStruct;
+	uint32_t PageError = 0;
+
+	HAL_FLASH_Unlock();
+
+	EraseInitStruct.TypeErase = FLASH_TYPEERASE_PAGES;
+	EraseInitStruct.Banks = FLASH_BANK_1;
+	EraseInitStruct.Page = 128;
+	EraseInitStruct.NbPages = 4; // Pages 128 à 131
+
+	if (HAL_FLASHEx_Erase(&EraseInitStruct, &PageError) != HAL_OK) {
+		THW_printf("Erase failed, error: %lu\n", PageError);
+	}
+
+	HAL_FLASH_Lock();
 }
 
 static void MPU_Config(void)
