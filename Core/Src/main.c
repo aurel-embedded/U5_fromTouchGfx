@@ -168,6 +168,26 @@ EE_Status WriteFlashQuadWord(uint32_t Address, uint32_t* Data)
 	return status;
 }
 
+// Fonction pour écrire des données dans une page de la Flash
+EE_Status VerifyFlashQuadWord(uint32_t Address, uint32_t* Data)
+{
+	EE_Status status = EE_OK;
+
+	uint32_t readVal[4];
+	for (int i = 0; i < 4; i++) {
+	    readVal[i] = *(volatile uint32_t*)(Address + i * sizeof(uint32_t));
+	}
+
+	// Comparer les valeurs lues avec les valeurs attendues
+	for (int i = 0; i < 4; i++) {
+	    if (readVal[i] != Data[i]) {
+	    	status = EE_WRITE_ERROR;
+	    }
+	}
+
+	return status;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -240,6 +260,7 @@ int main(void)
 		0xA5A5A5A5
 	};
 	WriteFlashQuadWord(0x08100000, ValWord);
+	VerifyFlashQuadWord(0x08100000, ValWord);
 
 	HAL_FLASH_Lock();
 
