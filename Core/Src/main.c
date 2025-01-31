@@ -119,6 +119,8 @@ static void MX_FLASH_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#define START_ADDRESS_FOR_TEST 0x08100000
+#define START_ADDRESS_FOR_TEST2 0x08200000
 #define PAGE_SIZE FLASH_PAGE_SIZE  // Taille d'une page (8 Ko pour STM32U5)
 #define TARGET_PAGE_ADDRESS(page) (0x08000000 + (page * PAGE_SIZE)) // Adresse de la page (Bank1)
 
@@ -259,12 +261,19 @@ int main(void)
 		0xABABABAB,
 		0xA5A5A5A5
 	};
-	WriteFlashQuadWord(0x08100000, ValWord);
-	VerifyFlashQuadWord(0x08100000, ValWord);
-	WriteFlashQuadWord(0x08100010, ValWord);
-	VerifyFlashQuadWord(0x08100010, ValWord);
-	WriteFlashQuadWord(0x08100020, ValWord);
-	VerifyFlashQuadWord(0x08100020, ValWord);
+	WriteFlashQuadWord(START_ADDRESS_FOR_TEST, ValWord);
+	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST, ValWord);
+	WriteFlashQuadWord(START_ADDRESS_FOR_TEST + 0x10, ValWord);
+	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST + 0x10, ValWord);
+	WriteFlashQuadWord(START_ADDRESS_FOR_TEST + 0x20, ValWord);
+	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST + 0x20, ValWord);
+
+	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2, ValWord);
+	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2, ValWord);
+	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x10, ValWord);
+	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x10, ValWord);
+	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x20, ValWord);
+	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x20, ValWord);
 
 	HAL_FLASH_Lock();
 
