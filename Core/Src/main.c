@@ -93,6 +93,7 @@ PCD_HandleTypeDef hpcd_USB_OTG_HS;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void SystemPower_Config(void);
+static void MPU_Config(void);
 void MX_FREERTOS_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_GPDMA1_Init(void);
@@ -205,6 +206,9 @@ int main(void)
 
   /* MCU Configuration--------------------------------------------------------*/
 
+  /* MPU Configuration--------------------------------------------------------*/
+  MPU_Config();
+
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
@@ -250,32 +254,31 @@ int main(void)
 
 
 
-	HAL_FLASH_Unlock();
-
-	EraseFlashPage(0x08100000);
-
-	uint32_t ValWord[4] =
-	{
-		0x01234567,
-		0xABCDEF01,
-		0xABABABAB,
-		0xA5A5A5A5
-	};
-	WriteFlashQuadWord(START_ADDRESS_FOR_TEST, ValWord);
-	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST, ValWord);
-	WriteFlashQuadWord(START_ADDRESS_FOR_TEST + 0x10, ValWord);
-	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST + 0x10, ValWord);
-	WriteFlashQuadWord(START_ADDRESS_FOR_TEST + 0x20, ValWord);
-	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST + 0x20, ValWord);
-
-	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2, ValWord);
-	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2, ValWord);
-	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x10, ValWord);
-	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x10, ValWord);
-	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x20, ValWord);
-	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x20, ValWord);
-
-	HAL_FLASH_Lock();
+//	HAL_FLASH_Unlock();
+//	uint32_t ValWord[4] =
+//	{
+//		0x01234567,
+//		0xABCDEF01,
+//		0xABABABAB,
+//		0xA5A5A5A5
+//	};
+//	EraseFlashPage(START_ADDRESS_FOR_TEST);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST, ValWord);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST + 0x10, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST + 0x10, ValWord);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST + 0x20, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST + 0x20, ValWord);
+//
+//	EraseFlashPage(START_ADDRESS_FOR_TEST2);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2, ValWord);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x10, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x10, ValWord);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x20, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x20, ValWord);
+//
+//	HAL_FLASH_Lock();
 
   /* USER CODE END 2 */
 
@@ -1333,6 +1336,47 @@ void MX_TouchGFX_PreOSInit(void)
 }
 #endif
 /* USER CODE END 4 */
+
+ /* MPU Configuration */
+
+void MPU_Config(void)
+{
+  MPU_Region_InitTypeDef MPU_InitStruct = {0};
+  MPU_Attributes_InitTypeDef MPU_AttributesInit = {0};
+
+  /* Disables the MPU */
+  HAL_MPU_Disable();
+
+  /** Initializes and configures the Region and the memory to be protected
+  */
+  MPU_InitStruct.Enable = MPU_REGION_ENABLE;
+  MPU_InitStruct.Number = MPU_REGION_NUMBER0;
+  MPU_InitStruct.BaseAddress = 0x08000000;
+  MPU_InitStruct.LimitAddress = 0x081FFFFF;
+  MPU_InitStruct.AttributesIndex = MPU_ATTRIBUTES_NUMBER0;
+  MPU_InitStruct.AccessPermission = MPU_REGION_PRIV_RW;
+  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
+
+  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+  MPU_AttributesInit.Number = MPU_REGION_NUMBER0;
+  HAL_MPU_ConfigMemoryAttributes(&MPU_AttributesInit);
+
+  /** Initializes and configures the Region and the memory to be protected
+  */
+  MPU_InitStruct.Number = MPU_REGION_NUMBER1;
+  MPU_InitStruct.BaseAddress = 0x08200000;
+  MPU_InitStruct.LimitAddress = 0x083FFFFF;
+  MPU_InitStruct.AttributesIndex = MPU_ATTRIBUTES_NUMBER1;
+  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
+
+  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+  MPU_AttributesInit.Number = MPU_REGION_NUMBER1;
+  HAL_MPU_ConfigMemoryAttributes(&MPU_AttributesInit);
+  /* Enables the MPU */
+  HAL_MPU_Enable(MPU_HFNMI_PRIVDEF);
+
+}
 
 /**
   * @brief  Period elapsed callback in non blocking mode

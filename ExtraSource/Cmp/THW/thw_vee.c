@@ -65,6 +65,8 @@ void thw_drv_vee_setActive(void)
 	thw_actualMenu.manageChoiceFn = thw_drv_vee_ManageChoice;
 	thw_actualMenu.refreshFn = 		NULL;
 
+	HAL_FLASH_Unlock();
+
 	// Init MEM
 	if(VEE_init() != vee_error__OK){
 		THW_printf("HWT - Test Memoire - ERROR : VEE_init()\r\n");
@@ -123,6 +125,7 @@ static void thw_drv_vee_ManageChoice(char CodeToManage)
 	// Or Return to the previous menu
 	else if(CodeToManage == 0){
 		VEE_cleanUp();			// Cleanup
+		HAL_FLASH_Lock();
 		thw_main_setActive();	// Return to the previous menu
 	}
 }
@@ -207,6 +210,7 @@ static void thw_drv_vee_writeNPacks(uint16_t packQty)
 							atLeastOneWriteError_statusSav);
 					return;
 				}
+				osDelay(1);
 			}
 			// Log page consumption after each pack
 			THW_printf("Pack %d written - Active Page: %d\r\n", pack + 1, VEE_get_activePage());
@@ -340,7 +344,7 @@ static void thw_drv_vee_veeCleanup(void)
 /// \fn 		void thw_drv_vee_veeFormat(void)
 /// \brief
 //------------------------------------------------------------------------------
-static void thw_drv_vee_veeFormat()
+static void thw_drv_vee_veeFormat(void)
 {
 	uint32_t activePage_old = 0;
 	uint32_t time,tickStart = 0 ;
@@ -366,4 +370,5 @@ static void thw_drv_vee_veeFormat()
 	THW_avoidClearScreen();
 
 }
+
 
