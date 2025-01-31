@@ -261,6 +261,10 @@ int main(void)
 	};
 	WriteFlashQuadWord(0x08100000, ValWord);
 	VerifyFlashQuadWord(0x08100000, ValWord);
+	WriteFlashQuadWord(0x08100010, ValWord);
+	VerifyFlashQuadWord(0x08100010, ValWord);
+	WriteFlashQuadWord(0x08100020, ValWord);
+	VerifyFlashQuadWord(0x08100020, ValWord);
 
 	HAL_FLASH_Lock();
 
