@@ -716,14 +716,14 @@ static void MX_FLASH_Init(void)
   /* USER CODE BEGIN FLASH_Init 1 */
 
   /* USER CODE END FLASH_Init 1 */
-//  if (HAL_FLASH_Unlock() != HAL_OK)
-//  {
-//    Error_Handler();
-//  }
-//  if (HAL_FLASH_Lock() != HAL_OK)
-//  {
-//    Error_Handler();
-//  }
+  if (HAL_FLASH_Unlock() != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_FLASH_Lock() != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN FLASH_Init 2 */
 
   /* USER CODE END FLASH_Init 2 */
