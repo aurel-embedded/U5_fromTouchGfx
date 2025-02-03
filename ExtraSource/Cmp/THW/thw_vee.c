@@ -25,6 +25,8 @@ static void 	thw_drv_vee_writeNPacks(uint16_t packQty);
 static void 	thw_drv_vee_writeAndVerifyNPacks(uint16_t packQty);
 static void 	thw_drv_vee_veeCleanup();
 static void 	thw_drv_vee_veeFormat();
+static void 	thw_drv_vee_pageStatus();
+static void 	thw_drv_vee_pageStatus_standAlone();
 
 static void 	thw_drv_vee1_write1Pack(void);
 static void 	thw_drv_vee1_write10Pack(void);
@@ -37,10 +39,11 @@ st_thw_menuItem thw_drv_vee_menuTab[] = {
 		{.name = "VEE1 - Write & Verif 10 packs", 	.pActionFn = thw_drv_vee1_writeAndVerify10Pack, .info = 0},
 		{.name = "VEE1 - cleanup", 					.pActionFn = thw_drv_vee_veeCleanup, 			.info = 0},
 		{.name = "VEE1 - format", 					.pActionFn = thw_drv_vee_veeFormat, 			.info = 0},
+		{.name = "VEE1 - Pages Status",				.pActionFn = thw_drv_vee_pageStatus, 			.info = 0},
 };
 uint16_t thw_drv_vee_menuTabSize = sizeof(thw_drv_vee_menuTab) / sizeof(st_thw_menuItem);
 
-#define THW_DRV_VEE_OFFSET_DISPLAY 19
+#define THW_DRV_VEE_OFFSET_DISPLAY 16
 
 //****************************************
 //	*** MEMORY prototype encapsulation ***
@@ -183,6 +186,7 @@ static void thw_drv_vee_writeNPacks(uint16_t packQty)
 	vee_error_e		atLeastOneWriteError_statusSav = vee_error__OK;
 
 
+	THW_clearEndOfScreen();
 
 	// Get VEE Page before write
 	activePage_old = VEE_get_activePage();
@@ -210,7 +214,6 @@ static void thw_drv_vee_writeNPacks(uint16_t packQty)
 							atLeastOneWriteError_statusSav);
 					return;
 				}
-				osDelay(1);
 			}
 			// Log page consumption after each pack
 			THW_printf("Pack %d written - Active Page: %d\r\n", pack + 1, VEE_get_activePage());
@@ -225,12 +228,7 @@ static void thw_drv_vee_writeNPacks(uint16_t packQty)
 
 	THW_printf("VEE active Page:  %2d --> %2d      \r\n", activePage_old, VEE_get_activePage());
 
-
-	// Additional page state logging for debugging
-	THW_printf("Page State Check:\r\n");
-	for(uint16_t i = VEE_get_startPage(); i <= VEE_get_endPage(); i++) {
-		THW_printf("Page %d: %s\r\n", i, VEE_get_pageState_ToString(i));
-	}
+	thw_drv_vee_pageStatus_standAlone();
 
 	THW_avoidClearScreen();
 
@@ -249,6 +247,8 @@ static void thw_drv_vee_writeAndVerifyNPacks(uint16_t packQty)
 	uint32_t		valRead = 0;
 	uint32_t 		tickStart = 0;
 	uint32_t 		time = 0;
+
+	THW_clearEndOfScreen();
 
 	// Get VEE Page before write
 	activePage_old = VEE_get_activePage();
@@ -369,6 +369,32 @@ static void thw_drv_vee_veeFormat(void)
 	}
 	THW_avoidClearScreen();
 
+}
+
+//------------------------------------------------------------------------------
+/// \fn 		void thw_drv_vee_pageStatus(void)
+/// \brief
+//------------------------------------------------------------------------------
+static void 	thw_drv_vee_pageStatus()
+{
+	THW_clearEndOfScreen();
+	thw_drv_vee_pageStatus_standAlone();
+	THW_avoidClearScreen();
+}
+
+
+//------------------------------------------------------------------------------
+/// \fn 		void thw_drv_vee_pageStatus_standAlone(void)
+/// \brief
+//------------------------------------------------------------------------------
+static void 	thw_drv_vee_pageStatus_standAlone()
+{
+	// Additional page state logging for debugging
+	THW_printf("\r\n");
+	THW_printf("Page State Check:\r\n");
+	for(uint16_t i = VEE_get_startPage(); i <= VEE_get_endPage(); i++) {
+		THW_printf("Page %d: %s\r\n", i, VEE_get_pageState_ToString(i));
+	}
 }
 
 
