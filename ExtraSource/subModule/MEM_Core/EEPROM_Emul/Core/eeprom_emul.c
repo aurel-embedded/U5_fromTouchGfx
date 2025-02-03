@@ -2191,7 +2191,7 @@ uint32_t EE_ex_get_endEepromAddress(void)
 
 EE_Ex_State_type EE_ex_get_pageState(uint16_t page)
 {
-    uint32_t pageAddress = (uint32_t )(EE_ex_get_startEepromAddress() + (page * EE_ex_get_PageSize()));
+    uint32_t pageAddress = (uint32_t )(EE_ex_get_startEepromAddress() + ((page - EE_ex_get_startPage()) * EE_ex_get_PageSize()));
     return (EE_Ex_State_type)GetPageState(pageAddress);
 }
 
