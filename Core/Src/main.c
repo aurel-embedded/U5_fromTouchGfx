@@ -1352,7 +1352,7 @@ void MPU_Config(void)
   MPU_InitStruct.Enable = MPU_REGION_ENABLE;
   MPU_InitStruct.Number = MPU_REGION_NUMBER0;
   MPU_InitStruct.BaseAddress = 0x08000000;
-  MPU_InitStruct.LimitAddress = 0x081FFFFF;
+  MPU_InitStruct.LimitAddress = 0x082FFFFF;
   MPU_InitStruct.AttributesIndex = MPU_ATTRIBUTES_NUMBER0;
   MPU_InitStruct.AccessPermission = MPU_REGION_PRIV_RW;
   MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
@@ -1365,7 +1365,7 @@ void MPU_Config(void)
   /** Initializes and configures the Region and the memory to be protected
   */
   MPU_InitStruct.Number = MPU_REGION_NUMBER1;
-  MPU_InitStruct.BaseAddress = 0x08200000;
+  MPU_InitStruct.BaseAddress = 0x08300000;
   MPU_InitStruct.LimitAddress = 0x083FFFFF;
   MPU_InitStruct.AttributesIndex = MPU_ATTRIBUTES_NUMBER1;
   MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
