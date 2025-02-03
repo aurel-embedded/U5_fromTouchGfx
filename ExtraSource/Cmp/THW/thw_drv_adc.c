@@ -10,7 +10,6 @@
  * les ADC\n
  *
  */
-#ifdef MODE_THW
 
 #include <string.h>
 #include <cmsis_os2.h>
@@ -159,4 +158,3 @@ static void thw_drv_adc_startStop(void)
 
 
 
-#endif //MODE_THW

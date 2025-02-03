@@ -27,6 +27,7 @@
 #include <usbd_def.h>
 #include "BSP/Components/mx66uw1g45g/mx66uw1g45g.h"
 #include <Tools/assertError.h>
+#include <eeprom_emul_types.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -92,6 +93,7 @@ PCD_HandleTypeDef hpcd_USB_OTG_HS;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void SystemPower_Config(void);
+static void MPU_Config(void);
 void MX_FREERTOS_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_GPDMA1_Init(void);
@@ -112,11 +114,82 @@ static void MX_TIM15_Init(void);
 static void MX_ADC2_Init(void);
 static void MX_ADC4_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_FLASH_Init(void);
 /* USER CODE BEGIN PFP */
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#define START_ADDRESS_FOR_TEST 0x08100000
+#define START_ADDRESS_FOR_TEST2 0x08200000
+#define PAGE_SIZE FLASH_PAGE_SIZE  // Taille d'une page (8 Ko pour STM32U5)
+#define TARGET_PAGE_ADDRESS(page) (0x08000000 + (page * PAGE_SIZE)) // Adresse de la page (Bank1)
+
+// Fonction pour effacer une page de la mémoire Flash
+void EraseFlashPage(uint32_t pageAddress)
+{
+    FLASH_EraseInitTypeDef EraseInitStruct;
+    uint32_t PageError = 0;
+
+    // Déverrouiller la mémoire Flash
+
+    // Initialiser la structure pour l'effacement de la page
+    EraseInitStruct.TypeErase = FLASH_TYPEERASE_PAGES;
+    EraseInitStruct.Banks = FLASH_BANK_1;  // Choisir la banque de mémoire (ici Bank 1)
+    EraseInitStruct.Page = (pageAddress - 0x08000000) / FLASH_PAGE_SIZE; // Calculer le numéro de la page à effacer
+    EraseInitStruct.NbPages = 1; // Effacer une seule page
+
+    // Effectuer l'effacement
+    if (HAL_FLASHEx_Erase(&EraseInitStruct, &PageError) != HAL_OK) {
+        // En cas d'erreur d'effacement
+        Error_Handler();
+    }
+}
+
+uint32_t QuadWordVal[4] =
+{
+	0x00000000,
+	0x00000000,
+	0x00000000,
+	0x00000000
+};
+// Fonction pour écrire des données dans une page de la Flash
+EE_Status WriteFlashQuadWord(uint32_t Address, uint32_t* Data)
+{
+	EE_Status status = EE_OK;
+
+	QuadWordVal[0] = Data[0];
+	QuadWordVal[1] = Data[1];
+	QuadWordVal[2] = Data[2];
+	QuadWordVal[3] = Data[3];
+
+	if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_QUADWORD, Address, ((uint32_t)QuadWordVal)) != HAL_OK)
+	{
+		status = EE_WRITE_ERROR;
+	}
+
+	return status;
+}
+
+// Fonction pour écrire des données dans une page de la Flash
+EE_Status VerifyFlashQuadWord(uint32_t Address, uint32_t* Data)
+{
+	EE_Status status = EE_OK;
+
+	uint32_t readVal[4];
+	for (int i = 0; i < 4; i++) {
+	    readVal[i] = *(volatile uint32_t*)(Address + i * sizeof(uint32_t));
+	}
+
+	// Comparer les valeurs lues avec les valeurs attendues
+	for (int i = 0; i < 4; i++) {
+	    if (readVal[i] != Data[i]) {
+	    	status = EE_WRITE_ERROR;
+	    }
+	}
+
+	return status;
+}
 
 /* USER CODE END 0 */
 
@@ -132,6 +205,9 @@ int main(void)
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
+
+  /* MPU Configuration--------------------------------------------------------*/
+  MPU_Config();
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
@@ -170,10 +246,39 @@ int main(void)
   MX_ADC2_Init();
   MX_ADC4_Init();
   MX_USART1_UART_Init();
+  MX_FLASH_Init();
   MX_TouchGFX_Init();
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
+
+
+
+//	HAL_FLASH_Unlock();
+//	uint32_t ValWord[4] =
+//	{
+//		0x01234567,
+//		0xABCDEF01,
+//		0xABABABAB,
+//		0xA5A5A5A5
+//	};
+//	EraseFlashPage(START_ADDRESS_FOR_TEST);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST, ValWord);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST + 0x10, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST + 0x10, ValWord);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST + 0x20, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST + 0x20, ValWord);
+//
+//	EraseFlashPage(START_ADDRESS_FOR_TEST2);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2, ValWord);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x10, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x10, ValWord);
+//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x20, ValWord);
+//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x20, ValWord);
+//
+//	HAL_FLASH_Lock();
 
   /* USER CODE END 2 */
 
@@ -609,6 +714,35 @@ static void MX_DMA2D_Init(void)
   /* USER CODE BEGIN DMA2D_Init 2 */
 
   /* USER CODE END DMA2D_Init 2 */
+
+}
+
+/**
+  * @brief FLASH Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_FLASH_Init(void)
+{
+
+  /* USER CODE BEGIN FLASH_Init 0 */
+
+  /* USER CODE END FLASH_Init 0 */
+
+  /* USER CODE BEGIN FLASH_Init 1 */
+
+  /* USER CODE END FLASH_Init 1 */
+  if (HAL_FLASH_Unlock() != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_FLASH_Lock() != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN FLASH_Init 2 */
+
+  /* USER CODE END FLASH_Init 2 */
 
 }
 
@@ -1202,6 +1336,47 @@ void MX_TouchGFX_PreOSInit(void)
 }
 #endif
 /* USER CODE END 4 */
+
+ /* MPU Configuration */
+
+void MPU_Config(void)
+{
+  MPU_Region_InitTypeDef MPU_InitStruct = {0};
+  MPU_Attributes_InitTypeDef MPU_AttributesInit = {0};
+
+  /* Disables the MPU */
+  HAL_MPU_Disable();
+
+  /** Initializes and configures the Region and the memory to be protected
+  */
+  MPU_InitStruct.Enable = MPU_REGION_ENABLE;
+  MPU_InitStruct.Number = MPU_REGION_NUMBER0;
+  MPU_InitStruct.BaseAddress = 0x08000000;
+  MPU_InitStruct.LimitAddress = 0x082FFFFF;
+  MPU_InitStruct.AttributesIndex = MPU_ATTRIBUTES_NUMBER0;
+  MPU_InitStruct.AccessPermission = MPU_REGION_PRIV_RW;
+  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
+
+  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+  MPU_AttributesInit.Number = MPU_REGION_NUMBER0;
+  HAL_MPU_ConfigMemoryAttributes(&MPU_AttributesInit);
+
+  /** Initializes and configures the Region and the memory to be protected
+  */
+  MPU_InitStruct.Number = MPU_REGION_NUMBER1;
+  MPU_InitStruct.BaseAddress = 0x08300000;
+  MPU_InitStruct.LimitAddress = 0x083FFFFF;
+  MPU_InitStruct.AttributesIndex = MPU_ATTRIBUTES_NUMBER1;
+  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
+
+  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+  MPU_AttributesInit.Number = MPU_REGION_NUMBER1;
+  HAL_MPU_ConfigMemoryAttributes(&MPU_AttributesInit);
+  /* Enables the MPU */
+  HAL_MPU_Enable(MPU_HFNMI_PRIVDEF);
+
+}
 
 /**
   * @brief  Period elapsed callback in non blocking mode
