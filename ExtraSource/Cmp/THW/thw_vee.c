@@ -94,9 +94,9 @@ static void thw_drv_vee_DisplayMenu(void)
 	THW_printf("\r\n");
 
 	THW_printf("                         VEE\r\n");
-	THW_printf("Variable Qty (1 pack)  : %d\t(max: %d)\r\n", 		thw_drv_vee_varQty, 	VEE_get_variablesQty());
-	THW_printf("Page Active            : %d\t(0x%08X)  \r\n", 		VEE_get_activePage(), 	VEE_get_activePageAddress());
-	THW_printf("pagesQty               : %d  (from %d to %d)(from 0x%08X to 0x%08X)\r\n",
+	THW_printf("Variable Qty (1 pack)  : %d   (max: %d)  \r\n", 		thw_drv_vee_varQty, 	VEE_get_variablesQty());
+	THW_printf("Page Active            : %d   (0x%08X)   \r\n", 		VEE_get_activePage(), 	VEE_get_activePageAddress());
+	THW_printf("pagesQty               : %d   (from %d to %d)(from 0x%08X to 0x%08X)\r\n",
 			VEE_get_pagesQty(),
 			VEE_get_startPage(), VEE_get_endPage(),
 			VEE_get_startEepromAddress(), VEE_get_endEepromAddress());
@@ -229,7 +229,7 @@ static void thw_drv_vee_writeNPacks(uint16_t packQty)
 	// Additional page state logging for debugging
 	THW_printf("Page State Check:\r\n");
 	for(uint16_t i = VEE_get_startPage(); i <= VEE_get_endPage(); i++) {
-		THW_printf("Page %d: State = %d\r\n", i, VEE_get_pageState(i));
+		THW_printf("Page %d: %s\r\n", i, VEE_get_pageState_ToString(i));
 	}
 
 	THW_avoidClearScreen();

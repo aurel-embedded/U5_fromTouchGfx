@@ -147,19 +147,29 @@ EE_Status EE_FlashEraseAll(void);
 
 
 // Extra API
-extern uint32_t 	EE_ex_get_variablesQty(void);
-extern uint32_t 	EE_ex_get_pagesQty(void);
-extern uint32_t 	EE_ex_get_activePage(void);
-extern uint32_t 	EE_ex_get_activePageAddress(void);
-extern uint32_t 	EE_ex_get_nbMaxElementsByPage(void);
-extern uint32_t 	EE_ex_get_pagesQty(void);
-extern uint32_t 	EE_ex_get_nbMaxWrittenElements(void);
-extern uint32_t 	EE_ex_get_startPage(void);
-extern uint32_t 	EE_ex_get_endPage(void);
-extern uint32_t 	EE_ex_get_PageSize(void);
-extern uint32_t 	EE_ex_get_startEepromAddress(void);
-extern uint32_t 	EE_ex_get_endEepromAddress(void);
-extern uint8_t 		EE_ex_get_pageState(uint16_t page);
+typedef enum {
+   EE_Ex_STATE_PAGE_ERASED,
+   EE_Ex_STATE_PAGE_RECEIVE,
+   EE_Ex_STATE_PAGE_ACTIVE,
+   EE_Ex_STATE_PAGE_VALID,
+   EE_Ex_STATE_PAGE_ERASING,
+   EE_Ex_STATE_PAGE_INVALID
+} EE_Ex_State_type;
+
+extern uint32_t 			EE_ex_get_variablesQty(void);
+extern uint32_t 			EE_ex_get_pagesQty(void);
+extern uint32_t 			EE_ex_get_activePage(void);
+extern uint32_t 			EE_ex_get_activePageAddress(void);
+extern uint32_t 			EE_ex_get_nbMaxElementsByPage(void);
+extern uint32_t 			EE_ex_get_pagesQty(void);
+extern uint32_t 			EE_ex_get_nbMaxWrittenElements(void);
+extern uint32_t 			EE_ex_get_startPage(void);
+extern uint32_t 			EE_ex_get_endPage(void);
+extern uint32_t 			EE_ex_get_PageSize(void);
+extern uint32_t 			EE_ex_get_startEepromAddress(void);
+extern uint32_t 			EE_ex_get_endEepromAddress(void);
+extern EE_Ex_State_type 	EE_ex_get_pageState(uint16_t page);
+extern char* 				EE_ex_get_pageState_ToString(uint16_t page);
 
 #ifdef __cplusplus
 }

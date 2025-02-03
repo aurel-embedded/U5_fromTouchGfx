@@ -45,5 +45,6 @@ extern uint32_t 	VEE_get_endPage();
 extern uint32_t 	VEE_get_startEepromAddress();
 extern uint32_t 	VEE_get_endEepromAddress();
 extern uint8_t 		VEE_get_pageState(uint16_t page);
+extern char* 		VEE_get_pageState_ToString(uint16_t page);
 
 #endif /* MEM_CORE_VEE_API_H_ */

@@ -2189,10 +2189,31 @@ uint32_t EE_ex_get_endEepromAddress(void)
 	return END_EEPROM_ADDRESS;
 }
 
-uint8_t EE_ex_get_pageState(uint16_t page)
+EE_Ex_State_type EE_ex_get_pageState(uint16_t page)
 {
-    uint32_t *pageAddress = (uint32_t *)(EE_ex_get_startEepromAddress() + (page * EE_ex_get_PageSize()));
-    return (uint8_t)(*pageAddress);
+    uint32_t pageAddress = (uint32_t )(EE_ex_get_startEepromAddress() + (page * EE_ex_get_PageSize()));
+    return (EE_Ex_State_type)GetPageState(pageAddress);
+}
+
+char* EE_ex_get_pageState_ToString(uint16_t page)
+{
+	EE_Ex_State_type state = EE_ex_get_pageState(page);
+	switch (state) {
+		case EE_Ex_STATE_PAGE_ERASED:
+			return "ERASED";
+		case EE_Ex_STATE_PAGE_RECEIVE:
+			return "RECEIVE";
+		case EE_Ex_STATE_PAGE_ACTIVE:
+			return "ACTIVE";
+		case EE_Ex_STATE_PAGE_VALID:
+			return "VALID";
+		case EE_Ex_STATE_PAGE_ERASING:
+			return "ERASING";
+		case EE_Ex_STATE_PAGE_INVALID:
+			return "INVALID";
+		default:
+			return "NA";
+	}
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

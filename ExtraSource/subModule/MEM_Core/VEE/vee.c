@@ -204,7 +204,7 @@ vee_error_e VEE_cleanUp()
 
 
 //------------------------------------------------------------------------------
-/// \fn 		uint32_t VEE_get_variablesQty(vee_number_e vee_number)
+/// \fn 		uint32_t VEE_get_variablesQty()
 /// \brief
 //------------------------------------------------------------------------------
 uint32_t VEE_get_variablesQty()
@@ -213,7 +213,7 @@ uint32_t VEE_get_variablesQty()
 }
 
 //------------------------------------------------------------------------------
-/// \fn 		uint32_t VEE_get_activePage(vee_number_e vee_number)
+/// \fn 		uint32_t VEE_get_activePage()
 /// \brief
 //------------------------------------------------------------------------------
 uint32_t VEE_get_activePage()
@@ -222,7 +222,7 @@ uint32_t VEE_get_activePage()
 }
 
 //------------------------------------------------------------------------------
-/// \fn 		uint32_t VEE_get_activePageAddress(vee_number_e vee_number)
+/// \fn 		uint32_t VEE_get_activePageAddress()
 /// \brief
 //------------------------------------------------------------------------------
 uint32_t VEE_get_activePageAddress()
@@ -231,7 +231,7 @@ uint32_t VEE_get_activePageAddress()
 }
 
 //------------------------------------------------------------------------------
-/// \fn 		uint32_t VEE_get_nbMaxElementsByPage(vee_number_e vee_number)
+/// \fn 		uint32_t VEE_get_nbMaxElementsByPage()
 /// \brief		Finalize component
 //------------------------------------------------------------------------------
 uint32_t VEE_get_nbMaxElementsByPage()
@@ -240,7 +240,7 @@ uint32_t VEE_get_nbMaxElementsByPage()
 }
 
 //------------------------------------------------------------------------------
-/// \fn 		uint32_t VEE_get_pagesQty(vee_number_e vee_number)
+/// \fn 		uint32_t VEE_get_pagesQty()
 //------------------------------------------------------------------------------
 uint32_t VEE_get_pagesQty()
 {
@@ -248,7 +248,7 @@ uint32_t VEE_get_pagesQty()
 }
 
 //------------------------------------------------------------------------------
-/// \fn 		uint32_t VEE_get_nbMaxWrittenElements(vee_number_e vee_number)
+/// \fn 		uint32_t VEE_get_nbMaxWrittenElements()
 /// \brief
 //------------------------------------------------------------------------------
 uint32_t VEE_get_nbMaxWrittenElements()
@@ -257,7 +257,7 @@ uint32_t VEE_get_nbMaxWrittenElements()
 }
 
 //------------------------------------------------------------------------------
-/// \fn 		uint32_t VEE_get_startPage(vee_number_e vee_number)
+/// \fn 		uint32_t VEE_get_startPage()
 /// \brief
 //------------------------------------------------------------------------------
 uint32_t VEE_get_startPage()
@@ -266,7 +266,7 @@ uint32_t VEE_get_startPage()
 }
 
 //------------------------------------------------------------------------------
-/// \fn 		uint32_t VEE_get_endPage(vee_number_e vee_number)
+/// \fn 		uint32_t VEE_get_endPage()
 /// \brief
 //------------------------------------------------------------------------------
 uint32_t VEE_get_endPage()
@@ -275,7 +275,7 @@ uint32_t VEE_get_endPage()
 }
 
 //------------------------------------------------------------------------------
-/// \fn 		uint32_t VEE_get_startEepromAddress(vee_number_e vee_number)
+/// \fn 		uint32_t VEE_get_startEepromAddress()
 /// \brief
 //------------------------------------------------------------------------------
 uint32_t VEE_get_startEepromAddress()
@@ -284,7 +284,7 @@ uint32_t VEE_get_startEepromAddress()
 }
 
 //------------------------------------------------------------------------------
-/// \fn 		uint32_t VEE_get_endEepromAddress(vee_number_e vee_number)
+/// \fn 		uint32_t VEE_get_endEepromAddress()
 /// \brief
 //------------------------------------------------------------------------------
 uint32_t VEE_get_endEepromAddress()
@@ -293,11 +293,20 @@ uint32_t VEE_get_endEepromAddress()
 }
 
 //------------------------------------------------------------------------------
-/// \fn 		uint32_t VEE_get_pageState(vee_number_e vee_number)
+/// \fn 		uint32_t VEE_get_pageState(uint16_t page)
 /// \brief
 //------------------------------------------------------------------------------
 uint8_t VEE_get_pageState(uint16_t page)
 {
 	return EE_ex_get_pageState(page);
+}
+
+//------------------------------------------------------------------------------
+/// \fn 		uint32_t VEE_get_pageState_ToString(uint16_t page)
+/// \brief
+//------------------------------------------------------------------------------
+char* VEE_get_pageState_ToString(uint16_t page)
+{
+	return EE_ex_get_pageState_ToString(page);
 }
 

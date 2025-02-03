@@ -26,7 +26,7 @@ st_thw_menuItem thw_main_menuTab[] = {
 		{.name = "Uart THW", 			.pActionFn = thw_drv_uartThw_setActive, .info = 0},
 		{.name = "Driver Adc", 			.pActionFn = thw_drv_adc_setActive, 	.info = 0},
 		{.name = "Vee", 				.pActionFn = thw_drv_vee_setActive, 	.info = 0},
-		{.name = "Vee2", 				.pActionFn = thw_drv_vee2_setActive, 	.info = 0},
+//		{.name = "Vee2", 				.pActionFn = thw_drv_vee2_setActive, 	.info = 0},
 //		{.name = "Test HardFault", 		.pActionFn = thw_HardFault_setActive, 	.info = 0},
 };
 
