@@ -135,7 +135,7 @@ vee_error_e VEE_read(uint16_t VirtAddress, uint32_t* pData)
 vee_error_e VEE_format(EE_Erase_type EraseType)
 {
 	// Format Vee
-	EE_Status 	status = EE_Format(EE_FORCED_ERASE);
+	EE_Status 	status = EE_Format(EraseType);
 	if(status == EE_OK)
 	{
 		return vee_error__OK;
