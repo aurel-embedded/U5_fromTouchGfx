@@ -16,43 +16,12 @@
 //-----------------------------------------------------------------------------
 typedef struct{
 	cmp_mode_t 		cmpStatus;
-	cmp_mode_t 		Vee1_Status;
-	cmp_mode_t 		Vee2_Status;
-	cmp_mode_t 		Vee3_Status;
+	cmp_mode_t 		VeeStatus;
 } vee_internalData_t;
 vee_internalData_t vee_internalData = {
 		.cmpStatus = cmp_mode_notDefined,
-		.Vee1_Status = cmp_mode_notDefined,
-		.Vee2_Status = cmp_mode_notDefined,
-		.Vee3_Status = cmp_mode_notDefined,
+		.VeeStatus = cmp_mode_notDefined,
 };
-
-//=====================================================================================================================
-//=====================================================================================================================
-//													VEE - FOPS CONFIGURATION
-//=====================================================================================================================
-//=====================================================================================================================
-
-//VEE1
-mem_vee_confEmul_t mem_vee_confItem_vee1 = {
-		.variableCpt = 				0,
-		.writeVariable32bits = 		EE_WriteVariable32bits,
-		.readVariable32bits = 		EE_ReadVariable32bits,
-		.cleanUp = 					EE_CleanUp,
-		.format = 					EE_Format,
-		.get_variablesQty = 		EE_ex_get_variablesQty,
-		.get_activePage = 			EE_ex_get_activePage,
-		.get_activePageAddress = 	EE_ex_get_activePageAddress,
-		.get_nbMaxElementsByPage = 	EE_ex_get_nbMaxElementsByPage,
-//		.get_pagesQty =				EE_ex_get_pagesQty,
-		.get_nbMaxWrittenElements = EE_ex_get_nbMaxWrittenElements,
-//		.get_startPage = 			EE_ex_get_startPage,
-//		.get_endPage = 				EE_ex_get_endPage,
-//		.get_startEepromAddress = 	EE_ex_get_startEepromAddress,
-//		.get_endEepromAddress = 	EE_ex_get_endEepromAddress,
-};
-
-
 
 
 //=====================================================================================================================
@@ -87,7 +56,7 @@ vee_error_e VEE_init(void)
 		EE_Format(EE_FORCED_ERASE);
 		return vee_error__veeInitError;
 	}
-	vee_internalData.Vee1_Status = cmp_mode_nominal;
+	vee_internalData.VeeStatus = cmp_mode_nominal;
 	return vee_error__OK;
 }
 
@@ -98,7 +67,7 @@ vee_error_e VEE_init(void)
 vee_error_e VEE_exit(void)
 {
 	// Exit VEE
-	vee_internalData.Vee1_Status = cmp_mode_notDefined;
+	vee_internalData.VeeStatus = cmp_mode_notDefined;
 
 	HAL_FLASH_Lock();
 	return vee_error__OK;

@@ -28,6 +28,7 @@
 #include "BSP/Components/mx66uw1g45g/mx66uw1g45g.h"
 #include <Tools/assertError.h>
 #include <eeprom_emul_types.h>
+#include <MEM_Core/VEE/vee_api.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -370,6 +371,19 @@ void SystemClock_Config(void)
   */
 static void SystemPower_Config(void)
 {
+  PWR_PVDTypeDef sConfigPVD = {0};
+
+  /*
+   * PVD Configuration
+   */
+  sConfigPVD.PVDLevel = PWR_PVDLEVEL_6;
+  sConfigPVD.Mode = PWR_PVD_MODE_IT_RISING;
+  HAL_PWR_ConfigPVD(&sConfigPVD);
+
+  /*
+   * Enable the PVD Output
+   */
+  HAL_PWR_EnablePVD();
 
   /*
    * Switch to SMPS regulator instead of LDO
@@ -378,6 +392,9 @@ static void SystemPower_Config(void)
   {
     Error_Handler();
   }
+  /* PVD_PVM_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(PVD_PVM_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(PVD_PVM_IRQn);
 /* USER CODE BEGIN PWR */
 /* USER CODE END PWR */
 }
@@ -1276,6 +1293,10 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+//=============================================================================
+//							HAL DELAY OVERWRITE
+//=============================================================================
 void HAL_Delay(uint32_t Delay)
 {
 	uint32_t tickstart = HAL_GetTick();
@@ -1320,6 +1341,10 @@ int _getentropy(void *buffer, size_t length)
     return 0; // Succès
 }
 
+
+//=============================================================================
+//							DUMMIES FUNCTIONS FOR THW
+//=============================================================================
 #ifdef MODE_THW
 void MX_TouchGFX_Init(void)
 {
@@ -1330,6 +1355,22 @@ void MX_TouchGFX_PreOSInit(void)
     // Dummy function
 }
 #endif
+
+//=============================================================================
+//							Power Voltage Detection Callback
+//=============================================================================
+void HAL_PWR_PVDCallback(void)
+{
+	/* Loop inside the handler to prevent the Cortex from using the Flash,
+		 allowing the flash interface to finish any ongoing transfer. */
+	while (__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO) != RESET)
+	{
+	}
+
+	// In case of the power is back -> restart
+	NVIC_SystemReset();
+}
+
 /* USER CODE END 4 */
 
  /* MPU Configuration */

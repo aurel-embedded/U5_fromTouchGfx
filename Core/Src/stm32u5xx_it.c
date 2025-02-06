@@ -180,6 +180,20 @@ void DebugMon_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles PVD/PVM through EXTI Line detection Interrupt.
+  */
+void PVD_PVM_IRQHandler(void)
+{
+  /* USER CODE BEGIN PVD_PVM_IRQn 0 */
+
+  /* USER CODE END PVD_PVM_IRQn 0 */
+  HAL_PWR_PVD_IRQHandler();
+  /* USER CODE BEGIN PVD_PVM_IRQn 1 */
+
+  /* USER CODE END PVD_PVM_IRQn 1 */
+}
+
+/**
   * @brief This function handles Flash non-secure global interrupt.
   */
 void FLASH_IRQHandler(void)
