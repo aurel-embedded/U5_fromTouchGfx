@@ -80,6 +80,8 @@ void Error_Handler(void);
 #define USER_LD2_RED_GPIO_Port GPIOD
 #define USER_LD3_GREEN_Pin GPIO_PIN_4
 #define USER_LD3_GREEN_GPIO_Port GPIOD
+#define SpareGpio_PG15_Pin GPIO_PIN_15
+#define SpareGpio_PG15_GPIO_Port GPIOG
 
 /* USER CODE BEGIN Private defines */
 

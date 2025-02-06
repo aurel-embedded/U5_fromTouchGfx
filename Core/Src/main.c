@@ -28,6 +28,8 @@
 #include "BSP/Components/mx66uw1g45g/mx66uw1g45g.h"
 #include <Tools/assertError.h>
 #include <eeprom_emul_types.h>
+#include <MEM_Core/VEE/vee_api.h>
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,7 +39,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define PVD_DEBUG_MEASUREMENT_ON_GPIO 1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -87,6 +89,7 @@ UART_HandleTypeDef huart1;
 PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
 /* USER CODE BEGIN PV */
+static bool isDebouncingWaitDone = false;
 
 /* USER CODE END PV */
 
@@ -120,76 +123,7 @@ static void MX_FLASH_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-#define START_ADDRESS_FOR_TEST 0x08100000
-#define START_ADDRESS_FOR_TEST2 0x08200000
-#define PAGE_SIZE FLASH_PAGE_SIZE  // Taille d'une page (8 Ko pour STM32U5)
-#define TARGET_PAGE_ADDRESS(page) (0x08000000 + (page * PAGE_SIZE)) // Adresse de la page (Bank1)
 
-// Fonction pour effacer une page de la mémoire Flash
-void EraseFlashPage(uint32_t pageAddress)
-{
-    FLASH_EraseInitTypeDef EraseInitStruct;
-    uint32_t PageError = 0;
-
-    // Déverrouiller la mémoire Flash
-
-    // Initialiser la structure pour l'effacement de la page
-    EraseInitStruct.TypeErase = FLASH_TYPEERASE_PAGES;
-    EraseInitStruct.Banks = FLASH_BANK_1;  // Choisir la banque de mémoire (ici Bank 1)
-    EraseInitStruct.Page = (pageAddress - 0x08000000) / FLASH_PAGE_SIZE; // Calculer le numéro de la page à effacer
-    EraseInitStruct.NbPages = 1; // Effacer une seule page
-
-    // Effectuer l'effacement
-    if (HAL_FLASHEx_Erase(&EraseInitStruct, &PageError) != HAL_OK) {
-        // En cas d'erreur d'effacement
-        Error_Handler();
-    }
-}
-
-uint32_t QuadWordVal[4] =
-{
-	0x00000000,
-	0x00000000,
-	0x00000000,
-	0x00000000
-};
-// Fonction pour écrire des données dans une page de la Flash
-EE_Status WriteFlashQuadWord(uint32_t Address, uint32_t* Data)
-{
-	EE_Status status = EE_OK;
-
-	QuadWordVal[0] = Data[0];
-	QuadWordVal[1] = Data[1];
-	QuadWordVal[2] = Data[2];
-	QuadWordVal[3] = Data[3];
-
-	if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_QUADWORD, Address, ((uint32_t)QuadWordVal)) != HAL_OK)
-	{
-		status = EE_WRITE_ERROR;
-	}
-
-	return status;
-}
-
-// Fonction pour écrire des données dans une page de la Flash
-EE_Status VerifyFlashQuadWord(uint32_t Address, uint32_t* Data)
-{
-	EE_Status status = EE_OK;
-
-	uint32_t readVal[4];
-	for (int i = 0; i < 4; i++) {
-	    readVal[i] = *(volatile uint32_t*)(Address + i * sizeof(uint32_t));
-	}
-
-	// Comparer les valeurs lues avec les valeurs attendues
-	for (int i = 0; i < 4; i++) {
-	    if (readVal[i] != Data[i]) {
-	    	status = EE_WRITE_ERROR;
-	    }
-	}
-
-	return status;
-}
 
 /* USER CODE END 0 */
 
@@ -251,34 +185,10 @@ int main(void)
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
+  HAL_Delay(500);
+  isDebouncingWaitDone = true;
 
 
-
-//	HAL_FLASH_Unlock();
-//	uint32_t ValWord[4] =
-//	{
-//		0x01234567,
-//		0xABCDEF01,
-//		0xABABABAB,
-//		0xA5A5A5A5
-//	};
-//	EraseFlashPage(START_ADDRESS_FOR_TEST);
-//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST, ValWord);
-//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST, ValWord);
-//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST + 0x10, ValWord);
-//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST + 0x10, ValWord);
-//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST + 0x20, ValWord);
-//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST + 0x20, ValWord);
-//
-//	EraseFlashPage(START_ADDRESS_FOR_TEST2);
-//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2, ValWord);
-//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2, ValWord);
-//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x10, ValWord);
-//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x10, ValWord);
-//	WriteFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x20, ValWord);
-//	VerifyFlashQuadWord(START_ADDRESS_FOR_TEST2 + 0x20, ValWord);
-//
-//	HAL_FLASH_Lock();
 
   /* USER CODE END 2 */
 
@@ -370,6 +280,21 @@ void SystemClock_Config(void)
   */
 static void SystemPower_Config(void)
 {
+  HAL_PWREx_EnableVddIO2();
+
+  PWR_PVDTypeDef sConfigPVD = {0};
+
+  /*
+   * PVD Configuration
+   */
+  sConfigPVD.PVDLevel = PWR_PVDLEVEL_6;
+  sConfigPVD.Mode = PWR_PVD_MODE_IT_RISING;
+  HAL_PWR_ConfigPVD(&sConfigPVD);
+
+  /*
+   * Enable the PVD Output
+   */
+  HAL_PWR_EnablePVD();
 
   /*
    * Switch to SMPS regulator instead of LDO
@@ -378,6 +303,9 @@ static void SystemPower_Config(void)
   {
     Error_Handler();
   }
+  /* PVD_PVM_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(PVD_PVM_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(PVD_PVM_IRQn);
 /* USER CODE BEGIN PWR */
 /* USER CODE END PWR */
 }
@@ -1219,6 +1147,9 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, USER_LD2_RED_Pin|USER_LD3_GREEN_Pin, GPIO_PIN_SET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(SpareGpio_PG15_GPIO_Port, SpareGpio_PG15_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pin : LCD_DISP_EN_Pin */
   GPIO_InitStruct.Pin = LCD_DISP_EN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -1267,6 +1198,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : SpareGpio_PG15_Pin */
+  GPIO_InitStruct.Pin = SpareGpio_PG15_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SpareGpio_PG15_GPIO_Port, &GPIO_InitStruct);
+
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI5_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI5_IRQn);
@@ -1276,6 +1214,10 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+//=============================================================================
+//							HAL DELAY OVERWRITE
+//=============================================================================
 void HAL_Delay(uint32_t Delay)
 {
 	uint32_t tickstart = HAL_GetTick();
@@ -1320,6 +1262,10 @@ int _getentropy(void *buffer, size_t length)
     return 0; // Succès
 }
 
+
+//=============================================================================
+//							DUMMIES FUNCTIONS FOR THW
+//=============================================================================
 #ifdef MODE_THW
 void MX_TouchGFX_Init(void)
 {
@@ -1330,6 +1276,29 @@ void MX_TouchGFX_PreOSInit(void)
     // Dummy function
 }
 #endif
+
+//=============================================================================
+//							Power Voltage Detection Callback
+//=============================================================================
+void HAL_PWR_PVDCallback(void)
+{
+	// Doing Job if initial tempo has been reached
+	if(isDebouncingWaitDone)
+	{
+#ifdef PVD_DEBUG_MEASUREMENT_ON_GPIO
+		HAL_GPIO_WritePin(SpareGpio_PG15_GPIO_Port, SpareGpio_PG15_Pin, GPIO_PIN_SET);
+#endif
+		/* Loop inside the handler to prevent the Cortex from using the Flash,
+			 allowing the flash interface to finish any ongoing transfer. */
+		while (__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO) != RESET)
+		{
+		}
+
+		// In case of the power is back -> restart correctly
+		NVIC_SystemReset();
+	}
+}
+
 /* USER CODE END 4 */
 
  /* MPU Configuration */
