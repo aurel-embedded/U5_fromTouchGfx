@@ -11,126 +11,126 @@
 
 
 //-----------------------------------------------------------------------------
-// VEE  MIRROR DATA IN RAM
+// VEE
 //-----------------------------------------------------------------------------
-mem_vee_pairValues_t tab_vee[NB_OF_VARIABLES];
-uint32_t tab_vee_size = sizeof(tab_vee) / sizeof(mem_vee_pairValues_t);
+typedef enum{
+	mem_virtualAddress_ID_potar1_min,
+	mem_virtualAddress_ID_potar1_max,
+	mem_virtualAddress_ID_potar2_min,
+	mem_virtualAddress_ID_potar2_max,
+	mem_virtualAddress_ID_potar3_min,
+	mem_virtualAddress_ID_potar3_max,
+	mem_virtualAddress_ID_potar4_min,
+	mem_virtualAddress_ID_potar4_max,
+	mem_virtualAddress_ID_potar5_min,
+	mem_virtualAddress_ID_potar5_max,
+	mem_virtualAddress_ID_potar6_min,
+	mem_virtualAddress_ID_potar6_max,
+}mem_virtualAddress_ID_e;
+
+mem_virtualAddressData_pair_t mem_values_tab[] = {
+		{.virtualAddress = mem_virtualAddress_ID_potar1_min},
+		{.virtualAddress = mem_virtualAddress_ID_potar1_max},
+		{.virtualAddress = mem_virtualAddress_ID_potar2_min},
+		{.virtualAddress = mem_virtualAddress_ID_potar2_max},
+		{.virtualAddress = mem_virtualAddress_ID_potar3_min},
+		{.virtualAddress = mem_virtualAddress_ID_potar3_max},
+		{.virtualAddress = mem_virtualAddress_ID_potar4_min},
+		{.virtualAddress = mem_virtualAddress_ID_potar4_max},
+		{.virtualAddress = mem_virtualAddress_ID_potar5_min},
+		{.virtualAddress = mem_virtualAddress_ID_potar5_max},
+		{.virtualAddress = mem_virtualAddress_ID_potar6_min},
+		{.virtualAddress = mem_virtualAddress_ID_potar6_max},
+};
+uint32_t mem_values_tabSize = sizeof(mem_values_tab) / sizeof(mem_virtualAddressData_pair_t);
+
+static mem_virtualAddressData_pair_t * mem_getPairFromVirtualAddress(mem_virtualAddress_ID_e id);
+static void mem_razValues(void);
 
 //=====================================================================================================
-//						 Functions ()
+//						 		COMMON COMPONENT FUNCTIONS
 //=====================================================================================================
-
-//------------------------------------------------------------------------------
-/// \fn 		mem_vee_confEmul_t * mem_getRamConfigurationSizeInstance(void)
-/// \brief
-//------------------------------------------------------------------------------
-static uint32_t mem_getRamConfigurationSizeInstance(void)
-{
-	return tab_vee_size;
-}
 
 
 //--------------------------------------------------------------------------------------------------
 /// \fn 		EE_Status mem_vee_write(mem_vee_virtual_addr_t VirtAddress, uint32_t data)
-/// \brief		write in vee
+/// \brief		write in vee & in Ram
 //--------------------------------------------------------------------------------------------------
 mem_error_e mem_write(uint16_t VirtAddress, uint32_t data)
 {
 	vee_error_e 	err = vee_error__OK;
 
 	//check valid Virtual Address
-	if (VirtAddress > 0 && VirtAddress < 0xFFFE)
-	{
-		// Write to VEE
-		err = VEE_write((uint16_t)VirtAddress, data);
-		if(err != vee_error__OK)
-			return mem_error__writeError;
-
-		// Map To RAM
-		mem_vee_pairValues_t 	*pPairValuesToUse = 	mem_getRamConfigurationInstance();
-
-		if(pPairValuesToUse == NULL){
-			return mem_error__ramConfigNotFound;
-		}
-		pPairValuesToUse[VirtAddress-1].virtualAddress = VirtAddress;
-		pPairValuesToUse[VirtAddress-1].data = data;
-	}
-	else
-	{
-		mem_vee_internalData.info.cpt_InvalidVirtualAddressError++;
+	if (VirtAddress == 0 || VirtAddress == 0xFFFF){
 		return mem_error__invalidVirtualAddress;
 	}
 
+	// Write to VEE
+	err = VEE_write((uint16_t)VirtAddress, data);
+	if(err != vee_error__OK)
+		return mem_error__writeError;
 
-
-	return mem_error__OK;
-}
-
-
-//--------------------------------------------------------------------------------------------------
-/// \fn 		EE_Status mem_readFromVee(mem_vee_virtual_addr_t VirtAddress, uint32_t* data)
-/// \brief		read from vee
-//--------------------------------------------------------------------------------------------------
-mem_error_e mem_readFromVee(uint16_t VirtAddress, uint32_t* pData)
-{
-	vee_error_e err = vee_error__OK;
-
-	//check valid Virtual Address
-	if (VirtAddress > 0 && VirtAddress < 0xFFFE)
-	{
-		err = VEE_read((uint16_t)VirtAddress, pData);
-		if(err != vee_error__OK) {
-			if(err == vee_error__dataNotFound) {
-				return mem_error__noData;
-			}
-			else {
-				return mem_error__readError;
-			}
-		}
+	// Write To RAM
+	mem_virtualAddressData_pair_t 	*pPairValuesToUse = mem_getPairFromVirtualAddress(VirtAddress);
+	if(pPairValuesToUse == NULL){
+		return mem_error__ramConfigNotFound;
 	}
-	else
-	{
-		mem_vee_internalData.info.cpt_InvalidVirtualAddressError++;
-		return mem_error__invalidVirtualAddress;
-	}
+	pPairValuesToUse->data = data;
 
 	return mem_error__OK;
 }
 
 //--------------------------------------------------------------------------------------------------
-/// \fn 		EE_Status mem_readFromRam(mem_vee_virtual_addr_t VirtAddress, uint32_t* data)
+/// \fn 		EE_Status mem_read(mem_vee_virtual_addr_t VirtAddress, uint32_t* data)
 /// \brief		read from Ram
 //--------------------------------------------------------------------------------------------------
-mem_error_e mem_readFromRam(uint16_t VirtAddress, uint32_t* data)
+mem_error_e mem_read(uint16_t VirtAddress, uint32_t* data)
 {
 	//check valid Virtual Address
-	if (VirtAddress > 0 && VirtAddress < 0xFFFE)
-	{
-		// Get Pair Config to use
-		mem_vee_pairValues_t *pPairValuesToUse = mem_getRamConfigurationInstance();
-		if(pPairValuesToUse == NULL){
-			return mem_error__ramConfigNotFound;
-		}
-
-		// Check
-		if(pPairValuesToUse[VirtAddress-1].virtualAddress != VirtAddress){
-			return mem_error__noData;
-		}
-
-		// Assign data
-		*data = pPairValuesToUse[VirtAddress-1].data;
-	}
-	else
-	{
-		mem_vee_internalData.info.cpt_InvalidVirtualAddressError++;
+	if (VirtAddress == 0 || VirtAddress == 0xFFFF){
 		return mem_error__invalidVirtualAddress;
 	}
 
+	// Get Pair Config to use
+	mem_virtualAddressData_pair_t 	*pPairValuesToUse = mem_getPairFromVirtualAddress(VirtAddress);
+	if(pPairValuesToUse == NULL){
+		return mem_error__ramConfigNotFound;
+	}
 
+	// Assign data
+	*data = pPairValuesToUse->data;
 
 	return mem_error__OK;
 }
 
+//--------------------------------------------------------------------------------------------------
+/// \fn 		EE_Status mem_vee_write(mem_vee_virtual_addr_t VirtAddress, uint32_t data)
+/// \brief		write in vee & in Ram
+//--------------------------------------------------------------------------------------------------
+mem_error_e mem_loadRamWithVee()
+{
+	uint32_t data;
+	bool atLeastOneError = false;
+
+	for (uint8_t idx = 0; idx < mem_values_tabSize; idx++) {
+		if(mem_values_tab[idx].virtualAddress != 0){
+			// Read From VEE
+			vee_error_e err = VEE_read((uint16_t)mem_values_tab[idx].virtualAddress, &data);
+			if(err == vee_error__OK){
+				// Copy to Ram
+				mem_values_tab[idx].data = data;
+			}else{
+				atLeastOneError = true;
+			}
+				return mem_error__writeError;
+		}
+	}
+
+	if(atLeastOneError == true)
+		return mem_error__writeError;
+	else
+		return mem_error__readError;
+}
 
 //--------------------------------------------------------------------------------------------------
 /// \fn 		EE_Status mem_format(void)
@@ -145,18 +145,8 @@ mem_error_e mem_format(void)
 	if(err != vee_error__OK)
 		return mem_error__formatError;
 
-	// Raz RAM
-	mem_vee_pairValues_t 	*pPairValuesToUse = 	mem_getRamConfigurationInstance();
-	uint32_t				pairValuesSizeToUse = 	mem_getRamConfigurationSizeInstance();
-
-	if(pPairValuesToUse == NULL){
-		return mem_error__ramConfigNotFound;
-	}
-
 	// Reset RAM
-	memset(	pPairValuesToUse,
-			0,
-			pairValuesSizeToUse);
+	mem_razValues();
 
 	return mem_error__OK;
 }
@@ -176,52 +166,34 @@ mem_error_e mem_cleanUp(void)
 }
 
 
+//=====================================================================================================
+//						 				LOCAL FUNCTIONS
+//=====================================================================================================
+
 //--------------------------------------------------------------------------------------------------
-/// \fn 		EE_Status mem_loadDataToRam_item(void)
-/// \brief		read from vee
+/// \fn 		mem_virtualAddressData_pair_t * mem_getPairFromVirtualAddress(mem_virtualAddress_ID_e id)
+/// \brief		get pair values from tab
 //--------------------------------------------------------------------------------------------------
-static mem_error_e mem_loadDataToRam_item(int addMax)
+static mem_virtualAddressData_pair_t * mem_getPairFromVirtualAddress(mem_virtualAddress_ID_e id)
 {
-	mem_error_e errReturn = mem_error__OK;
-	vee_error_e errRead = vee_error__OK;
-	uint32_t varValue;
-
-	// Get Pair Config to use
-	mem_vee_pairValues_t *pPairValuesToUse = mem_getRamConfigurationInstance();
-	if(pPairValuesToUse == NULL){
-		return mem_error__ramConfigNotFound;
-	}
-
-	for(int i = 1; i < addMax; i++)
-	{
-		errRead = VEE_read(i, &varValue);
-		if(errRead ==  vee_error__OK){
-			pPairValuesToUse[i-1].data = varValue;
-			// Assign Virtual Address
-			pPairValuesToUse[i-1].virtualAddress = i;
-		}
-		else if(errRead !=  vee_error__dataNotFound) {
-			errReturn = mem_error__readError;
+	for (uint8_t idx = 0; idx < mem_values_tabSize; idx++) {
+		if(mem_values_tab[idx].virtualAddress == id){
+			return &(mem_values_tab[idx]);
 		}
 	}
 
-	return errReturn;
+	return NULL;
 }
 
 //--------------------------------------------------------------------------------------------------
-/// \fn 		EE_Status mem_loadDataFromVeeToRam(void)
-/// \brief		read from vee
+/// \fn 		static void mem_razValues(void)
+/// \brief		Raz All Values (don't erase virtualAddress)
 //--------------------------------------------------------------------------------------------------
-mem_error_e mem_loadDataFromVeeToRam(void)
+static void mem_razValues(void)
 {
-	mem_error_e errReturn = mem_error__OK;
-	mem_error_e err = mem_error__OK;
-
-	err = mem_loadDataToRam_item(NB_OF_VARIABLES+1);
-	if(err != mem_error__OK)
-		errReturn = err;
-
-
-	return errReturn;
+	for (uint8_t idx = 0; idx < mem_values_tabSize; idx++) {
+		if(mem_values_tab[idx].virtualAddress != 0){
+			mem_values_tab[idx].data = 0;
+		}
+	}
 }
-

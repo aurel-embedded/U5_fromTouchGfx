@@ -22,9 +22,9 @@
 typedef struct{
 	uint16_t virtualAddress;
 	uint32_t data;
-}mem_vee_pairValues_t;
+}mem_virtualAddressData_pair_t;
 
-extern mem_vee_pairValues_t tab_vee[NB_OF_VARIABLES];
+extern mem_virtualAddressData_pair_t mem_values_tab[NB_OF_VARIABLES];
 
 //-----------------------------------------------------------------------------
 // INTERNAL DATA
@@ -77,9 +77,8 @@ typedef struct {
 mem_error_e mem_format(void);
 mem_error_e mem_cleanUp(void);
 mem_error_e mem_write(uint16_t VirtAddress, uint32_t data);
-mem_error_e mem_readFromVee(uint16_t VirtAddress, uint32_t* data);
-mem_error_e mem_readFromRam(uint16_t VirtAddress, uint32_t* data);
-mem_error_e mem_loadDataFromVeeToRam(void);
+mem_error_e mem_read(uint16_t VirtAddress, uint32_t* data);
+mem_error_e mem_loadRamWithVee(void);
 
 
 #endif /* CMP_MEM_MEM_COMMON_H_ */

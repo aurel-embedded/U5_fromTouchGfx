@@ -76,7 +76,6 @@ typedef struct {
 //-----------------------------------------------------------------------------
 typedef struct {
 	uint32_t cpt_osMsgQueuePutError;
-	uint32_t cpt_InvalidVirtualAddressError;
 
 }mem_vee_info_t;
 

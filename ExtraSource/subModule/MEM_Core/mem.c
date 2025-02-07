@@ -7,6 +7,7 @@
 
 #include <main.h>
 #include <cmsis_os2.h>
+#include <DBG/dbg_debugPrintf.h>
 #include <MEM_Core/EEPROM_Emul/Core/eeprom_emul_types.h>
 #include <MEM_Core/mem_api.h>
 #include <MEM_Core/mem_common.h>
@@ -106,12 +107,13 @@ static void mem_vee_tsk_fn(void *arg)
 	osStatus_t 	status;
 
 	//init RAM values
-	memset(tab_vee,0,sizeof(tab_vee));
+	memset(mem_values_tab,0,sizeof(mem_values_tab));
 
 	//Loading already stored value if any to RAM
-	if((mem_vee_internalData.cmpStatus.errNumber = mem_loadDataToRam()) != mem_error__OK)
+	if((mem_vee_internalData.cmpStatus.errNumber = mem_loadRamWithVee()) != mem_error__OK)
 	{
-		mem_vee_internalData.mem_vee_error_loading_to_ram = 1;
+		DBG_printf("MEM: Init...ERROR (mem_loadRamWithVee)\r\n");
+		return;
 	}
 	// Component Status
 	mem_vee_internalData.cmpStatus.isTaskRunning = true;
@@ -189,7 +191,6 @@ mem_error_e MEM_init(void)
 		DBG_printf("MEM: Init...ERROR (INIT VEE)\r\n");
 		return mem_error__init_veeInit;
 	}
-
 
 	// Create Mutex
 	mem_vee_memoryShared.mtx_id = osMutexNew(&mem_vee_mtx_attr);
