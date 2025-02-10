@@ -22,6 +22,7 @@
 #include "stm32u5xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -78,6 +79,7 @@ extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
 extern TIM_HandleTypeDef htim6;
 
 /* USER CODE BEGIN EV */
+void prvGetRegistersFromStack(uint32_t *pulFaultStackAddress);
 
 /* USER CODE END EV */
 
@@ -105,6 +107,14 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
+	   __asm volatile
+	    (
+	        "TST lr, #4\n"              // Test si la pile PSP ou MSP est utilisée
+	        "ITE EQ\n"
+	        "MRSEQ r0, MSP\n"           // Si MSP (Main Stack Pointer), charge r0
+	        "MRSNE r0, PSP\n"           // Si PSP (Process Stack Pointer), charge r0
+	        "B prvGetRegistersFromStack\n"
+	    );
 
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
@@ -447,5 +457,33 @@ void JPEG_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+/**
+  * @brief This function handles Hard fault interrupt.
+  */
+void prvGetRegistersFromStack(uint32_t *pulFaultStackAddress)
+{
+    // Récupération des registres au moment de la faute
+    uint32_t stacked_r0 = pulFaultStackAddress[0];
+    uint32_t stacked_r1 = pulFaultStackAddress[1];
+    uint32_t stacked_r2 = pulFaultStackAddress[2];
+    uint32_t stacked_r3 = pulFaultStackAddress[3];
+    uint32_t stacked_r12 = pulFaultStackAddress[4];
+    uint32_t stacked_lr = pulFaultStackAddress[5];    // Link register
+    uint32_t stacked_pc = pulFaultStackAddress[6];    // Program counter (l'instruction fautive)
+    uint32_t stacked_psr = pulFaultStackAddress[7];   // Program status register
+
+    // Imprimer ou afficher les valeurs pour analyse
+    printf("HardFault Detected!\r\n");
+    printf("R0 = 0x%08lx\r\n", stacked_r0);
+    printf("R1 = 0x%08lx\r\n", stacked_r1);
+    printf("R2 = 0x%08lx\r\n", stacked_r2);
+    printf("R3 = 0x%08lx\r\n", stacked_r3);
+    printf("R12 = 0x%08lx\r\n", stacked_r12);
+    printf("LR = 0x%08lx\r\n", stacked_lr);
+    printf("PC (fault) = 0x%08lx\r\n", stacked_pc);  // Adresse de l'instruction fautive
+    printf("PSR = 0x%08lx\r\n", stacked_psr);
+
+    while (1);  // Boucle infinie pour stopper l'exécution ici
+}
 
 /* USER CODE END 1 */

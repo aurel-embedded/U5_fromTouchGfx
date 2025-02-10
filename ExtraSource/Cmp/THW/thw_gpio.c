@@ -9,8 +9,6 @@
  *  Created on: 26 sept. 2024
  *      Author: apajadon
  */
-#ifdef MODE_THW
-
 #include <stddef.h>
 #include <stdint.h>
 #include <THW/thw.h>
@@ -140,6 +138,3 @@ static void thw_Gpio_SpareGpio_PG15_reset(void)
 	HAL_GPIO_WritePin(SpareGpio_PG15_GPIO_Port, SpareGpio_PG15_Pin, GPIO_PIN_RESET);
 }
 
-
-
-#endif	// MODE_THW
