@@ -17,14 +17,22 @@
 
 
 //-----------------------------------------------------------------------------
-// VEE  MIRROR DATA IN RAM
+// Config
 //-----------------------------------------------------------------------------
 typedef struct{
 	uint16_t virtualAddress;
-	uint32_t data;
-}mem_virtualAddressData_pair_t;
+	uint64_t defaultValue;
+}mem_config_pair_t;
 
-extern mem_virtualAddressData_pair_t mem_values_tab[NB_OF_VARIABLES];
+extern mem_config_pair_t 	mem_config_tab[];
+extern uint32_t 			mem_config_tabSize;
+
+//-----------------------------------------------------------------------------
+// Data
+//-----------------------------------------------------------------------------
+extern mem_data_pair_t 	mem_data_tab[];
+extern uint32_t 		mem_data_tabSize;
+
 
 //-----------------------------------------------------------------------------
 // INTERNAL DATA
@@ -35,16 +43,6 @@ typedef struct{
 	uint8_t mem_vee_error_loading_to_ram;
 } mem_vee_internalData_t;
 extern mem_vee_internalData_t mem_vee_internalData;
-
-//-----------------------------------------------------------------------------
-// MEMORY SHARED
-//-----------------------------------------------------------------------------
-typedef struct{
-    osMutexId_t  	mtx_id;
-    mem_vee_data_t	data;
-}mem_vee_memoryShared_t;
-extern mem_vee_memoryShared_t mem_vee_memoryShared;
-
 
 // Handle
 extern osMessageQueueId_t mem_vee_ct_mq_id;
@@ -64,8 +62,8 @@ typedef enum{
 
 // Message Type
 typedef struct {
-	mem_vee_cta_id_t ctaId;			// ActionId
-	mem_vee_data_t	data;
+	mem_vee_cta_id_t 	ctaId;			// ActionId
+	mem_data_pair_t		actualValue;
 }mem_vee_ct_mq_item_t;
 
 #define MEM_VEE_MTX_WAIT_TIME    osWaitForever
@@ -74,11 +72,12 @@ typedef struct {
 //-----------------------------------------------------------------------------
 // INTERNAL FUNCTIONS
 //-----------------------------------------------------------------------------
-mem_error_e mem_format(void);
-mem_error_e mem_cleanUp(void);
-mem_error_e mem_write(uint16_t VirtAddress, uint32_t data);
-mem_error_e mem_read(uint16_t VirtAddress, uint32_t* data);
-mem_error_e mem_loadRamWithVee(void);
+extern void 		mem_data_razValues(void);
+extern mem_error_e 	mem_format(void);
+extern mem_error_e 	mem_cleanUp(void);
+extern mem_error_e 	mem_write(uint16_t VirtAddress, uint64_t data);
+extern mem_error_e 	mem_read(uint16_t VirtAddress, uint64_t* data);
+extern mem_error_e 	mem_loadRamWithVee(void);
 
 
 #endif /* CMP_MEM_MEM_COMMON_H_ */

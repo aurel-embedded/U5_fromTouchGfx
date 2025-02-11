@@ -11,6 +11,7 @@
 #include <MEM_Core/EEPROM_Emul/Core/eeprom_emul_types.h>
 #include <MEM_Core/mem_api.h>
 #include <MEM_Core/mem_common.h>
+#include <Config/MEM/mem_config.h>
 #include <task_config.h>
 #include "string.h"
 
@@ -59,22 +60,26 @@ mem_vee_internalData_t mem_vee_internalData = {
 
 
 //-----------------------------------------------------------------------------
-// MEMORY SHARED
+// DATA
 //-----------------------------------------------------------------------------
-mem_vee_memoryShared_t mem_vee_memoryShared = {
-		.mtx_id = NULL,
-		.data = {
-				.data = 0,
-				.VirtAddress = 0,
-		},
+mem_data_pair_t mem_data_tab[] = {
+		{.virtualAddress = mem_virtualAddress_ID_potar1_min, .data = 0},
+		{.virtualAddress = mem_virtualAddress_ID_potar1_max, .data = 0},
+		{.virtualAddress = mem_virtualAddress_ID_potar2_min, .data = 0},
+		{.virtualAddress = mem_virtualAddress_ID_potar2_max, .data = 0},
+		{.virtualAddress = mem_virtualAddress_ID_potar3_min, .data = 0},
+		{.virtualAddress = mem_virtualAddress_ID_potar3_max, .data = 0},
+		{.virtualAddress = mem_virtualAddress_ID_potar4_min, .data = 0},
+		{.virtualAddress = mem_virtualAddress_ID_potar4_max, .data = 0},
+		{.virtualAddress = mem_virtualAddress_ID_potar5_min, .data = 0},
+		{.virtualAddress = mem_virtualAddress_ID_potar5_max, .data = 0},
+		{.virtualAddress = mem_virtualAddress_ID_potar6_min, .data = 0},
+		{.virtualAddress = mem_virtualAddress_ID_potar6_max, .data = 0},
 };
-
-
-//-----------------------------------------------------------------------------
-// MUTEX - Memory shared
-//-----------------------------------------------------------------------------
-const osMutexAttr_t mem_vee_mtx_attr = {
-		"mem_vee_mtx",                             	// human readable mutex name
+uint32_t 			mem_data_tabSize = sizeof(mem_data_tab) / sizeof(mem_data_pair_t);
+osMutexId_t  		mem_data_mtx_id;
+const osMutexAttr_t mem_data_mtx_attr = {
+		"mem_data_mtx",                             // human readable mutex name
 		osMutexRecursive | osMutexPrioInherit,  	// attr_bits
 		NULL,                                    	// memory for control block
 		0U                                       	// size for control block
@@ -107,7 +112,7 @@ static void mem_vee_tsk_fn(void *arg)
 	osStatus_t 	status;
 
 	//init RAM values
-	memset(mem_values_tab,0,sizeof(mem_values_tab));
+	mem_data_razValues();
 
 	//Loading already stored value if any to RAM
 	if((mem_vee_internalData.cmpStatus.errNumber = mem_loadRamWithVee()) != mem_error__OK)
@@ -128,7 +133,7 @@ static void mem_vee_tsk_fn(void *arg)
 			// Manage Request Action
 			switch(msg->ctaId){
 			case mem_vee_write_id:
-				mem_write(msg->data.VirtAddress,  msg->data.data);
+				mem_write(msg->actualValue.virtualAddress,  msg->actualValue.data);
 				// Deallocate the memory used by the message.
 				osMemoryPoolFree(mem_vee_ct_memPool_id, msg);
 				break;
@@ -187,15 +192,16 @@ mem_error_e MEM_init(void)
 	mem_vee_internalData.cmpStatus.cmpMode = cmp_mode_notDefined;
 
 	// Init Vee Component
-	if(VEE_init() != vee_error__OK){
-		DBG_printf("MEM: Init...ERROR (INIT VEE)\r\n");
-		return mem_error__init_veeInit;
+	if(VEE_getComponentStatus() != cmp_mode_nominal){
+		if(VEE_init() != vee_error__OK){
+			DBG_printf("MEM: Init...ERROR (INIT VEE)\r\n");
+			return mem_error__init_veeInit;
+		}
 	}
 
 	// Create Mutex
-	mem_vee_memoryShared.mtx_id = osMutexNew(&mem_vee_mtx_attr);
-	if (mem_vee_memoryShared.mtx_id == NULL)  {
-		osMutexDelete(mem_vee_memoryShared.mtx_id);
+	mem_data_mtx_id = osMutexNew(&mem_data_mtx_attr);
+	if (mem_data_mtx_id == NULL)  {
 		DBG_printf("MEM: Init...ERROR (Mutex)\r\n");
 		return mem_error__init_creatingMutex;
 	}
@@ -203,7 +209,7 @@ mem_error_e MEM_init(void)
 	// Creating Message Queue
 	mem_vee_ct_mq_id = osMessageQueueNew(MEM_VEE_CT_MQ_QTY, sizeof(mem_vee_ct_mq_item_t *), &mem_vee_ct_mq_attr);
 	if (mem_vee_ct_mq_id == NULL) {
-		osMessageQueueDelete(mem_vee_ct_mq_id);
+		osMutexDelete(mem_data_mtx_id);
 		DBG_printf("MEM: Init...ERROR (MessageQueue)\r\n");
 		return mem_error__init_creatingMessageQueue;
 	}
@@ -211,7 +217,8 @@ mem_error_e MEM_init(void)
 	// Creating Memory Pool
 	mem_vee_ct_memPool_id = osMemoryPoolNew(MEM_VEE_CT_MEM_POOL_QTY, sizeof(mem_vee_ct_mq_item_t), &mem_vee_ct_memPool_attr);
 	if (mem_vee_ct_memPool_id == NULL) {
-		osMemoryPoolDelete(mem_vee_ct_memPool_id);
+		osMutexDelete(mem_data_mtx_id);
+		osMessageQueueDelete(mem_vee_ct_mq_id);
 		DBG_printf("MEM: Init...ERROR (MemoryPool)\r\n");
 		return mem_error__init_creatingMemoryPool;
 	}
@@ -219,6 +226,9 @@ mem_error_e MEM_init(void)
 	// Creating Task
 	mem_vee_tsk_id = osThreadNew(mem_vee_tsk_fn, NULL, &mem_vee_tsk_attr);
 	if(mem_vee_tsk_id == NULL){
+		osMutexDelete(mem_data_mtx_id);
+		osMessageQueueDelete(mem_vee_ct_mq_id);
+		osMemoryPoolDelete(mem_vee_ct_memPool_id);
 		DBG_printf("MEM: Init...ERROR (Task)\r\n");
 		return mem_error__init_creatingTask;
 	}
@@ -237,11 +247,11 @@ mem_error_e MEM_exit(void)
 {
 	mem_error_e err =  mem_error__OK;
 
-	// Delete task
+	// Delete All Os object
 	osThreadTerminate(mem_vee_tsk_id);
-
-	// Delete message Queue
-	osMutexDelete(mem_vee_memoryShared.mtx_id);
+	osMutexDelete(mem_data_mtx_id);
+	osMessageQueueDelete(mem_vee_ct_mq_id);
+	osMemoryPoolDelete(mem_vee_ct_memPool_id);
 
 	//clean up VEE
 	err = mem_cleanUp();
@@ -266,7 +276,7 @@ mem_error_e MEM_exit(void)
 /// \fn 		MEM_write(uint16_t id, const uint8_t *data,size_t size)
 /// \brief		Write to VEE
 //--------------------------------------------------------------------------------------------------------
-mem_error_e MEM_write(uint16_t id, const uint8_t *data,uint8_t size)
+mem_error_e MEM_write(uint16_t id, const uint8_t *data)
 {
 	mem_error_e status = mem_error__OK;
 	//TODO: MEM_write
@@ -278,25 +288,12 @@ mem_error_e MEM_write(uint16_t id, const uint8_t *data,uint8_t size)
 /// \fn 		MEM_readFromVee(uint16_t id, mem_dataType_t dataType,uint8_t* data, size_t size)
 /// \brief		Read Data from VEE
 //---------------------------------------------------------------------------------------------------------------------
-mem_error_e MEM_readFromVee(uint16_t id, uint8_t* data, uint8_t size)
+mem_error_e MEM_read(uint16_t id, uint8_t* data)
 {
 	mem_error_e status = mem_error__OK;
 	//TODO: MEM_readFromVee
 	return status;
 }
-
-
-//---------------------------------------------------------------------------------------------------------------------
-/// \fn 		MEM_readFromRam(uint16_t id, mem_dataType_t dataType,uint8_t* data, size_t size)
-/// \brief		Read Data from RAM
-//---------------------------------------------------------------------------------------------------------------------
-mem_error_e MEM_readFromRam(uint16_t id, uint8_t* data, uint8_t size)
-{
-	mem_error_e status = mem_error__OK;
-	//TODO: MEM_readFromRam
-	return status;
-}
-
 
 
 
