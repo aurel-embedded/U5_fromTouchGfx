@@ -1,0 +1,12 @@
+
+-------------------------------------------------------------------------------
+==> Problem: La Flash ne s'effacait plus entierement lors d'une programmation 
+				par	CubeIde ou CubeProgrammer.
+				
+==> Solution: Reset the FLASH_OPTSR_PRG (0x40022040) register:
+	STM32_Programmer_CLI -c port=SWD -w32 0x40022040 0x1FEFF8AA
+-------------------------------------------------------------------------------
+
+	
+	
+	

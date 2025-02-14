@@ -20,11 +20,15 @@ const char thw_mem_menuName[] = "Driver | MEM";
 
 
 //-------------------------
-static void 	thw_mem_func1(void);
+static void 	thw_mem_read(void);
+static void 	thw_mem_write(void);
+static void 	thw_mem_toggleId(void);
 
 
 st_thw_menuItem thw_mem_menuTab[] = {
-		{.name = "", 			.pActionFn = thw_mem_func1, 			.info = 0},
+		{.name = "", 			.pActionFn = thw_mem_read, 			.info = 0},
+		{.name = "", 			.pActionFn = thw_mem_write, 		.info = 0},
+		{.name = "", 			.pActionFn = thw_mem_toggleId, 		.info = 0},
 };
 uint16_t thw_mem_menuTabSize = sizeof(thw_mem_menuTab) / sizeof(st_thw_menuItem);
 
@@ -108,7 +112,19 @@ static void thw_mem_ManageChoice(char CodeToManage)
 //									VEE TESTS
 //==============================================================================
 
-static void thw_mem_func1(void)
+static void 	thw_mem_read(void)
+{
+
+}
+
+
+static void 	thw_mem_write(void)
+{
+
+}
+
+
+static void 	thw_mem_toggleId(void)
 {
 
 }

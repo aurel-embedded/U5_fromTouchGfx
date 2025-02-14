@@ -89,8 +89,9 @@ cmp_mode_t VEE_getComponentStatus(void)
 //--------------------------------------------------------------------------------------------------------
 vee_error_e VEE_write(uint16_t VirtAddress, uint64_t data)
 {
+
 	// Write to Vee
-	EE_Status 	status = EE_WriteVariable96bits((uint16_t)VirtAddress, data);
+	EE_Status 	status = EE_WriteVariable96bits((uint16_t)VirtAddress, &data);
 	if(status == EE_CLEANUP_REQUIRED)
 	{
 		// Execute CleanUp if required
