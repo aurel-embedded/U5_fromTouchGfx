@@ -61,6 +61,10 @@ typedef struct {
 
 }mem_vee_info_t;
 
+typedef struct{
+	uint16_t min;
+	uint16_t max;
+}mem_potar_cfg_st;
 
 //------------------------------------------------------------------------------
 // API
@@ -70,6 +74,9 @@ extern mem_error_e 	MEM_exit(void);
 
 extern mem_error_e 	MEM_write(uint16_t id, const uint8_t *data);
 extern mem_error_e 	MEM_read(uint16_t id, uint8_t* data);
+
+extern mem_error_e 	MEM_potarCfg_write(uint8_t potarId, mem_potar_cfg_st cfg);
+extern mem_error_e 	MEM_potarCfg_read(uint8_t potarId, mem_potar_cfg_st *pCfg);
 
 extern mem_error_e 	MEM_reset();
 extern cmp_status_t MEM_getCmpStatus(void);

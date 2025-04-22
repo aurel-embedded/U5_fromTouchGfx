@@ -10,6 +10,7 @@
  */
 
 #include <cmsis_os2.h>
+#include <MEM/mem_config.h>
 #include <MEM_Core/mem_api.h>
 #include <stddef.h>
 #include <THW/thw.h>
@@ -35,8 +36,18 @@ uint16_t thw_mem_menuTabSize = sizeof(thw_mem_menuTab) / sizeof(st_thw_menuItem)
 #define THW_MEM_OFFSET_DISPLAY 16
 
 //****************************************
-//	*** MEMORY prototype encapsulation ***
+//	*** MEMORY ID ***
 //****************************************
+typedef struct{
+	uint16_t	id;
+	uint64_t 	data;
+}thw_mem_veeItem_t;
+
+static thw_mem_veeItem_t thw_mem_veeItemList[] = {
+};
+static uint8_t thw_mem_veeItemList_size = sizeof(thw_mem_veeItemList) / sizeof(thw_mem_veeItem_t);
+static uint8_t thw_mem_veeItemList_ind = 0;
+static void thw_mem_displayVeeItemSelection(void);
 
 static void thw_mem_DisplayMenu(void);
 static void thw_mem_ManageChoice(char CodeToManage);
@@ -81,6 +92,8 @@ static void thw_mem_DisplayMenu(void)
 	// Affichage Banner
 	THW_Banner(thw_mem_menuName);
 	THW_printf("\r\n");
+	THW_printf("Mem Id:\r\n");
+	thw_mem_displayVeeItemSelection();
 
 
 	// Affichage du menu
@@ -112,21 +125,49 @@ static void thw_mem_ManageChoice(char CodeToManage)
 //									VEE TESTS
 //==============================================================================
 
+//------------------------------------------------------------------------------
+/// \fn 		void thw_mem_read(void)
+/// \brief
+//------------------------------------------------------------------------------
 static void 	thw_mem_read(void)
 {
 
 }
 
 
+//------------------------------------------------------------------------------
+/// \fn 		void thw_mem_write(void)
+/// \brief
+//------------------------------------------------------------------------------
 static void 	thw_mem_write(void)
 {
 
 }
 
 
+//------------------------------------------------------------------------------
+/// \fn 		void thw_mem_toggleId(void)
+/// \brief
+//------------------------------------------------------------------------------
 static void 	thw_mem_toggleId(void)
 {
 
 }
 
+//------------------------------------------------------------------------------
+/// \fn 		void thw_mem_displayVeeItemSelection(void)
+/// \brief
+//------------------------------------------------------------------------------
+static void thw_mem_displayVeeItemSelection(void)
+{
+	for(uint8_t i = 0; i < thw_mem_veeItemList_size; i++){
+		if(i == thw_mem_veeItemList_ind)
+			THW_printf(" -->");
+		else
+			THW_printf("    ");
+		THW_printf(" %d", thw_mem_veeItemList[i].id);
+		THW_printf("%16X ", thw_mem_veeItemList[i].data);
+		THW_printf(VT100_CLEAREOL"\r\n");
+	}
+}
 

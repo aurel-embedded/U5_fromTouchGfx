@@ -1293,6 +1293,9 @@ void HAL_PWR_PVDCallback(void)
 		while (__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO) != RESET)
 		{
 		}
+#ifdef PVD_DEBUG_MEASUREMENT_ON_GPIO
+		HAL_GPIO_WritePin(SpareGpio_PG15_GPIO_Port, SpareGpio_PG15_Pin, GPIO_PIN_RESET);
+#endif
 
 		// In case of the power is back -> restart correctly
 		NVIC_SystemReset();

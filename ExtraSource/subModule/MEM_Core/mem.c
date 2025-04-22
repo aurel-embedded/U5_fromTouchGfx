@@ -12,6 +12,7 @@
 #include <MEM_Core/mem_api.h>
 #include <MEM_Core/mem_common.h>
 #include <Config/MEM/mem_config.h>
+#include <Config/MEM/vee_config.h>
 #include <task_config.h>
 #include "string.h"
 
@@ -60,22 +61,17 @@ mem_vee_internalData_t mem_vee_internalData = {
 
 
 //-----------------------------------------------------------------------------
-// DATA
+// CONFIG RAM
 //-----------------------------------------------------------------------------
-mem_data_pair_t mem_data_tab[] = {
-		{.virtualAddress = mem_virtualAddress_ID_potar1_min, .data = 0},
-		{.virtualAddress = mem_virtualAddress_ID_potar1_max, .data = 0},
-		{.virtualAddress = mem_virtualAddress_ID_potar2_min, .data = 0},
-		{.virtualAddress = mem_virtualAddress_ID_potar2_max, .data = 0},
-		{.virtualAddress = mem_virtualAddress_ID_potar3_min, .data = 0},
-		{.virtualAddress = mem_virtualAddress_ID_potar3_max, .data = 0},
-		{.virtualAddress = mem_virtualAddress_ID_potar4_min, .data = 0},
-		{.virtualAddress = mem_virtualAddress_ID_potar4_max, .data = 0},
-		{.virtualAddress = mem_virtualAddress_ID_potar5_min, .data = 0},
-		{.virtualAddress = mem_virtualAddress_ID_potar5_max, .data = 0},
-		{.virtualAddress = mem_virtualAddress_ID_potar6_min, .data = 0},
-		{.virtualAddress = mem_virtualAddress_ID_potar6_max, .data = 0},
-};
+struct{
+	mem_potar_cfg_st potar1;
+	mem_potar_cfg_st potar2;
+	mem_potar_cfg_st potar3;
+	mem_potar_cfg_st potar4;
+	mem_potar_cfg_st potar5;
+	mem_potar_cfg_st potar6;
+}mem_config;
+
 uint32_t 			mem_data_tabSize = sizeof(mem_data_tab) / sizeof(mem_data_pair_t);
 osMutexId_t  		mem_data_mtx_id;
 const osMutexAttr_t mem_data_mtx_attr = {
@@ -86,7 +82,27 @@ const osMutexAttr_t mem_data_mtx_attr = {
 };
 
 
+//-----------------------------------------------------------------------------
+// Potar Mapping
+//-----------------------------------------------------------------------------
+typedef struct{
+	mem_potar_ID_e				Id;
+	vee_virtualAddress_ID_e 	vee_virtualAddress;
+	mem_potar_cfg_st 			*pRam_cfgItem;
+}mem_potar_mappingItem_st;
 
+mem_potar_mappingItem_st mem_potar_mappingItemList[] = {
+		// Mapping: Id potar,	Vee ID,	Ram Object
+		{mem_potar1, vee_virtualAddress_ID_potar1_minMax, &(mem_config.potar1)},
+		{mem_potar2, vee_virtualAddress_ID_potar2_minMax, &(mem_config.potar2)},
+		{mem_potar3, vee_virtualAddress_ID_potar3_minMax, &(mem_config.potar3)},
+		{mem_potar4, vee_virtualAddress_ID_potar4_minMax, &(mem_config.potar4)},
+		{mem_potar5, vee_virtualAddress_ID_potar5_minMax, &(mem_config.potar5)},
+		{mem_potar6, vee_virtualAddress_ID_potar6_minMax, &(mem_config.potar6)},
+};
+uint8_t mem_potar_mappingItemList_Size = sizeof(mem_potar_mappingItemList) / sizeof(mem_potar_mappingItem_st);
+
+static mem_potar_mappingItem_st * mem_potar_mappingItem_findItem(mem_potar_ID_e potarId);
 
 //-----------------------------------------------------------------------------
 // THREAD
@@ -328,3 +344,56 @@ void MEM_BusError_Activate(void)
 }
 
 
+//------------------------------------------------------------------------------
+/// \fn 		mem_error_e MEM_potarCfg_write(uint8_t potarId, uint16_t min, uint16_t max)
+/// \brief		write to memory (RAM & VEE)
+//------------------------------------------------------------------------------
+mem_error_e MEM_potarCfg_write(mem_potar_ID_e potarId, mem_potar_cfg_st cfg)
+{
+	// Find Mapping Item
+	mem_potar_mappingItem_st *pCfgToUse = mem_potar_mappingItem_findItem(potarId);
+	if(pCfgToUse == NULL)
+		return mem_error__noData;
+
+	// TODO: Convert data
+
+	// TODO: Write to Vee
+
+	// Write to Ram
+	memcpy(pCfgToUse->pRam_cfgItem, &cfg, sizeof(mem_potar_cfg_st));
+
+	return mem_error__OK;
+}
+
+//------------------------------------------------------------------------------
+/// \fn 		MEM_potarCfg_read(uint8_t potarId, mem_potar_cfg_st *pCfg)
+/// \brief		read from memory (RAM)
+//------------------------------------------------------------------------------
+mem_error_e MEM_potarCfg_read(mem_potar_ID_e potarId, mem_potar_cfg_st *pCfg)
+{
+	// Find Mapping Item
+	mem_potar_mappingItem_st *pCfgToUse = mem_potar_mappingItem_findItem(potarId);
+	if(pCfgToUse == NULL)
+		return mem_error__noData;
+
+	// Read From Ram
+	memcpy(pCfg, pCfgToUse->pRam_cfgItem, sizeof(mem_potar_cfg_st));
+
+	return mem_error__OK;
+}
+
+//------------------------------------------------------------------------------
+/// \fn 		mem_potar_configItem_st mem_potar_configItem_findItem(mem_potar_ID_e potarId)
+/// \brief		find Item
+//------------------------------------------------------------------------------
+static mem_potar_mappingItem_st * mem_potar_mappingItem_findItem(mem_potar_ID_e potarId)
+{
+	if(potarId >= mem_potar_mappingItemList_Size)
+		return NULL;
+
+	for(uint8_t i = 0; i < mem_potar_mappingItemList_Size; i++){
+		if(mem_potar_mappingItemList[i].Id == potarId)
+			return &(mem_potar_mappingItemList[i]);
+	}
+	return NULL;
+}
