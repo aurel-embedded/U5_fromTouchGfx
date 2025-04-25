@@ -100,8 +100,8 @@ void pmgr_thread::threadFunction_mode1(void* argument)
     // Convert to Format and send if values changed
     //-------------------------------------------
     if (valuesChanged) {
-//        std::string data = DataFormatter::formatToJson(midiValues);
-        std::string data = DataFormatter::formatToCsv(midiValues);
+        std::string data = DataFormatter::formatToJson(midiValues);
+//        std::string data = DataFormatter::formatToCsv(midiValues);
         sendData(data); // Send the data
     }
 

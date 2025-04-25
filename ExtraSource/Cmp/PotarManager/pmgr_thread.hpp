@@ -53,7 +53,8 @@ private:
     osThreadId_t threadId;                      						// ID du thread
     static constexpr uint32_t stackSize = TSK_CFG__STACK__TSK_PMGR; 	// Taille de la pile
     static constexpr osPriority_t priority = TSK_CFG__PRIO__TSK_PMGR; 	// Priorité
-    static constexpr uint32_t taskDelay = 50;
+//    static constexpr uint32_t taskDelay = 50;
+    static constexpr uint32_t taskDelay = 1000;
 
     // Fsm
     //----------
