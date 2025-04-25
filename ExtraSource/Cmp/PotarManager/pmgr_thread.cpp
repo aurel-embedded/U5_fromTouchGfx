@@ -115,6 +115,7 @@ void pmgr_thread::threadFunction_mode1(void* argument)
 /// \fn         void pmgr_thread::sendJsonData(const std::string& jsonData)
 /// \brief      Send JSON data via UART or another communication channel
 //------------------------------------------------------------------------------
+extern UART_HandleTypeDef huart2;
 void pmgr_thread::sendJsonData(const std::string& jsonData)
 {
     // Example: Send JSON data via UART (replace with actual implementation)
