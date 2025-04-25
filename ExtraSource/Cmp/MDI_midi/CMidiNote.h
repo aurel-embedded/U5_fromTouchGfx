@@ -7,6 +7,7 @@
 
 #ifndef SRC_MDI_MIDI_CMIDINOTE_H_
 #define SRC_MDI_MIDI_CMIDINOTE_H_
+#include <stdint.h>
 
 class CMidiNote {
 public:
