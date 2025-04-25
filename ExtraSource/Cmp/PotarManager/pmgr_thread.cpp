@@ -8,7 +8,7 @@
  *
  */
 #include <MDI_midi/mdi_thread.hpp>
-#include <PotarManager/Formatter/Jsonformatter.hpp>
+#include <PotarManager/Formatter/DataFormatter.hpp>
 #include <Tools/Tools.h>
 #include <UserInterfaces/drvAdc/drvAdc.h>
 #include <PotarManager/pmgr_thread.hpp>
@@ -97,11 +97,12 @@ void pmgr_thread::threadFunction_mode1(void* argument)
     valuesChanged |= sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x4A, midiValues_old.val5, midiValues.val5);
     valuesChanged |= sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x4B, midiValues_old.val6, midiValues.val6);
 
-    // Convert to JSON and send if values changed
+    // Convert to Format and send if values changed
     //-------------------------------------------
     if (valuesChanged) {
-        std::string jsonData = JsonFormatter::formatToJson(midiValues);
-        sendJsonData(jsonData); // Send the JSON data
+//        std::string data = DataFormatter::formatToJson(midiValues);
+        std::string data = DataFormatter::formatToCsv(midiValues);
+        sendData(data); // Send the data
     }
 
     if (valuesChanged) {
@@ -116,10 +117,10 @@ void pmgr_thread::threadFunction_mode1(void* argument)
 /// \brief      Send JSON data via UART or another communication channel
 //------------------------------------------------------------------------------
 extern UART_HandleTypeDef huart2;
-void pmgr_thread::sendJsonData(const std::string& jsonData)
+void pmgr_thread::sendData(const std::string& data)
 {
     // Example: Send JSON data via UART (replace with actual implementation)
-    HAL_UART_Transmit(&huart2, reinterpret_cast<const uint8_t*>(jsonData.c_str()), jsonData.length(), HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart2, reinterpret_cast<const uint8_t*>(data.c_str()), data.length(), HAL_MAX_DELAY);
 }
 
 //------------------------------------------------------------------------------
