@@ -8,6 +8,7 @@
  *
  */
 #include <MDI_midi/mdi_thread.hpp>
+#include <PotarManager/Formatter/Jsonformatter.hpp>
 #include <Tools/Tools.h>
 #include <UserInterfaces/drvAdc/drvAdc.h>
 #include <PotarManager/pmgr_thread.hpp>
@@ -83,26 +84,54 @@ void pmgr_thread::threadFunction_mode1(void* argument)
 	midiValues.val5 = maxMidiMsgValue - map(adcValuesDrv.val5, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
 	midiValues.val6 = maxMidiMsgValue - map(adcValuesDrv.val6, minVoltageValue, maxVoltageValue, minMidiMsgValue, maxMidiMsgValue);
 
+    // Perform actions based on value changes
+    //----------------------------------------
+    bool valuesChanged = false;
+
 	// Send Midi Values if different
 	//-------------------------------
-	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x46, &(midiValues_old.val1), midiValues.val1);
-	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x47, &(midiValues_old.val2), midiValues.val2);
-	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x48, &(midiValues_old.val3), midiValues.val3);
-	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x49, &(midiValues_old.val4), midiValues.val4);
-	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x4A, &(midiValues_old.val5), midiValues.val5);
-	sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x4B, &(midiValues_old.val6), midiValues.val6);
+    valuesChanged |= sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x46, midiValues_old.val1, midiValues.val1);
+    valuesChanged |= sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x47, midiValues_old.val2, midiValues.val2);
+    valuesChanged |= sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x48, midiValues_old.val3, midiValues.val3);
+    valuesChanged |= sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x49, midiValues_old.val4, midiValues.val4);
+    valuesChanged |= sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x4A, midiValues_old.val5, midiValues.val5);
+    valuesChanged |= sendCCIfDifferent(CMidiChannel::Channel_e::Ch01, 0x4B, midiValues_old.val6, midiValues.val6);
+
+    // Convert to JSON and send if values changed
+    //-------------------------------------------
+    if (valuesChanged) {
+        std::string jsonData = JsonFormatter::formatToJson(midiValues);
+        sendJsonData(jsonData); // Send the JSON data
+    }
+
+    if (valuesChanged) {
+        // Update old values
+        //-------------------
+        midiValues_old = midiValues;
+    }
+}
+
+//------------------------------------------------------------------------------
+/// \fn         void pmgr_thread::sendJsonData(const std::string& jsonData)
+/// \brief      Send JSON data via UART or another communication channel
+//------------------------------------------------------------------------------
+void pmgr_thread::sendJsonData(const std::string& jsonData)
+{
+    // Example: Send JSON data via UART (replace with actual implementation)
+    HAL_UART_Transmit(&huart2, reinterpret_cast<const uint8_t*>(jsonData.c_str()), jsonData.length(), HAL_MAX_DELAY);
 }
 
 //------------------------------------------------------------------------------
 /// \fn 		void pmgr_thread::sendCCIfDifferent(uint8_t channel, uint8_t cc, uint8_t *pOldData, uint8_t actualData)
 /// \brief		Send Midi Values if different
 //------------------------------------------------------------------------------
-void pmgr_thread::sendCCIfDifferent(uint8_t channel, uint8_t cc, uint8_t *pOldData, uint8_t actualData)
+bool pmgr_thread::sendCCIfDifferent(uint8_t channel, uint8_t cc, uint8_t OldData, uint8_t actualData)
 {
-	if(*pOldData != actualData){
+	if(OldData != actualData){
 		mdi_thread::getInstance().putMessage(channel, cc, actualData);
-		*pOldData = actualData;
+        return true; // Indicate that the value has changed
 	}
+    return false; // No change
 
 }
 

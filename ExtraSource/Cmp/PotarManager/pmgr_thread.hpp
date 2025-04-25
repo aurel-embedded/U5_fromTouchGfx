@@ -14,6 +14,7 @@
 #include "cmsis_os2.h"
 #include "main.h"
 #include <atomic>
+#include <string>
 
 class pmgr_thread
 {
@@ -47,7 +48,8 @@ private:
     std::atomic<bool> thread_stopRequested{false};
     static void threadFunction(void* argument); 						// Fonction statique pour le thread
     static void threadFunction_mode1(void* argument); 					// Fonction statique pour le thread
-    static void sendCCIfDifferent(uint8_t channel, uint8_t cc, uint8_t *pOldData, uint8_t actualData);
+    static bool sendCCIfDifferent(uint8_t channel, uint8_t cc, uint8_t OldData, uint8_t actualData);
+    static void sendJsonData(const std::string& jsonData);
     osThreadId_t threadId;                      						// ID du thread
     static constexpr uint32_t stackSize = TSK_CFG__STACK__TSK_PMGR; 	// Taille de la pile
     static constexpr osPriority_t priority = TSK_CFG__PRIO__TSK_PMGR; 	// Priorité
