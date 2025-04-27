@@ -172,12 +172,6 @@
     <Filter Include="Header Files\generated\simulator\include\simulator\video">
       <UniqueIdentifier>E86D76E7-5B01-6A61-9FB4-160679D02244</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\generated\gui_generated\containers">
-      <UniqueIdentifier>0C17C0A6-A8EC-232B-D7E9-8EF9AA23E043</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\containers">
-      <UniqueIdentifier>B6EF2896-DBC4-8749-8D39-E2B55C033F48</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\gui\xy_screen_screen">
       <UniqueIdentifier>198EE26D-F310-90A0-FAA0-4BB52B085706</UniqueIdentifier>
     </Filter>
@@ -218,10 +212,10 @@
       <UniqueIdentifier>8A6E0ACC-5E55-2B60-DD6A-5024C21BB849</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\include">
-      <UniqueIdentifier>2BB5E2A5-C189-A86D-07C6-B6C1E5A1E8BC</UniqueIdentifier>
+      <UniqueIdentifier>8CEE6AF1-1C69-E5B2-3C78-C41F6B977A02</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\include\custom">
-      <UniqueIdentifier>2E44F32D-3B22-04D1-D2A9-36C686C60F65</UniqueIdentifier>
+      <UniqueIdentifier>064B0027-B68B-24FA-7B99-12086AF3E1F2</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

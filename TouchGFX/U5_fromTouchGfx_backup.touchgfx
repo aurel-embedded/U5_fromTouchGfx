@@ -1,0 +1,595 @@
+{
+  "Application": {
+    "Screens": [
+      {
+        "Name": "Main_Screen",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "BackGround",
+            "Width": 800,
+            "Height": 480,
+            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_800x480_puzzle.png"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "midi2_btn",
+            "X": 560,
+            "Y": 50,
+            "Width": 240,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
+            "TextId": "__SingleUse_LJUJ",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "midi1_btn",
+            "X": 560,
+            "Width": 240,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
+            "TextId": "__SingleUse_3SGT",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "Title",
+            "X": 329,
+            "Width": 96,
+            "Height": 36,
+            "TextId": "__SingleUse_3OLG",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 36,
+              "Green": 121,
+              "Blue": 181
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "Analog_btn",
+            "X": 10,
+            "Y": 100,
+            "Width": 144,
+            "Height": 60,
+            "Pressed": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_pressed.png",
+            "Released": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_active.png",
+            "TextId": "__SingleUse_ULET",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "dark_theme\\presets\\button\\regular\\height_60\\tiny_rounded_active.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "XY_btn",
+            "X": 10,
+            "Y": 23,
+            "Width": 144,
+            "Height": 60,
+            "Pressed": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_pressed.png",
+            "Released": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_active.png",
+            "TextId": "__SingleUse_N03U",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "dark_theme\\presets\\button\\regular\\height_60\\tiny_rounded_active.json"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "midi1_btn_clicked_action",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "midi1_btn"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "midi1_btn_clicked"
+            }
+          },
+          {
+            "InteractionName": "midi2_btn_clicked_action",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "midi2_btn"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "midi2_btn_clicked"
+            }
+          },
+          {
+            "InteractionName": "xy_action",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "XY_btn"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "XY_Screen"
+            }
+          },
+          {
+            "InteractionName": "Analog_action",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "Analog_btn"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "Analog_Screen"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "XY_Screen",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "background",
+            "Width": 800,
+            "Height": 480,
+            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_800x480_puzzle.png"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "Back_btn",
+            "X": 10,
+            "Y": 23,
+            "Width": 144,
+            "Height": 60,
+            "Pressed": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_pressed.png",
+            "Released": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_active.png",
+            "TextId": "__SingleUse_AGN0",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "dark_theme\\presets\\button\\regular\\height_60\\tiny_rounded_active.json"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "TouchPicture",
+            "X": 332,
+            "Y": 15,
+            "Width": 450,
+            "Height": 450,
+            "Filename": "__generated\\dark_theme_images_backgrounds_480x480_carbon.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "coordX_lbl",
+            "X": 9,
+            "Y": 418,
+            "Width": 170,
+            "Height": 47,
+            "TextId": "__SingleUse_4N89",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_3EMT",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "coordY_lbl",
+            "X": 179,
+            "Y": 418,
+            "Width": 153,
+            "Height": 47,
+            "TextId": "__SingleUse_IWX2",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_MTID",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "backToMainMenu_Action",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "Back_btn"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "West",
+              "ActionComponent": "Main_Screen"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Analog_Screen",
+        "CanvasBufferSize": 12000,
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "background",
+            "Width": 800,
+            "Height": 480,
+            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_800x480_puzzle.png"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "Back_btn",
+            "X": 10,
+            "Y": 23,
+            "Width": 144,
+            "Height": 60,
+            "Pressed": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_pressed.png",
+            "Released": "__generated\\dark_theme_images_widgets_button_regular_height_60_tiny_rounded_active.png",
+            "TextId": "__SingleUse_ZXGM",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "dark_theme\\presets\\button\\regular\\height_60\\tiny_rounded_active.json"
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel2_progress",
+            "X": 154,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 30.0,
+            "LineWidth": 50.0,
+            "StartAngle": 200.0,
+            "EndAngle": 520.0,
+            "CapPrecision": "Butt",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 320,
+            "ProgressInitialValue": 30
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel6_progress",
+            "X": 661,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 30.0,
+            "LineWidth": 50.0,
+            "StartAngle": 200.0,
+            "EndAngle": 520.0,
+            "CapPrecision": "Butt",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 320,
+            "ProgressInitialValue": 70
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel5_progress",
+            "X": 533,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 30.0,
+            "LineWidth": 50.0,
+            "StartAngle": 200.0,
+            "EndAngle": 520.0,
+            "CapPrecision": "Butt",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 320,
+            "ProgressInitialValue": 60
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel4_progress",
+            "X": 409,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 30.0,
+            "LineWidth": 50.0,
+            "StartAngle": 200.0,
+            "EndAngle": 520.0,
+            "CapPrecision": "Butt",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 320,
+            "ProgressInitialValue": 50
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel3_progress",
+            "X": 279,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 30.0,
+            "LineWidth": 50.0,
+            "StartAngle": 200.0,
+            "EndAngle": 520.0,
+            "CapPrecision": "Butt",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 320,
+            "ProgressInitialValue": 40
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "channel1_progress",
+            "X": 27,
+            "Y": 352,
+            "Width": 110,
+            "Height": 110,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "CenterX": 55.0,
+            "CenterY": 55.0,
+            "Radius": 30.0,
+            "LineWidth": 50.0,
+            "StartAngle": 200.0,
+            "EndAngle": 520.0,
+            "CapPrecision": "Butt",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_circleprogress_backgrounds_small.png",
+            "ProgressRangeMax": 320,
+            "ProgressInitialValue": 20
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel5_val",
+            "X": 10,
+            "Y": 253,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_QCJL",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_QN2F",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel3_val",
+            "X": 10,
+            "Y": 175,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_71WA",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_K13N",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel6_val",
+            "X": 10,
+            "Y": 292,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_YKFO",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_KR4F",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel4_val",
+            "X": 10,
+            "Y": 214,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_S2YY",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_W9F8",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel2_val",
+            "X": 10,
+            "Y": 136,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_AHW5",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_4IQL",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "channel1_val",
+            "X": 10,
+            "Y": 97,
+            "Width": 234,
+            "Height": 39,
+            "TextId": "__SingleUse_8VP5",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_6E1H",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "backToMainScreen_action",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "Back_btn"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Main_Screen"
+            }
+          }
+        ]
+      }
+    ],
+    "CustomContainerDefinitions": [],
+    "Name": "MyApplication",
+    "Resolution": {
+      "Width": 800,
+      "Height": 480
+    },
+    "SelectedColorDepth": 16,
+    "StartupScreenName": "Main_Screen",
+    "SelectedStartupLanguage": "GB",
+    "TouchGfxPath": "../Middlewares/ST/touchgfx",
+    "UIPath": ".",
+    "AvailableColorDepths": [
+      16
+    ],
+    "AvailableLCDs": {
+      "16": "LCDGPU2D"
+    },
+    "AvailableSections": [
+      "ExtFlashSection",
+      "IntFlashSection"
+    ],
+    "AvailableResolutions": [
+      {
+        "Width": 800,
+        "Height": 480
+      }
+    ],
+    "PhysicalButtons": [],
+    "GenerateAssetsCommand": "make -f simulator/gcc/Makefile assets -j8",
+    "PostGenerateCommand": "touchgfx update_project --project-file=simulator/msvs/Application.vcxproj",
+    "PostGenerateTargetCommand": "touchgfx update_project",
+    "CompileSimulatorCommand": "make -f simulator/gcc/Makefile -j8",
+    "RunSimulatorCommand": "build\\bin\\simulator.exe",
+    "LandscapeSkinX": 0,
+    "LandscapeSkinY": 0,
+    "PortraitSkinX": 0,
+    "PortraitSkinY": 0,
+    "DisplayOrientation": "Landscape",
+    "Family": "STM32U5",
+    "SubFamily": "STM32U5F9/5G9",
+    "Toolchain": "STM32CubeIDE",
+    "Platform": "m33",
+    "ProjectFile": "../U5_fromTouchGfx.ioc",
+    "OptionalComponentsRoot": "../Middlewares/ST/touchgfx_components",
+    "OptionalComponents": [
+      "GPU2D"
+    ],
+    "AdditionalFeatures": [
+      "GPU2DVector",
+      "VectorFonts",
+      "Video"
+    ]
+  },
+  "Version": "4.24.1"
+}
