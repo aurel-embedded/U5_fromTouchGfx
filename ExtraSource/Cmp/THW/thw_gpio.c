@@ -9,7 +9,6 @@
  *  Created on: 26 sept. 2024
  *      Author: apajadon
  */
-#ifdef MODE_THW
 
 #include <stddef.h>
 #include <stdint.h>
@@ -142,4 +141,3 @@ static void thw_Gpio_SpareGpio_PG15_reset(void)
 
 
 
-#endif	// MODE_THW
