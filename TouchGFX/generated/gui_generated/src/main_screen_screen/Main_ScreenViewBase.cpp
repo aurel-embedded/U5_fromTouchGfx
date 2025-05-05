@@ -14,7 +14,7 @@ Main_ScreenViewBase::Main_ScreenViewBase() :
     add(__background);
 
     BackGround.setXY(0, 0);
-    BackGround.setBitmap(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_BACKGROUNDS_800X480_WAVY_LINES_ID));
+    BackGround.setBitmap(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_BACKGROUNDS_800X480_RAYS_ID));
     add(BackGround);
 
     midi2_btn.setXY(560, 50);

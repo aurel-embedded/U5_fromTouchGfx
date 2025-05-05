@@ -191,16 +191,28 @@ if(HAL_GPIO_ReadPin(USER_BUTTON_GPIO_Port, USER_BUTTON_Pin) == GPIO_PIN_RESET)
 * @param argument: Not used
 * @retval None
 */
+extern UART_HandleTypeDef huart2;
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN defaultTask */
+	static uint8_t cpt = 0;
+	char buffer[10];  // Buffer pour stocker la chaîne à envoyer
 	MX_USB_DEVICE_Init();
   /* Infinite loop */
   for(;;)
   {
-//	  HAL_GPIO_TogglePin(USER_LD3_GREEN_GPIO_Port, USER_LD3_GREEN_Pin);
-	  osDelay(100);
+	    // Incrémentation du compteur
+//	    cpt++;
+//
+//	    // Affichage de la valeur du compteur sur le port série
+//	    snprintf(buffer, sizeof(buffer), "cpt: %d\n", cpt);  // Convertir cpt en chaîne de caractères
+//
+//	    // Envoi de la valeur de cpt via UART
+//	    HAL_UART_Transmit(&huart2, (uint8_t*)buffer, strlen(buffer), HAL_MAX_DELAY);
+
+	    // Délai de 500ms
+	    osDelay(500);
   }
   /* USER CODE END defaultTask */
 }

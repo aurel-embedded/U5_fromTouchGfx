@@ -12,6 +12,7 @@
 #include <Tools/Tools.h>
 #include <UserInterfaces/drvAdc/drvAdc.h>
 #include <PotarManager/pmgr_thread.hpp>
+#include <cstring>
 
 
 
@@ -63,12 +64,16 @@ void pmgr_thread::threadFunction(void* argument)
 //=============================================================================
 //								Private Methods
 //=============================================================================
+extern UART_HandleTypeDef huart2;
 
 // Fonction du thread (statique)
 void pmgr_thread::threadFunction_mode1(void* argument)
 {
 	userTypes_6Uint8_t midiValues;
 	static userTypes_6Uint8_t midiValues_old;
+	static uint8_t cpt = 0;
+	char buffer[20];  // Buffer pour stocker la chaîne à envoyer
+	static uint32_t lastTick = HAL_GetTick();
 
 	// Get ADC Values
 	//----------------
@@ -99,10 +104,17 @@ void pmgr_thread::threadFunction_mode1(void* argument)
 
     // Convert to Format and send if values changed
     //-------------------------------------------
-    if (valuesChanged) {
-        std::string data = DataFormatter::formatToJson(midiValues);
-//        std::string data = DataFormatter::formatToCsv(midiValues);
-        sendData(data); // Send the data
+//    if (valuesChanged) {
+////        std::string data = DataFormatter::formatToJson(midiValues);
+////        std::string data = DataFormatter::formatToCsv(midiValues);
+////        sendData(data); // Send the data
+//        sendData(std::to_string(static_cast<int>(cpt))); // Send the data
+//    }
+
+    if (HAL_GetTick() - lastTick > 20) {
+	    cpt++;
+	    snprintf(buffer, sizeof(buffer), "%d;%d\n", midiValues.val1, midiValues.val2);  // Convertir cpt en chaîne de caractères
+	    HAL_UART_Transmit(&huart2, (uint8_t*)buffer, strlen(buffer), HAL_MAX_DELAY);
     }
 
     if (valuesChanged) {
@@ -110,16 +122,16 @@ void pmgr_thread::threadFunction_mode1(void* argument)
         //-------------------
         midiValues_old = midiValues;
     }
+
 }
 
 //------------------------------------------------------------------------------
 /// \fn         void pmgr_thread::sendJsonData(const std::string& jsonData)
 /// \brief      Send JSON data via UART or another communication channel
 //------------------------------------------------------------------------------
-extern UART_HandleTypeDef huart2;
 void pmgr_thread::sendData(const std::string& data)
 {
-    // Example: Send JSON data via UART (replace with actual implementation)
+    // Example: Send data via UART (replace with actual implementation)
     HAL_UART_Transmit(&huart2, reinterpret_cast<const uint8_t*>(data.c_str()), data.length(), HAL_MAX_DELAY);
 }
 
