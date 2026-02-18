@@ -27,6 +27,9 @@
 #include <usbd_def.h>
 #include "BSP/Components/mx66uw1g45g/mx66uw1g45g.h"
 #include <Tools/assertError.h>
+#include <eeprom_emul_types.h>
+#include <MEM_Core/VEE/vee_api.h>
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,7 +39,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define PVD_DEBUG_MEASUREMENT_ON_GPIO 1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -81,15 +84,19 @@ RNG_HandleTypeDef hrng;
 
 TIM_HandleTypeDef htim15;
 
+UART_HandleTypeDef huart1;
+
 PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
 /* USER CODE BEGIN PV */
+static bool isDebouncingWaitDone = false;
 
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void SystemPower_Config(void);
+static void MPU_Config(void);
 void MX_FREERTOS_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_GPDMA1_Init(void);
@@ -109,12 +116,14 @@ static void MX_ADC1_Init(void);
 static void MX_TIM15_Init(void);
 static void MX_ADC2_Init(void);
 static void MX_ADC4_Init(void);
+static void MX_USART1_UART_Init(void);
+static void MX_FLASH_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
 
 /* USER CODE END 0 */
 
@@ -130,6 +139,9 @@ int main(void)
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
+
+  /* MPU Configuration--------------------------------------------------------*/
+  MPU_Config();
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
@@ -167,10 +179,16 @@ int main(void)
   MX_TIM15_Init();
   MX_ADC2_Init();
   MX_ADC4_Init();
+  MX_USART1_UART_Init();
+  MX_FLASH_Init();
   MX_TouchGFX_Init();
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
+  HAL_Delay(500);
+  isDebouncingWaitDone = true;
+
+
 
   /* USER CODE END 2 */
 
@@ -262,11 +280,21 @@ void SystemClock_Config(void)
   */
 static void SystemPower_Config(void)
 {
+  HAL_PWREx_EnableVddIO2();
+
+  PWR_PVDTypeDef sConfigPVD = {0};
 
   /*
-   * Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
+   * PVD Configuration
    */
-  HAL_PWREx_DisableUCPDDeadBattery();
+  sConfigPVD.PVDLevel = PWR_PVDLEVEL_6;
+  sConfigPVD.Mode = PWR_PVD_MODE_IT_RISING;
+  HAL_PWR_ConfigPVD(&sConfigPVD);
+
+  /*
+   * Enable the PVD Output
+   */
+  HAL_PWR_EnablePVD();
 
   /*
    * Switch to SMPS regulator instead of LDO
@@ -275,6 +303,9 @@ static void SystemPower_Config(void)
   {
     Error_Handler();
   }
+  /* PVD_PVM_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(PVD_PVM_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(PVD_PVM_IRQn);
 /* USER CODE BEGIN PWR */
 /* USER CODE END PWR */
 }
@@ -606,6 +637,35 @@ static void MX_DMA2D_Init(void)
   /* USER CODE BEGIN DMA2D_Init 2 */
 
   /* USER CODE END DMA2D_Init 2 */
+
+}
+
+/**
+  * @brief FLASH Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_FLASH_Init(void)
+{
+
+  /* USER CODE BEGIN FLASH_Init 0 */
+
+  /* USER CODE END FLASH_Init 0 */
+
+  /* USER CODE BEGIN FLASH_Init 1 */
+
+  /* USER CODE END FLASH_Init 1 */
+  if (HAL_FLASH_Unlock() != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_FLASH_Lock() != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN FLASH_Init 2 */
+
+  /* USER CODE END FLASH_Init 2 */
 
 }
 
@@ -975,6 +1035,54 @@ static void MX_TIM15_Init(void)
 }
 
 /**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART1_Init 0 */
+
+  /* USER CODE END USART1_Init 0 */
+
+  /* USER CODE BEGIN USART1_Init 1 */
+
+  /* USER CODE END USART1_Init 1 */
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 460800;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart1.Init.ClockPrescaler = UART_PRESCALER_DIV1;
+  huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetTxFifoThreshold(&huart1, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetRxFifoThreshold(&huart1, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_DisableFifoMode(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART1_Init 2 */
+
+  /* USER CODE END USART1_Init 2 */
+
+}
+
+/**
   * @brief USB_OTG_HS Initialization Function
   * @param None
   * @retval None
@@ -1039,6 +1147,9 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, USER_LD2_RED_Pin|USER_LD3_GREEN_Pin, GPIO_PIN_SET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(SpareGpio_PG15_GPIO_Port, SpareGpio_PG15_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pin : LCD_DISP_EN_Pin */
   GPIO_InitStruct.Pin = LCD_DISP_EN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -1087,6 +1198,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : SpareGpio_PG15_Pin */
+  GPIO_InitStruct.Pin = SpareGpio_PG15_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SpareGpio_PG15_GPIO_Port, &GPIO_InitStruct);
+
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI5_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI5_IRQn);
@@ -1096,6 +1214,10 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+//=============================================================================
+//							HAL DELAY OVERWRITE
+//=============================================================================
 void HAL_Delay(uint32_t Delay)
 {
 	uint32_t tickstart = HAL_GetTick();
@@ -1139,7 +1261,86 @@ int _getentropy(void *buffer, size_t length)
 
     return 0; // Succès
 }
+
+
+//=============================================================================
+//							DUMMIES FUNCTIONS FOR THW
+//=============================================================================
+#ifdef MODE_THW
+void MX_TouchGFX_Init(void)
+{
+    // Dummy function
+}
+void MX_TouchGFX_PreOSInit(void)
+{
+    // Dummy function
+}
+#endif
+
+//=============================================================================
+//							Power Voltage Detection Callback
+//=============================================================================
+void HAL_PWR_PVDCallback(void)
+{
+	// Doing Job if initial tempo has been reached
+	if(isDebouncingWaitDone)
+	{
+#ifdef PVD_DEBUG_MEASUREMENT_ON_GPIO
+		HAL_GPIO_WritePin(SpareGpio_PG15_GPIO_Port, SpareGpio_PG15_Pin, GPIO_PIN_SET);
+#endif
+		/* Loop inside the handler to prevent the Cortex from using the Flash,
+			 allowing the flash interface to finish any ongoing transfer. */
+		while (__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO) != RESET)
+		{
+		}
+
+		// In case of the power is back -> restart correctly
+		NVIC_SystemReset();
+	}
+}
+
 /* USER CODE END 4 */
+
+ /* MPU Configuration */
+
+void MPU_Config(void)
+{
+  MPU_Region_InitTypeDef MPU_InitStruct = {0};
+  MPU_Attributes_InitTypeDef MPU_AttributesInit = {0};
+
+  /* Disables the MPU */
+  HAL_MPU_Disable();
+
+  /** Initializes and configures the Region and the memory to be protected
+  */
+  MPU_InitStruct.Enable = MPU_REGION_ENABLE;
+  MPU_InitStruct.Number = MPU_REGION_NUMBER0;
+  MPU_InitStruct.BaseAddress = 0x08000000;
+  MPU_InitStruct.LimitAddress = 0x082FFFFF;
+  MPU_InitStruct.AttributesIndex = MPU_ATTRIBUTES_NUMBER0;
+  MPU_InitStruct.AccessPermission = MPU_REGION_PRIV_RW;
+  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
+
+  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+  MPU_AttributesInit.Number = MPU_REGION_NUMBER0;
+  HAL_MPU_ConfigMemoryAttributes(&MPU_AttributesInit);
+
+  /** Initializes and configures the Region and the memory to be protected
+  */
+  MPU_InitStruct.Number = MPU_REGION_NUMBER1;
+  MPU_InitStruct.BaseAddress = 0x08300000;
+  MPU_InitStruct.LimitAddress = 0x083FFFFF;
+  MPU_InitStruct.AttributesIndex = MPU_ATTRIBUTES_NUMBER1;
+  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
+
+  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+  MPU_AttributesInit.Number = MPU_REGION_NUMBER1;
+  HAL_MPU_ConfigMemoryAttributes(&MPU_AttributesInit);
+  /* Enables the MPU */
+  HAL_MPU_Enable(MPU_HFNMI_PRIVDEF);
+
+}
 
 /**
   * @brief  Period elapsed callback in non blocking mode

@@ -44,9 +44,10 @@ _Min_Stack_Size = 0x1000; /* required amount of stack */
 /* Memories definition */
 MEMORY
 {
-  RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 3008K
-  FLASH    (rx)    : ORIGIN = 0x08000000,   LENGTH = 4096K
-  EXT_FLASH (r)   : ORIGIN = 0xA0000000, LENGTH = 128M
+  RAM       (xrw)  : ORIGIN = 0x20000000,   LENGTH = 3008K
+  FLASH     (rx)   : ORIGIN = 0x08000000,   LENGTH = 3072K   	/* Code, 3 Mo */
+  FLASH_VEE (rw)   : ORIGIN = 0x08300000,   LENGTH = 1024K   	/* VEE, 1 Mo */
+  EXT_FLASH (r)    : ORIGIN = 0xA0000000,   LENGTH = 128M
 }
 
 /* Sections */
@@ -148,6 +149,13 @@ SECTIONS
     _edata = .;        /* define a global symbol at data end */
 
   } >RAM AT> FLASH
+
+	.vee_data (NOLOAD) :
+	{
+	    . = ALIGN(4);
+	    *(.vee_data)
+	    . = ALIGN(4);
+	} > FLASH_VEE
 
   /* Uninitialized data section into "RAM" Ram type memory */
   . = ALIGN(4);
