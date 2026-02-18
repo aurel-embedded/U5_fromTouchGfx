@@ -204,7 +204,7 @@ static void thw_drv_vee_writeNPacks(uint16_t packQty)
 			for(uint16_t i = 0; i < thw_drv_vee_varQty; i++){
 				uint16_t virtAdd = i + 1;
 				// Write 32 bits (don't write on 0 address)
-				writeStatus = VEE_write(virtAdd, (virtAdd << 16) + i);
+				writeStatus = VEE_write(virtAdd, 0x1234567800000000 + (virtAdd << 16) + i);
 
 				if(writeStatus != vee_error__OK) {
 					atLeastOneWriteError_ind = i;
@@ -244,7 +244,7 @@ static void thw_drv_vee_writeAndVerifyNPacks(uint16_t packQty)
 	uint32_t 		activePage_old = 0;
 	vee_error_e 	writeStatus = vee_error__OK;
 	vee_error_e 	readStatus = vee_error__OK;
-	uint32_t		valRead = 0;
+	uint64_t		valRead = 0;
 	uint32_t 		tickStart = 0;
 	uint32_t 		time = 0;
 

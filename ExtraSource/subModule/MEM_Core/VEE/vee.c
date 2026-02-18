@@ -16,11 +16,9 @@
 //-----------------------------------------------------------------------------
 typedef struct{
 	cmp_mode_t 		cmpStatus;
-	cmp_mode_t 		VeeStatus;
 } vee_internalData_t;
 vee_internalData_t vee_internalData = {
 		.cmpStatus = cmp_mode_notDefined,
-		.VeeStatus = cmp_mode_notDefined,
 };
 
 
@@ -51,12 +49,11 @@ vee_error_e VEE_init(void)
 
 	// Init VEE
 	EE_Status ret = EE_Init(EE_CONDITIONAL_ERASE);
-//	EE_Status ret = EE_Init(EE_FORCED_ERASE);
 	if(ret != EE_OK){
 		EE_Format(EE_FORCED_ERASE);
 		return vee_error__veeInitError;
 	}
-	vee_internalData.VeeStatus = cmp_mode_nominal;
+	vee_internalData.cmpStatus = cmp_mode_nominal;
 	return vee_error__OK;
 }
 
@@ -66,11 +63,23 @@ vee_error_e VEE_init(void)
 //------------------------------------------------------------------------------
 vee_error_e VEE_exit(void)
 {
+	EE_CleanUp();
+
 	// Exit VEE
-	vee_internalData.VeeStatus = cmp_mode_notDefined;
+	vee_internalData.cmpStatus = cmp_mode_notDefined;
 
 	HAL_FLASH_Lock();
 	return vee_error__OK;
+}
+
+
+//------------------------------------------------------------------------------
+/// \fn 		cmp_mode_t VEE_getComponentStatus(void)
+/// \brief		return the component status
+//------------------------------------------------------------------------------
+cmp_mode_t VEE_getComponentStatus(void)
+{
+	return vee_internalData.cmpStatus;
 }
 
 
@@ -78,10 +87,11 @@ vee_error_e VEE_exit(void)
 /// \fn 		vee_error_e VEE_write(uint16_t VirtAddress, uint32_t data, vee_number_e vee_number)
 /// \brief		Write to VEE
 //--------------------------------------------------------------------------------------------------------
-vee_error_e VEE_write(uint16_t VirtAddress, uint32_t data)
+vee_error_e VEE_write(uint16_t VirtAddress, uint64_t data)
 {
+
 	// Write to Vee
-	EE_Status 	status = EE_WriteVariable32bits((uint16_t)VirtAddress, data);
+	EE_Status 	status = EE_WriteVariable96bits((uint16_t)VirtAddress, &data);
 	if(status == EE_CLEANUP_REQUIRED)
 	{
 		// Execute CleanUp if required
@@ -104,10 +114,10 @@ vee_error_e VEE_write(uint16_t VirtAddress, uint32_t data)
 /// \fn 		vee_error_e VEE_read(uint16_t VirtAddress, uint32_t* data, vee_number_e vee_number)
 /// \brief		Read Data from VEE
 //---------------------------------------------------------------------------------------------------------------------
-vee_error_e VEE_read(uint16_t VirtAddress, uint32_t* pData)
+vee_error_e VEE_read(uint16_t VirtAddress, uint64_t* pData)
 {
 	// Read from Vee
-	EE_Status 	status = EE_ReadVariable32bits((uint16_t)VirtAddress, pData);
+	EE_Status 	status = EE_ReadVariable96bits((uint16_t)VirtAddress, pData);
 	if(status == EE_CLEANUP_REQUIRED)
 	{
 		// Execute CleanUp if required
@@ -135,7 +145,7 @@ vee_error_e VEE_read(uint16_t VirtAddress, uint32_t* pData)
 vee_error_e VEE_format(EE_Erase_type EraseType)
 {
 	// Format Vee
-	EE_Status 	status = EE_Format(EE_FORCED_ERASE);
+	EE_Status 	status = EE_Format(EraseType);
 	if(status == EE_OK)
 	{
 		return vee_error__OK;

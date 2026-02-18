@@ -218,10 +218,10 @@
       <UniqueIdentifier>8A6E0ACC-5E55-2B60-DD6A-5024C21BB849</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\include">
-      <UniqueIdentifier>7FF2A840-776B-2626-486E-B810C261337C</UniqueIdentifier>
+      <UniqueIdentifier>2BB5E2A5-C189-A86D-07C6-B6C1E5A1E8BC</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\include\custom">
-      <UniqueIdentifier>B20D47D4-2664-DE97-2BB2-E31D7F1B12AD</UniqueIdentifier>
+      <UniqueIdentifier>2E44F32D-3B22-04D1-D2A9-36C686C60F65</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -765,6 +765,12 @@
     </ClInclude>
     <ClInclude Include="..\..\gui\include\custom\TouchXYCursor2.hpp">
       <Filter>Header Files\gui\include\custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\custom\ScreenManager.hpp">
+      <Filter>Header Files\gui\include\custom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\model\ViewId.hpp">
+      <Filter>Header Files\gui\model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

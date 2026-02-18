@@ -25,6 +25,8 @@
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.863900907" name="Board" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board" useByScannerDiscovery="false" value="genericBoard" valueType="string"/>
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1912903754" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" useByScannerDiscovery="false" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.6 || Debug || true || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || STM32U5G9ZJTxQ || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Core/Inc | ../TouchGFX/App | ../TouchGFX/target/generated | ../TouchGFX/target | ../Drivers/STM32U5xx_HAL_Driver/Inc | ../Drivers/STM32U5xx_HAL_Driver/Inc/Legacy | ../Drivers/CMSIS/Device/ST/STM32U5xx/Include | ../Drivers/CMSIS/Include | ../Middlewares/Third_Party/FreeRTOS/Source/include/ | ../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/ | ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/ | ../Middlewares/Third_Party/CMSIS/RTOS2/Include/ ||  ||  || USE_HAL_DRIVER | STM32U5G9xx ||  || Drivers | TouchGFX | Core/Startup | Middlewares | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32U5G9ZJTXQ_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None ||  ||  || " valueType="string"/>
 							<option id="com.st.stm32cube.ide.mcu.debug.option.cpuclock.1586913910" name="Cpu clock frequence" superClass="com.st.stm32cube.ide.mcu.debug.option.cpuclock" useByScannerDiscovery="false" value="160" valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.convertsrec.1994365768" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.convertsrec" value="true" valueType="boolean"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.converthex.2079673533" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.converthex" value="true" valueType="boolean"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform.2036168780" isAbstract="false" osList="all" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform"/>
 							<builder buildPath="${workspace_loc:/U5_fromTouchGfx}/Debug" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder.1708550099" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder"/>
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.568185603" name="MCU/MPU GCC Assembler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler">
@@ -47,13 +49,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.1773027655" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -93,13 +95,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.189947336" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -138,13 +140,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags.1700912936" name="Other flags" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags" useByScannerDiscovery="true" valueType="stringList">
 									<listOptionValue builtIn="false" value="-femit-class-debug-always"/>
@@ -235,13 +237,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.1914963729" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -280,13 +282,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.581355416" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -324,13 +326,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags.5808577021" name="Other flags" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags" useByScannerDiscovery="true" valueType="stringList">
 									<listOptionValue builtIn="false" value="-femit-class-debug-always"/>
@@ -424,13 +426,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.432841093" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -470,13 +472,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1438186751" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -515,13 +517,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags.666278969" name="Other flags" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags" useByScannerDiscovery="true" valueType="stringList">
 									<listOptionValue builtIn="false" value="-femit-class-debug-always"/>
@@ -615,13 +617,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.826093970" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -662,13 +664,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.478842800" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -708,13 +710,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/App}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/USB_DEVICE/Target}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource}&quot;"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Cmp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ExtraSource/subModule/MEM_Core/EEPROM_Emul/Porting/STM32U5}&quot;"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags.197061911" name="Other flags" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags" useByScannerDiscovery="true" valueType="stringList">
 									<listOptionValue builtIn="false" value="-femit-class-debug-always"/>

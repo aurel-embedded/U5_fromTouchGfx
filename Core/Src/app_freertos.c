@@ -172,6 +172,7 @@ if(HAL_GPIO_ReadPin(USER_BUTTON_GPIO_Port, USER_BUTTON_Pin) == GPIO_PIN_RESET)
 	  ASSERT_ERROR("PMGR_Init");
   }
 }else{
+	// THW when button is pressed @ startup
   THW_init();
 }
 #else
